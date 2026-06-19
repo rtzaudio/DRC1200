@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="DRC1200" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/DRC1200" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/DRC1200" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="`wx-config --cflags`" />
+			<Add option="-Wall" />
+		</Compiler>
+		<Linker>
+			<Add option="`wx-config --libs`" />
+		</Linker>
+		<Unit filename="DRC1200.h" />
+		<Unit filename="DRC1200App.cpp" />
+		<Unit filename="MainFrame.cpp" />
+		<Unit filename="MainFrame.h" />
+		<Unit filename="MainFrameHelper.cpp" />
+		<Unit filename="MainFrameMenu.cpp" />
+		<Unit filename="MainFramePanel.cpp" />
+		<Unit filename="STC1200TCP.h" />
+		<Unit filename="STCCommand.cpp" />
+		<Unit filename="STCCommand.h" />
+		<Unit filename="TimePanel.cpp" />
+		<Unit filename="TimePanel.h" />
+		<Unit filename="TrackFrame.cpp" />
+		<Unit filename="TrackFrame.h" />
+		<Unit filename="VelocityPanel.cpp" />
+		<Unit filename="VelocityPanel.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
