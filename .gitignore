@@ -1,0 +1,27 @@
+# Build artifacts
+*.obj
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.idb
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+
+# Backup and temp
+*.log
+*.tmp
+*.bak
+
+# Build output
+x64/
+Debug/
+Release/
