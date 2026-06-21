@@ -152,7 +152,7 @@ void MainFrame::UpdateCommandButton(CommandButton* button, STC_STATE_MSG& state,
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-void MainFrame::UpdateLocatorButtonStates(void)
+void MainFrame::UpdateLocatorButtonStates(bool repaint)
 {
     STC_STATE_MSG& state = GetTransportState();
 
@@ -160,7 +160,7 @@ void MainFrame::UpdateLocatorButtonStates(void)
 
     RightContainer* panel = m_panelRight;
 
-    if (m_ledMaskButton_prev != m_state.ledMaskButton)
+    if ((m_ledMaskButton_prev != m_state.ledMaskButton) || repaint)
     {
         // Locate Buttons
         UpdateLocatorButton(panel->m_btnDigit0, state, STC_L_LOC0, 0);
@@ -209,6 +209,17 @@ void MainFrame::UpdateLocatorButtonStates(void)
         }
 
         panel->m_btnCancel->SetBackgroundColour(color);
+    }
+
+    if (!IsConnected())
+    {
+        panel->m_btnZeroReturn->SetForegroundColour(m_colorGrey);
+        panel->m_btnZeroReturn->SetBackgroundColour(m_colorBtnDark);
+    }
+    else
+    {
+        panel->m_btnZeroReturn->SetForegroundColour(m_colorTextBright);
+        panel->m_btnZeroReturn->SetBackgroundColour(m_colorOFF);
     }
 }
 

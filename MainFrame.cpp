@@ -681,7 +681,7 @@ void MainFrame::ConnectionClose(void)
     UpdateTimePanel();
 	UpdateVelocityPanel();
     UpdateTransportButtonStates();
-    UpdateLocatorButtonStates();
+    UpdateLocatorButtonStates(true);
     UpdateCommandButtonStates();
 
     m_trackFrame->ResetTrackButtonStates();

@@ -221,7 +221,7 @@ public:
 	void UpdateTimePanel(void);
 	void UpdateVelocityPanel(void);
     void UpdateTransportButtonStates(void);
-    void UpdateLocatorButtonStates(void);
+    void UpdateLocatorButtonStates(bool repaint=false);
     void UpdateCommandButtonStates(void);
 
     bool IsTrackControllerReady(void);
