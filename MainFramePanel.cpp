@@ -27,18 +27,14 @@ OptionPanel::OptionPanel(wxPanel* parent)
     m_checkStandbyMon = new wxCheckBox(panel, ID_CHECK_STANDBYMON, wxT("Standby Monitor"));
 	m_checkStandbyMon->SetForegroundColour(colorText);
 
-	//m_gauge = new wxGauge(panel, wxID_ANY, 100, wxDefaultPosition, wxSize(-1, 10));
-	//m_gauge->SetValue(0);
-
 	wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* vbox = new wxBoxSizer(wxVERTICAL);
 
-	hbox->Add(m_checkAutoPlay, 0, wxEXPAND | wxALL, 5);
-	hbox->Add(m_checkLibWind, 0, wxEXPAND | wxALL, 5);
+	hbox->Add(m_checkAutoPlay, 0, wxEXPAND | wxALL, 10);
+	hbox->Add(m_checkLibWind, 0, wxEXPAND | wxALL, 10);
 
 	vbox->Add(hbox, 0, wxEXPAND | wxALL, 0);
-    vbox->Add(m_checkStandbyMon, 0, wxEXPAND | wxALL, 5);
-	//vbox->Add(m_gauge, 0, wxEXPAND | wxTOP | wxBOTTOM | wxRIGHT | wxLEFT, 8);
+    vbox->Add(m_checkStandbyMon, 0, wxEXPAND | wxALL, 10);
 
 	panel->SetSizer(vbox);
 

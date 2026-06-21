@@ -45,7 +45,7 @@
     <Image Include="res\DRC1200.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DRC12001.rc" />
+    <ResourceCompile Include="DRC1200.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
