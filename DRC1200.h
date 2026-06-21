@@ -15,6 +15,8 @@
 #include "wx/html/htmlwin.h"
 #include "wx/persist/toplevel.h"
 #include "wx/aboutdlg.h"
+#include "wx/numdlg.h"
+#include "wx/progdlg.h"
 #include "wx/socket.h"
 #include "wx/url.h"
 #include "wx/sstream.h"

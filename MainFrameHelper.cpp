@@ -217,7 +217,7 @@ void MainFrame::UpdateLocatorButton(LocatorButton* button, STC_STATE_MSG& state,
     if (!IsConnected())
     {
         button->SetForegroundColour(m_colorGrey);
-        button->SetBackgroundColour(m_colorDark);
+        button->SetBackgroundColour(m_colorBtnDark);
     }
     else
     {

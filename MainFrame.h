@@ -288,7 +288,7 @@ public:
 	wxColor				m_colorBtnModeRepro;
 	wxColor				m_colorBtnModeSync;
 	wxColor				m_colorBtnModeMon;
-
+	wxProgressDialog*   m_dlgProgress;
 
 private:
 	bool				m_busy;

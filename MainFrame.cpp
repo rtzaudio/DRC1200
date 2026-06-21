@@ -174,6 +174,7 @@ MainFrame::MainFrame() :
 	m_smpteMins = 0;
 	m_smpteSecs = 0;
 	m_smpteFrame = 0;
+    m_dlgProgress = nullptr;
 
 	m_strHostname = wxT("");
 	m_nPortNumber = STC_PORT_STATE;
@@ -372,6 +373,19 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	msg.Printf(wxT("Connecting..."), hostname, addr->Service());
 	SetStatusText(msg, 2);
 
+    m_dlgProgress = new wxProgressDialog
+                        (
+                         wxT("Progress dialog"),
+                         wxT("Connecting to MM1200"),
+                         100,
+                         this,
+                         wxPD_CAN_ABORT |
+                         wxPD_AUTO_HIDE |
+                         wxPD_APP_MODAL
+                        );
+
+    m_dlgProgress->Update();
+
     connected = m_sockCommand.ConnectionOpen(hostname);
 
 	if (connected)
@@ -450,6 +464,9 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
         SetStatusText(msg, 2);
 	}
 
+    m_dlgProgress->Destroy();
+    m_dlgProgress = nullptr;
+
     m_connected = connected;
 
 	UpdateStatusBar();
@@ -457,6 +474,198 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 
 	return connected;
 }
+
+#if 0
+// =========================================================================
+// OPEN/CLOSE TCP NETWORK CONNECTIONS
+
+void CMainFrame::OpenConnections(void)
+{
+	DWORD dwError = ERROR_SUCCESS;
+	BOOL flag = TRUE;
+
+	m_dlgConnecting = new CConnectingDlg(this);
+
+	CString str;
+    m_dlgConnecting->Create(IDD_CONNECTING, NULL);	//(CView*)&m_wndView);
+	str.Format(_T("Connecting to %s"), m_strIPAddr.GetString());
+    m_dlgConnecting->SetMessage(str);
+    m_dlgConnecting->CenterWindow();
+    m_dlgConnecting->ShowWindow(SW_SHOWNORMAL);
+    m_dlgConnecting->UpdateWindow();
+
+	//EnableWindow(FALSE);
+
+	// Set status bar icon to connecting state
+	SetStatusBarConnectionIcon(1);
+
+	// Set the flag to indicate connection in progress
+	m_bConnecting   = TRUE;
+    m_bTcpConnected = FALSE;
+
+	theApp.m_dcsFound = FALSE;
+
+	// Create the streaming receive socket
+	GetSocketState().Create();
+
+	// Enable rx, close and connect notifications
+	GetSocketState().AsyncSelect(FD_READ|FD_CLOSE|FD_CONNECT);
+
+	// Indicate our application can reuse it's address
+	GetSocketState().SetSockOpt(SO_REUSEADDR, &flag, sizeof(BOOL));
+
+	// Now kick off the async TCP/IP connect
+	GetSocketState().Connect(m_strIPAddr, m_nPortNumber);
+
+	TRACE(_T("Waiting for connect..."));
+
+	BOOL bDoingBackgroundProcessing = TRUE;
+
+	while (bDoingBackgroundProcessing)
+	{
+		MSG msg;
+		while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+		{
+			if (!AfxGetApp()->PumpMessage())
+			{
+				bDoingBackgroundProcessing = FALSE;
+				::PostQuitMessage(0);
+				break;
+			}
+		}
+
+		// let MFC do its idle processing
+		LONG lIdle = 0;
+		while (AfxGetApp()->OnIdle(lIdle++));
+
+		if (!m_bConnecting)
+		{
+			flag = TRUE;
+			dwError = GetSocketState().SetSockOpt(SO_KEEPALIVE, &flag, sizeof(flag), SOL_SOCKET);
+
+			TRACE(_T("Connect completed...\n"));
+			break;
+		}
+
+		if (m_dlgConnecting->IsCancel())
+		{
+			TRACE(_T("Connect Canceled!\n"));
+			GetSocketState().ShutDown(2);
+
+			CloseConnections();
+			GetSocketState().Close();
+			break;
+		}
+	}
+
+	EnableWindow(TRUE);
+
+	// First attempt to open a command/response socket on a separate port.
+	if (m_bTcpConnected)
+	{
+		UINT uPort = m_nPortNumber + 1;
+		DWORD dwError = ERROR_SUCCESS;
+
+		// Create the command socket
+		GetSocketCommand().Create();
+
+		GetSocketCommand().SetSockOpt(SO_REUSEADDR, &flag, sizeof(BOOL));
+
+		// Connect to the command socket
+		if (!GetSocketCommand().Connect(m_strIPAddr, uPort))
+			dwError = GetLastError();
+
+		if (dwError == ERROR_SUCCESS)
+		{
+			flag = TRUE;
+			dwError = GetSocketCommand().SetSockOpt(SO_KEEPALIVE, &flag, sizeof(flag), SOL_SOCKET);
+
+			SetStatusBarConnectionIcon(2);
+
+			// Get and check the STC and DTC versions to make sure we are compatible
+
+			UINT rev_stc, rev_dtc;
+
+			rev_stc = rev_dtc = 0;
+
+			dwError = GetSocketCommand().VersionGet(&rev_stc, &rev_dtc, m_stcSN, m_dtcSN, m_mac);
+
+			if (dwError != ERROR_SUCCESS)
+			{
+				rev_stc = rev_dtc = 0;
+				TRACE(_T("Error getting version info - DTC may not be present!"));
+			}
+
+			m_stcVersion = rev_stc;
+			m_dtcVersion = rev_dtc;
+
+			// Requires STC version 3.0 or greater!
+			if (((rev_stc >> 16) >= 3) && ((rev_stc & 0xFF) >= 0) || (rev_stc == 0))
+			{
+				// Query the STC to see how many tracks it's configured to support
+				// if the DCS channel controller is installed in the machine.
+
+				UINT numTracks;
+				BOOL dcsFound;
+
+				if (GetSocketCommand().TrackGetCount(&numTracks, &dcsFound) == ERROR_SUCCESS)
+				{
+					TRACE(_T("Machine has %u Tracks\n"), numTracks);
+
+					if (numTracks != theApp.m_trackCount)
+					{
+						if ((numTracks >= 8) && (numTracks <= 24))
+							theApp.m_trackCount = numTracks;
+						else
+							theApp.m_trackCount = 24;
+
+						theApp.SaveCustomState();
+					}
+
+					// Indicates if the STC has a DCS track controller available
+					theApp.m_dcsFound = dcsFound;
+				}
+			}
+			else
+			{
+				// Close the connecting modeless dialog
+				m_dlgConnecting->DestroyWindow();
+
+				// Close connections
+				CloseConnections();
+
+				// Display error message
+				CString str;
+				CString fmt;
+				fmt.LoadString(IDS_ERROR_STC_VERSION);
+				str.Format(fmt, (rev_stc >> 16), (rev_stc & 0xFF));
+				AfxMessageBox(str, MB_OK | MB_ICONSTOP);
+				Invalidate(FALSE);
+				return;
+			}
+		}
+		else
+		{
+			CString str;
+			CString fmt;
+			fmt.LoadString(IDS_ERROR_SOCKET_OPEN);
+			GetSystemError(dwError, str);
+			str.Format(fmt, str.GetBuffer());
+			str.ReleaseBuffer();
+			//SetStatusBarConnectionIcon(0);
+			AfxMessageBox(str, MB_OK|MB_ICONERROR);
+		}
+	}
+
+	// Close the connecting modeless dialog
+	m_dlgConnecting->DestroyWindow();
+
+	// Update the client window
+	((CDRCWINView*)GetActiveView())->AdjustAll();
+
+	Invalidate(FALSE);
+}
+#endif
 
 void MainFrame::ConnectionClose(void)
 {
