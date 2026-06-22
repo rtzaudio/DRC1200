@@ -1,5 +1,6 @@
 #include "DRC1200.h"
 #include "ConnectDialog.h"
+//#include "DRC1200.xpm"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Message Event Dispatch Table
@@ -237,7 +238,7 @@ MainFrame::MainFrame() :
     config->Read(_("ConfirmZeroReset"), &m_bConfirmZeroReset);
     config->Read(_("ShowTracks"), &m_bShowTracks);
 
-	SetIcon(wxICON(_T("aaaaaaaa")));
+    //SetIcon(wxICON(DRC1200));
 	CreateMenuBar();
 
 	// Create the main frame panel covering the entire client area
@@ -2236,8 +2237,8 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	wxAboutDialogInfo info;
 
 	info.SetName(wxT("DRC1200"));
-    info.SetIcon(wxIcon(wxT("AAAAAAAA")));
-	//info.SetIcon(wxIcon(wxT("DRC1200.png")));
+    //info.SetIcon(wxICON(DRC1200));
+	info.SetIcon(wxIcon(wxT("DRC1200.png")));
 	info.SetVersion(wxT("1.03"), wxT("Version 1.03"));
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));

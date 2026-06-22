@@ -1982,10 +1982,10 @@
 1576881851 source:/home/bstarr/Development/DRC1200/VelocityPanel.cpp
 	"DRC1200.h"
 
-1781919471 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
+1782082324 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
 	"DRC1200.h"
 
-1781919471 /home/bob/Sandbox/DRC1200/DRC1200.h
+1781921952 /home/bob/Sandbox/DRC1200/DRC1200.h
 	"wx/wx.h"
 	"wx/event.h"
 	"wx/sizer.h"
@@ -1999,6 +1999,8 @@
 	"wx/html/htmlwin.h"
 	"wx/persist/toplevel.h"
 	"wx/aboutdlg.h"
+	"wx/numdlg.h"
+	"wx/progdlg.h"
 	"wx/socket.h"
 	"wx/url.h"
 	"wx/sstream.h"
@@ -3931,7 +3933,7 @@
 1743203047 /usr/local/include/wx-3.2/wx/overlay.h
 	"wx/defs.h"
 
-1781911822 /home/bob/Sandbox/DRC1200/MainFrame.h
+1782081221 /home/bob/Sandbox/DRC1200/MainFrame.h
 	"STC1200TCP.h"
 	"TimePanel.h"
 	"VelocityPanel.h"
@@ -3948,20 +3950,20 @@
 
 1781919471 /home/bob/Sandbox/DRC1200/TrackFrame.h
 
-1781912904 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
+1782086445 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
 1781919471 /home/bob/Sandbox/DRC1200/ConnectDialog.h
 
-1781921627 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
+1782081221 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
 1781919471 source:/home/bob/Sandbox/DRC1200/MainFrameMenu.cpp
 	"DRC1200.h"
 
-1781919471 source:/home/bob/Sandbox/DRC1200/MainFramePanel.cpp
+1782081221 source:/home/bob/Sandbox/DRC1200/MainFramePanel.cpp
 	"DRC1200.h"
 
 1781919471 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
@@ -6114,4 +6116,23 @@
 
 1781569668 source:/home/bob/Development/DRC1200-MSW/VelocityPanel.cpp
 	"DRC1200.h"
+
+1711874034 /usr/include/wx-3.2/wx/numdlg.h
+	"wx/defs.h"
+	"wx/generic/numdlgg.h"
+
+1711874034 /usr/include/wx-3.2/wx/generic/numdlgg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+
+1711874034 /usr/include/wx-3.2/wx/progdlg.h
+	"wx/defs.h"
+	"wx/generic/progdlgg.h"
+	"wx/msw/progdlg.h"
+
+1711874034 /usr/include/wx-3.2/wx/generic/progdlgg.h
+	"wx/dialog.h"
+	"wx/weakref.h"
+
+1782086355 /home/bob/Sandbox/DRC1200/DRC1200.xpm
 

@@ -64,10 +64,11 @@ bool DRC1200App::OnInit()
         m_strHostArg = argv[1];
     }
 
+    // Load formats like PNG or JPEG directly from a file
+    wxInitAllImageHandlers();
+
 	// Create and show the main application frame window
-
 	m_pMainFrame = new MainFrame();
-
 	m_pMainFrame->Show();
 
 	return true;
