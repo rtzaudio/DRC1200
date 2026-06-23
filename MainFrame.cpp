@@ -192,41 +192,6 @@ MainFrame::MainFrame() :
     m_ledMaskButton_prev = 0xFFFFFFFF;
     m_ledMaskTransport_prev = 0xFFFFFFFF;
 
-	// Button face colors
-
-    m_colorON.SetRGB(0x54A835);
-  	m_colorOFF.SetRGB(0x484848);
-    m_colorGrey.SetRGB(0xC9C9C9);
-    m_colorDark.SetRGB(0x484848);
-    m_colorRecReady.SetRGB(0x000055);
-    m_colorRecActive.SetRGB(0x0000FF);
-
-    // Button text colors
-    m_colorText.SetRGB(0xE0E0E0);
-    m_colorTextDim.SetRGB(0x404040);
-    m_colorTextBright.SetRGB(0xFFFFFF);
-
-
-
-	m_colorBlack.SetRGB(0x000000);
-	m_colorWhite.SetRGB(0xFFFFFF);
-
-	m_colorFrame.SetRGB(0x484848);
-	m_colorPanel.SetRGB(0x333333);
-
-	m_colorBtnText.SetRGB(0xFFFFFF);
-	m_colorBtnFace.SetRGB(0x585858);
-	m_colorBtnGrey.SetRGB(0xC9C9C9);
-	m_colorBtnDark.SetRGB(0x484848);
-
-	m_colorBtnRecReady.SetRGB(0x000055);
-	m_colorBtnRecActive.SetRGB(0x0000FF);
-
-	m_colorBtnModeInput.SetRGB(0x04B2FE);
-	m_colorBtnModeRepro.SetRGB(0x54A835);
-	m_colorBtnModeSync.SetRGB(0xEEA200);
-	m_colorBtnModeMon.SetRGB(0xA0A0A0);
-
     // Set a unique name
     SetName("DRC1200_MainFrame");
 
@@ -244,13 +209,15 @@ MainFrame::MainFrame() :
 	// Create the main frame panel covering the entire client area
 	m_panel = new wxPanel(this, wxID_ANY);
 
+	m_panel->SetBackgroundColour(wxGetApp().m_colorFrame);
+
 	wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
 
 	m_panelLeft  = new LeftContainer(m_panel);
 	m_panelRight = new RightContainer(m_panel);
 
-	hbox->Add(m_panelLeft, 2, wxEXPAND | wxALL, 0);
-	hbox->Add(m_panelRight, 1, wxEXPAND | wxUP | wxDOWN | wxRIGHT, 0);
+	hbox->Add(m_panelLeft, 2, wxEXPAND | wxALL, 5);
+	hbox->Add(m_panelRight, 1, wxEXPAND | wxUP | wxDOWN | wxRIGHT, 5);
 
 	m_panel->SetSizer(hbox);
 
@@ -270,7 +237,7 @@ MainFrame::MainFrame() :
 		SetClientSize(FromDIP(wxSize(925, 300)));
 	}
 
-	int widths[7] = { -1, 175, 130 };
+	int widths[] = { -1, 175, 130 };
 
 	const size_t numWidths =  sizeof(widths) / sizeof(int);
 
@@ -2237,8 +2204,8 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	wxAboutDialogInfo info;
 
 	info.SetName(wxT("DRC1200"));
-    //info.SetIcon(wxICON(DRC1200));
-	info.SetIcon(wxIcon(wxT("DRC1200.png")));
+	//info.SetIcon(wxIcon(wxT("DRC1200.png")));
+	info.SetIcon(wxIcon(wxT("AAAA_DRC1200")));
 	info.SetVersion(wxT("1.03"), wxT("Version 1.03"));
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));

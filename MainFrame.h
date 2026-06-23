@@ -257,37 +257,6 @@ private:
     bool                m_connected;
 
 public:
-	// Button face colors
-    wxColor             m_colorON;
-  	wxColor             m_colorOFF;
-    wxColor             m_colorRecReady;
-    wxColor             m_colorRecActive;
-    wxColor             m_colorGrey;
-    wxColor             m_colorDark;
-    // Button text colors
-	wxColor             m_colorText;
-    wxColor             m_colorTextBright;
-    wxColor             m_colorTextDim;
-
-
-	// Frame and panel background colors
-	wxColor				m_colorFrame;
-	wxColor				m_colorPanel;
-	// Some generic colors
-	wxColor				m_colorBlack;
-	wxColor				m_colorWhite;
-	// Button face colors
-	wxColor				m_colorBtnText;
-	// Button text colors
-	wxColor				m_colorBtnFace;
-	wxColor				m_colorBtnGrey;
-	wxColor				m_colorBtnDark;
-	wxColor				m_colorBtnRecReady;
-	wxColor				m_colorBtnRecActive;
-	wxColor				m_colorBtnModeInput;
-	wxColor				m_colorBtnModeRepro;
-	wxColor				m_colorBtnModeSync;
-	wxColor				m_colorBtnModeMon;
 	wxProgressDialog*   m_dlgProgress;
 
 private:

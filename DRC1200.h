@@ -64,7 +64,29 @@ public:
 	wxConfig* m_pConfig;
 	size_t  m_trackCount;       /* num of tracks machine supports 8, 16 or 24 */
     bool    m_dcsFound;         /* true if DCS track controller found */
-    wxString m_strHostArg;
+	wxString m_strHostArg;
+	// Generic colors
+	wxColor m_colorBlack;
+	wxColor m_colorWhite;
+	// Frame, panel and basic text colors
+	wxColor m_colorFrame;
+	wxColor m_colorPanel;
+	wxColor m_colorText;
+	// Button text colors
+	wxColor m_colorBtnText;
+	wxColor m_colorBtnTextDim;
+	wxColor m_colorBtnTextActive;
+	// Button face colors
+	wxColor m_colorBtnFace;
+	wxColor m_colorBtnGrey;
+	wxColor m_colorBtnDark;
+	wxColor m_colorBtnActive;
+	wxColor m_colorBtnRecReady;
+	wxColor m_colorBtnRecActive;
+	wxColor m_colorBtnModeInput;
+	wxColor m_colorBtnModeRepro;
+	wxColor m_colorBtnModeSync;
+	wxColor m_colorBtnModeMon;
 };
 
 #define GET_MAX_TRACKS()		( wxGetApp().m_trackCount )

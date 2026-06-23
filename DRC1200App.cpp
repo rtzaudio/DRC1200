@@ -22,6 +22,32 @@ DRC1200App::DRC1200App()
 	m_panelVelocity = nullptr;
     m_trackCount    = STC_MAX_TRACKS;
     m_dcsFound      = false;
+
+	// Generic colors
+	m_colorBlack.SetRGB(0x000000);
+	m_colorWhite.SetRGB(0xFFFFFF);
+
+	// Frame, panel and basic text colors
+	m_colorFrame.SetRGB(0x484848);				// panel frame color
+	m_colorPanel.SetRGB(0x333333);				// background panel color
+	m_colorText.SetRGB(0xE0E0E0);
+
+	// Button text colors
+	m_colorBtnText.SetRGB(0xFFFFFF);
+	m_colorBtnTextDim.SetRGB(0x222222);
+	m_colorBtnTextActive.SetRGB(0xFFFFFF);
+
+	// Button face colors
+	m_colorBtnFace.SetRGB(0x585858);
+	m_colorBtnGrey.SetRGB(0xC9C9C9);
+	m_colorBtnDark.SetRGB(0x484848);
+	m_colorBtnActive.SetRGB(0x54A835);
+	m_colorBtnRecReady.SetRGB(0x000055);
+	m_colorBtnRecActive.SetRGB(0x0000FF);
+	m_colorBtnModeInput.SetRGB(0x04B2FE);
+	m_colorBtnModeRepro.SetRGB(0x54A835);
+	m_colorBtnModeSync.SetRGB(0xEEA200);
+	m_colorBtnModeMon.SetRGB(0xA0A0A0);
 }
 
 DRC1200App::~DRC1200App()

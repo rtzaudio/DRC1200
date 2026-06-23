@@ -71,35 +71,35 @@ void MainFrame::UpdateTransportButtonStates(void)
 
         if (state.transportMode & STC_M_RECORD)
         {
-            panel->m_btnRec->SetBackgroundColour(m_colorRecActive);
+            panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecActive);
         }
         else
         {
             if (m_bRecord)
             {
-                panel->m_btnRec->SetBackgroundColour(m_colorRecReady);
+                panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecReady);
             }
             else
             {
-                panel->m_btnRec->SetBackgroundColour(m_colorOFF);
+                panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnFace);
             }
         }
 
-        panel->m_btnRec->SetForegroundColour(m_colorText);
+        panel->m_btnRec->SetForegroundColour(wxGetApp().m_colorBtnText);
 
         /////////////////////////////////////////////////////
         // Set LIFTERS Button Color
 
         if (state.transportMode & STC_M_LIFTERS)
         {
-            panel->m_btnLift->SetBackgroundColour(m_colorON);
+            panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnActive);
         }
         else
         {
-            panel->m_btnLift->SetBackgroundColour(m_colorOFF);
+            panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnFace);
         }
 
-        panel->m_btnLift->SetForegroundColour(m_colorText);
+        panel->m_btnLift->SetForegroundColour(wxGetApp().m_colorBtnText);
     }
 
     // Set Transport Button Colors
@@ -117,14 +117,14 @@ void MainFrame::UpdateTransportButton(TransportButton* button, STC_STATE_MSG& st
 {
     if (state.ledMaskTransport & mask)
     {
-        button->SetBackgroundColour(m_colorON);
+        button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
     }
     else
     {
-        button->SetBackgroundColour(m_colorOFF);
+        button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
     }
 
-    button->SetForegroundColour(m_colorText);
+    button->SetForegroundColour(wxGetApp().m_colorBtnText);
 }
 
 
@@ -139,14 +139,14 @@ void MainFrame::UpdateCommandButton(CommandButton* button, STC_STATE_MSG& state,
 {
     if (IsConnected() && IsHardwareDCS())
     {
-        button->SetBackgroundColour(m_colorON);
+        button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
     }
     else
     {
-        button->SetBackgroundColour(m_colorOFF);
+        button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
     }
 
-    button->SetForegroundColour(m_colorText);
+    button->SetForegroundColour(wxGetApp().m_colorBtnText);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -198,13 +198,13 @@ void MainFrame::UpdateLocatorButtonStates(bool repaint)
         // For CANCEL button we need to check if the transport is
         // searching or looping before drawing solid background.
 
-        color = m_colorOFF;
+        color = wxGetApp().m_colorBtnFace;
 
         if ((state.transportMode & STC_M_SEARCH) | (state.transportMode & STC_M_LOOP))
         {
             if (IsTransportSearching() || IsTransportLooping())
             {
-                color = m_colorON;
+                color = wxGetApp().m_colorBtnActive;
             }
         }
 
@@ -213,13 +213,13 @@ void MainFrame::UpdateLocatorButtonStates(bool repaint)
 
     if (!IsConnected())
     {
-        panel->m_btnZeroReturn->SetForegroundColour(m_colorGrey);
-        panel->m_btnZeroReturn->SetBackgroundColour(m_colorBtnDark);
+        panel->m_btnZeroReturn->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+        panel->m_btnZeroReturn->SetBackgroundColour(wxGetApp().m_colorBtnDark);
     }
     else
     {
-        panel->m_btnZeroReturn->SetForegroundColour(m_colorTextBright);
-        panel->m_btnZeroReturn->SetBackgroundColour(m_colorOFF);
+        panel->m_btnZeroReturn->SetForegroundColour(wxGetApp().m_colorBtnText);
+        panel->m_btnZeroReturn->SetBackgroundColour(wxGetApp().m_colorBtnFace);
     }
 }
 
@@ -227,36 +227,36 @@ void MainFrame::UpdateLocatorButton(LocatorButton* button, STC_STATE_MSG& state,
 {
     if (!IsConnected())
     {
-        button->SetForegroundColour(m_colorGrey);
-        button->SetBackgroundColour(m_colorBtnDark);
+        button->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+        button->SetBackgroundColour(wxGetApp().m_colorBtnDark);
     }
     else
     {
         if (cueIndex >= 0)
         {
-            // If cue point button is active, draw it in white
+            // If cue point button is active, draw it in active color
             if (state.cueState[cueIndex] & STC_CF_ACTIVE)
             {
-                button->SetForegroundColour(m_colorTextBright);
+                button->SetForegroundColour(wxGetApp().m_colorBtnTextActive);
             }
             else
             {
-                button->SetForegroundColour(m_colorTextDim);
+                button->SetForegroundColour(wxGetApp().m_colorBtnTextDim);
             }
 
             if (state.ledMaskButton & mask)
-                button->SetBackgroundColour(m_colorON);
+                button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
             else
-                button->SetBackgroundColour(m_colorOFF);
+                button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
         }
         else
         {
-            button->SetForegroundColour(m_colorText);
+            button->SetForegroundColour(wxGetApp().m_colorBtnText);
 
             if (state.ledMaskButton & mask)
-                button->SetBackgroundColour(m_colorON);
+                button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
             else
-                button->SetBackgroundColour(m_colorOFF);
+                button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
         }
     }
 }

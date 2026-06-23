@@ -7,25 +7,22 @@ OptionPanel::OptionPanel(wxPanel* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(150, 50), wxBORDER_NONE)
 {
 	m_parent = parent;
-
-	wxColor colorPanel(wxT("#222222"));
-	wxColor colorText(wxT("#FFFFFF"));
-
+	
 	wxPanel* panel = new wxPanel(this, wxID_ANY);
-	panel->SetBackgroundColour(colorPanel);
+	panel->SetBackgroundColour(wxGetApp().m_colorFrame);
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
 	sizer->Add(panel, 1, wxEXPAND | wxALL, 0);
 
 	m_checkAutoPlay = new wxCheckBox(panel, ID_CHECK_AUTOPLAY, wxT("Auto Play"));
-	m_checkAutoPlay->SetForegroundColour(colorText);
+	m_checkAutoPlay->SetForegroundColour(wxGetApp().m_colorText);
 
 	m_checkLibWind = new wxCheckBox(panel, ID_CHECK_LIBRARYWIND, wxT("Lib Wind"));
-	m_checkLibWind->SetForegroundColour(colorText);
+	m_checkLibWind->SetForegroundColour(wxGetApp().m_colorText);
 
     m_checkStandbyMon = new wxCheckBox(panel, ID_CHECK_STANDBYMON, wxT("Standby Monitor"));
-	m_checkStandbyMon->SetForegroundColour(colorText);
+	m_checkStandbyMon->SetForegroundColour(wxGetApp().m_colorText);
 
 	wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* vbox = new wxBoxSizer(wxVERTICAL);
@@ -44,11 +41,8 @@ OptionPanel::OptionPanel(wxPanel* parent)
 CommandButton::CommandButton(wxPanel* mypanel, int id, const wxString& label)
 	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(40, 20))
 {
-	//wxColor colorBtnFace(wxT("#616161"));
-	//wxColor colorBtnText(wxT("#FFFFFF"));
-
-    //SetBackgroundColour(colorBtnFace);
-	//SetForegroundColour(colorBtnText);
+    SetBackgroundColour(wxGetApp().m_colorBtnFace);
+	SetForegroundColour(wxGetApp().m_colorBtnText);
 
 	Connect(id, wxEVT_BUTTON, wxCommandEventHandler(CommandButton::OnCommandButtonClicked));
 }
@@ -74,8 +68,7 @@ CommandPanel::CommandPanel(wxPanel* parent)
 
 	wxPanel* panel = new wxPanel(this, wxID_ANY);
 
-	wxColor colorPanel(wxT("#333333"));
-    panel->SetBackgroundColour(colorPanel);
+    panel->SetBackgroundColour(wxGetApp().m_colorPanel);
 
     m_cmdButton[0]  = new CommandButton(panel, ID_TRACK_ALLINPUT, wxT("All Tracks Input"));
 	m_cmdButton[1]  = new CommandButton(panel, ID_TRACK_ALLREPRO, wxT("All Tracks Repro"));
@@ -91,7 +84,7 @@ CommandPanel::CommandPanel(wxPanel* parent)
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
-	const int spacing = 3;
+	const int spacing = 0;
 
 	wxGridSizer* gs = new wxGridSizer(3, 3, spacing, spacing);
 
@@ -100,7 +93,7 @@ CommandPanel::CommandPanel(wxPanel* parent)
         gs->Add(m_cmdButton[i], 1, wxEXPAND);
     }
 
-	sizer->Add(panel, 1, wxEXPAND | wxALL, spacing);
+	sizer->Add(panel, 1, wxEXPAND | wxALL);
 
 	panel->SetSizer(gs);
 
@@ -115,8 +108,7 @@ TopContainer::TopContainer(wxPanel* parent)
 {
 	m_parent = parent;
 
-	wxColor colorPanel(wxT("#333333"));
-	SetBackgroundColour(colorPanel);
+	SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -134,8 +126,7 @@ MiddleContainer::MiddleContainer(wxPanel* parent)
 {
 	m_parent = parent;
 
-	wxColor colorPanel(wxT("#333333"));
-	SetBackgroundColour(colorPanel);
+	SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -151,11 +142,8 @@ MiddleContainer::MiddleContainer(wxPanel* parent)
 TransportButton::TransportButton(wxPanel* mypanel, int id, const wxString& label)
 	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(50, 30))
 {
-	//wxColor colorBtnFace(wxT("#616161"));
-	//wxColor colorBtnText(wxT("#FFFFFF"));
-
-    //SetBackgroundColour(colorBtnFace);
-	//SetForegroundColour(colorBtnText);
+    SetBackgroundColour(wxGetApp().m_colorBtnFace);
+	SetForegroundColour(wxGetApp().m_colorBtnText);
 
 	Connect(id, wxEVT_BUTTON, wxCommandEventHandler(TransportButton::OnTransportButtonClicked));
 }
@@ -179,11 +167,10 @@ BottomContainer::BottomContainer(wxPanel* parent)
 {
 	m_parent = parent;
 
-	wxColor colorPanel(wxT("#333333"));
-	SetBackgroundColour(colorPanel);
+	SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	wxPanel* panel = new wxPanel(this, -1);
-    panel->SetBackgroundColour(colorPanel);
+    //panel->SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	m_btnRec  = new TransportButton(panel, ID_TRANSPORT_RECORD, wxT("REC"));
 	m_btnPlay = new TransportButton(panel, ID_TRANSPORT_PLAY, wxT("PLAY"));
@@ -218,13 +205,12 @@ LeftContainer::LeftContainer(wxWindow* parent)
 {
 	m_parent = parent;
 
-	wxColor colorPanel(wxT("#333333"));
-	SetBackgroundColour(colorPanel);
+	SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
 	wxPanel* panel = new wxPanel(this, -1);
-    panel->SetBackgroundColour(colorPanel);
+    //panel->SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	m_panelTop    = new TopContainer(panel);
 	m_panelMiddle = new MiddleContainer(panel);
@@ -249,11 +235,8 @@ LeftContainer::LeftContainer(wxWindow* parent)
 LocatorButton::LocatorButton(wxPanel* mypanel, int id, const wxString& label)
 	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(40, 40))
 {
-	wxColor colorBtnFace(wxT("#616161"));
-	wxColor colorBtnText(wxT("#FFFFFF"));
-
-    SetBackgroundColour(colorBtnFace);
-	SetForegroundColour(colorBtnText);
+    SetBackgroundColour(wxGetApp().m_colorBtnFace);
+	SetForegroundColour(wxGetApp().m_colorBtnText);
 
 	Connect(id, wxEVT_BUTTON, wxCommandEventHandler(LocatorButton::OnLocatorButtonClicked));
 }
@@ -277,12 +260,11 @@ RightContainer::RightContainer(wxWindow* parent)
 {
 	m_parent = parent;
 
-	wxColor colorPanel(wxT("#333333"));
-	SetBackgroundColour(colorPanel);
+	SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	wxPanel* panel = new wxPanel(this, -1);
 
-    panel->SetBackgroundColour(colorPanel);
+    panel->SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	m_btnDigit0     = new LocatorButton(panel, ID_CUEPOINT_LOC0, wxT("0"));
 	m_btnDigit1     = new LocatorButton(panel, ID_CUEPOINT_LOC1, wxT("1"));
@@ -335,7 +317,7 @@ RightContainer::RightContainer(wxWindow* parent)
 
     wxBoxSizer* sizerMain = new wxBoxSizer(wxVERTICAL);
 
-	sizerMain->Add(panel, 1, wxEXPAND | wxALL, 10);
+	sizerMain->Add(panel, 1, wxEXPAND | wxALL, 5);
 
 	panel->SetSizer(gs);
 

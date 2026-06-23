@@ -35,23 +35,6 @@ public:
 	TrackButton* m_btnTrackMode[STC_MAX_TRACKS];
 	TrackButton* m_btnTrackMon[STC_MAX_TRACKS];
 
-	wxColor m_colorBlack;
-    wxColor m_colorWhite;
-	wxColor m_colorFrame;
-	wxColor m_colorPanel;
-	wxColor m_colorBtnFace;
-	wxColor m_colorBtnText;
-	wxColor m_colorBtnGrey;
-    wxColor m_colorBtnDark;
-
-    wxColor m_colorBtnRecReady;
-    wxColor m_colorBtnRecActive;
-
-    wxColor m_colorBtnModeInput;
-    wxColor m_colorBtnModeSync;
-    wxColor m_colorBtnModeRepro;
-    wxColor m_colorBtnModeMon;
-
     uint8_t m_trackState[STC_MAX_TRACKS];
 
 private:

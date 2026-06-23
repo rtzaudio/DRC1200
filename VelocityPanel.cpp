@@ -130,7 +130,7 @@ void VelocityPanel::PlotVelocity(wxDC& dc)
 	float step = (float)rect.width / (float)MAX_VEL_SAMPLES;
 
     wxPen penPlot(m_colorPlot);
-    wxPen penLine(m_colorLine);
+    wxPen penLine(m_colorLine, 3);
 
     dc.SetBrush(*wxTRANSPARENT_BRUSH);
 
