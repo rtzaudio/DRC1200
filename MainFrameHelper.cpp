@@ -58,53 +58,69 @@ bool MainFrame::IsAnyTracksArmed(void)
 	return false;
 }
 
-void MainFrame::UpdateTransportButtonStates(void)
+void MainFrame::UpdateTransportButtonStates(bool repaint)
 {
     STC_STATE_MSG& state = GetTransportState();
 
     BottomContainer* panel = m_panelLeft->m_panelBottom;
 
-    if (m_transportMode_prev != m_state.transportMode)
+    if ((m_transportMode_prev != m_state.transportMode) || repaint)
     {
         /////////////////////////////////////////////////////
         // Set RECORD Button Color
 
-        if (state.transportMode & STC_M_RECORD)
+        if (!IsConnected())
         {
-            panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecActive);
+            panel->m_btnRec->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+            panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnDark);
         }
         else
         {
-            if (m_bRecord)
+            if (state.transportMode & STC_M_RECORD)
             {
-                panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecReady);
+                panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecActive);
             }
             else
             {
-                panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+                if (m_bRecord)
+                {
+                    panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecReady);
+                }
+                else
+                {
+                    panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+                }
             }
-        }
 
-        panel->m_btnRec->SetForegroundColour(wxGetApp().m_colorBtnText);
+            panel->m_btnRec->SetForegroundColour(wxGetApp().m_colorBtnText);
+        }
 
         /////////////////////////////////////////////////////
         // Set LIFTERS Button Color
 
-        if (state.transportMode & STC_M_LIFTERS)
+        if (!IsConnected())
         {
-            panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+            panel->m_btnLift->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+            panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnDark);
         }
         else
         {
-            panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnFace);
-        }
+            if (state.transportMode & STC_M_LIFTERS)
+            {
+                panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+            }
+            else
+            {
+                panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+            }
 
-        panel->m_btnLift->SetForegroundColour(wxGetApp().m_colorBtnText);
+            panel->m_btnLift->SetForegroundColour(wxGetApp().m_colorBtnText);
+        }
     }
 
     // Set Transport Button Colors
 
-    if (m_ledMaskTransport_prev != m_state.ledMaskTransport)
+    if ((m_ledMaskTransport_prev != m_state.ledMaskTransport) || repaint)
     {
         UpdateTransportButton(panel->m_btnPlay, state, STC_L_PLAY);
         UpdateTransportButton(panel->m_btnRew, state, STC_L_REW);
@@ -115,16 +131,24 @@ void MainFrame::UpdateTransportButtonStates(void)
 
 void MainFrame::UpdateTransportButton(TransportButton* button, STC_STATE_MSG& state, uint32_t mask)
 {
-    if (state.ledMaskTransport & mask)
+    if (!IsConnected())
     {
-        button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+        button->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+        button->SetBackgroundColour(wxGetApp().m_colorBtnDark);
     }
     else
     {
-        button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
-    }
+        if (state.ledMaskTransport & mask)
+        {
+            button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+        }
+        else
+        {
+            button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+        }
 
-    button->SetForegroundColour(wxGetApp().m_colorBtnText);
+        button->SetForegroundColour(wxGetApp().m_colorBtnText);
+    }
 }
 
 
@@ -185,7 +209,7 @@ void MainFrame::UpdateLocatorButtonStates(bool repaint)
         UpdateLocatorButton(panel->m_btnMarkOut, state, STC_L_MARK_OUT);
     }
 
-    if (m_transportMode_prev != m_state.transportMode)
+    if ((m_transportMode_prev != m_state.transportMode) || repaint)
     {
         // Auto Punch Buttons
 /*
@@ -197,18 +221,26 @@ void MainFrame::UpdateLocatorButtonStates(bool repaint)
 */
         // For CANCEL button we need to check if the transport is
         // searching or looping before drawing solid background.
-
-        color = wxGetApp().m_colorBtnFace;
-
-        if ((state.transportMode & STC_M_SEARCH) | (state.transportMode & STC_M_LOOP))
+        
+        if (!IsConnected())
         {
-            if (IsTransportSearching() || IsTransportLooping())
-            {
-                color = wxGetApp().m_colorBtnActive;
-            }
+            panel->m_btnCancel->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+            panel->m_btnCancel->SetBackgroundColour(wxGetApp().m_colorBtnDark);
         }
+        else
+        {
+            color = wxGetApp().m_colorBtnFace;
 
-        panel->m_btnCancel->SetBackgroundColour(color);
+            if ((state.transportMode & STC_M_SEARCH) | (state.transportMode & STC_M_LOOP))
+            {
+                if (IsTransportSearching() || IsTransportLooping())
+                {
+                    color = wxGetApp().m_colorBtnActive;
+                }
+            }
+
+            panel->m_btnCancel->SetBackgroundColour(color);
+        }
     }
 
     if (!IsConnected())

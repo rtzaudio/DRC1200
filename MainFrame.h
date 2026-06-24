@@ -220,7 +220,7 @@ public:
 
 	void UpdateTimePanel(void);
 	void UpdateVelocityPanel(void);
-    void UpdateTransportButtonStates(void);
+    void UpdateTransportButtonStates(bool repain=false);
     void UpdateLocatorButtonStates(bool repaint=false);
     void UpdateCommandButtonStates(void);
 

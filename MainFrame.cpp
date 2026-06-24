@@ -53,7 +53,7 @@ EVT_MENU(ID_CONFIGURATION_RESET, MainFrame::OnConfigurationReset)
 EVT_UPDATE_UI(ID_CONFIGURATION_RESET, MainFrame::OnUpdateConfigurationReset)
 // Transport Menu
 EVT_MENU(ID_TRANSPORT_RECORD, MainFrame::OnTransportRecord)
-//EVT_UPDATE_UI(ID_TRANSPORT_RECORD, MainFrame::OnUpdateUITransportRecord)
+EVT_UPDATE_UI(ID_TRANSPORT_RECORD, MainFrame::OnUpdateUITransportRecord)
 EVT_MENU(ID_TRANSPORT_PLAY, MainFrame::OnTransportPlay)
 EVT_UPDATE_UI(ID_TRANSPORT_PLAY, MainFrame::OnUpdateUITransportPlay)
 EVT_MENU(ID_TRANSPORT_REWIND, MainFrame::OnTransportRewind)
@@ -63,7 +63,7 @@ EVT_UPDATE_UI(ID_TRANSPORT_FORWARD, MainFrame::OnUpdateUITransportForward)
 EVT_MENU(ID_TRANSPORT_STOP, MainFrame::OnTransportStop)
 EVT_UPDATE_UI(ID_TRANSPORT_STOP, MainFrame::OnUpdateUITransportStop)
 EVT_MENU(ID_TRANSPORT_TAPELIFTER, MainFrame::OnTransportTapeLifter)
-//EVT_UPDATE_UI(ID_TRANSPORT_TAPELIFTER, MainFrame::OnUpdateUITransportTapeLifter)
+EVT_UPDATE_UI(ID_TRANSPORT_TAPELIFTER, MainFrame::OnUpdateUITransportTapeLifter)
 EVT_MENU(ID_TRANSPORT_LIBRARYWIND, MainFrame::OnTransportLibraryWind)
 EVT_UPDATE_UI(ID_TRANSPORT_LIBRARYWIND, MainFrame::OnUpdateUITransportLibraryWind)
 EVT_MENU(ID_TAPESPEED_HIGHSPEED, MainFrame::OnTapespeedHighspeed)
@@ -306,7 +306,6 @@ void MainFrame::OnConnectOpen(wxCommandEvent& WXUNUSED(event))
     if (m_strHostname.Length() > 0)
     {
         ConnectionOpen(wxSockAddress::IPV4, m_strHostname);
-        //UpdateStatusBar();
     }
 }
 
@@ -648,7 +647,7 @@ void MainFrame::ConnectionClose(void)
     // Update all buttons
     UpdateTimePanel();
 	UpdateVelocityPanel();
-    UpdateTransportButtonStates();
+    UpdateTransportButtonStates(true);
     UpdateLocatorButtonStates(true);
     UpdateCommandButtonStates();
 
@@ -708,12 +707,16 @@ void MainFrame::HandleReceiveData(void)
 
 	// Update the time display if tape is moving
 	UpdateTimePanel();
+
 	// Update the velocity panel control if tape is moving
 	UpdateVelocityPanel();
+
     // Update any Transport buttons
     UpdateTransportButtonStates();
+
     // Update any Locator buttons
     UpdateLocatorButtonStates();
+
     // Update any track assignment buttons
     m_trackFrame->UpdateTrackButtonStates();
 

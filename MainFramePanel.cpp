@@ -41,7 +41,7 @@ OptionPanel::OptionPanel(wxPanel* parent)
 CommandButton::CommandButton(wxPanel* mypanel, int id, const wxString& label)
 	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(40, 20))
 {
-    SetBackgroundColour(wxGetApp().m_colorBtnFace);
+    SetBackgroundColour(wxGetApp().m_colorBtnDark);
 	SetForegroundColour(wxGetApp().m_colorBtnText);
 
 	Connect(id, wxEVT_BUTTON, wxCommandEventHandler(CommandButton::OnCommandButtonClicked));
@@ -142,7 +142,7 @@ MiddleContainer::MiddleContainer(wxPanel* parent)
 TransportButton::TransportButton(wxPanel* mypanel, int id, const wxString& label)
 	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(50, 30))
 {
-    SetBackgroundColour(wxGetApp().m_colorBtnFace);
+    SetBackgroundColour(wxGetApp().m_colorBtnDark);
 	SetForegroundColour(wxGetApp().m_colorBtnText);
 
 	Connect(id, wxEVT_BUTTON, wxCommandEventHandler(TransportButton::OnTransportButtonClicked));
@@ -235,7 +235,7 @@ LeftContainer::LeftContainer(wxWindow* parent)
 LocatorButton::LocatorButton(wxPanel* mypanel, int id, const wxString& label)
 	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(40, 40))
 {
-    SetBackgroundColour(wxGetApp().m_colorBtnFace);
+    SetBackgroundColour(wxGetApp().m_colorBtnDark);
 	SetForegroundColour(wxGetApp().m_colorBtnText);
 
 	Connect(id, wxEVT_BUTTON, wxCommandEventHandler(LocatorButton::OnLocatorButtonClicked));
