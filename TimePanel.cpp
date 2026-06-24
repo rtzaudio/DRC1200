@@ -19,7 +19,7 @@ TimePanel::TimePanel(wxPanel* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE)
 {
 	m_owner = parent;
-	
+
 	wxGetApp().m_panelTime = this;
 
 #if DRAW_BUFFERED > 0
@@ -86,7 +86,7 @@ void TimePanel::Draw(wxDC& dc)
 
 	dc.SetTextForeground(colorText);
 	dc.SetFont(mono1);
-	dc.DrawText(str, 10, 10);
+	dc.DrawText(str, 10, dc.FromDIP(10));
 
     wxCoord width = dc.GetCharWidth();
 
@@ -166,12 +166,12 @@ void TimePanel::Draw(wxDC& dc)
 			strMode = _T("SLAVE");
 		else
 			strMode = _T("OFF");
+
+        str.Printf(wxT("SMPTE ") + strMode);
+        dc.DrawText(str, xpos, ypos);
 	}
 
-    str.Printf(wxT("SMPTE ") + strMode);
-	dc.DrawText(str, xpos, ypos);
-
-	ypos += vspace;
+    ypos += vspace;
 
     str.Printf(wxT("SPEED %u IPS"), state.tapeSpeed);
 	dc.DrawText(str, xpos, ypos);

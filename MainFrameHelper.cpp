@@ -221,7 +221,7 @@ void MainFrame::UpdateLocatorButtonStates(bool repaint)
 */
         // For CANCEL button we need to check if the transport is
         // searching or looping before drawing solid background.
-        
+
         if (!IsConnected())
         {
             panel->m_btnCancel->SetForegroundColour(wxGetApp().m_colorBtnGrey);
@@ -347,7 +347,7 @@ void MainFrame::UpdateStatusBar(void)
             else
                 strMode = _T("OFF");
 
-            str.Printf(wxT("SMPTE: %s"), strMode);
+            str.Printf(wxT("SMPTE %s"), strMode);
 
             // Display current smpte mode
             SetStatusText(str, 1);
@@ -390,7 +390,7 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 	switch (mode)
 	{
 	case STC_MODE_HALT:
-		str = wxT("TAPE OUT");
+		str = wxT("HALT TAPE OUT");
 		break;
 
 	case STC_MODE_THREAD:

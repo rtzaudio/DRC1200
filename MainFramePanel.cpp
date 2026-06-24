@@ -7,7 +7,7 @@ OptionPanel::OptionPanel(wxPanel* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(150, 50), wxBORDER_NONE)
 {
 	m_parent = parent;
-	
+
 	wxPanel* panel = new wxPanel(this, wxID_ANY);
 	panel->SetBackgroundColour(wxGetApp().m_colorFrame);
 
@@ -317,7 +317,7 @@ RightContainer::RightContainer(wxWindow* parent)
 
     wxBoxSizer* sizerMain = new wxBoxSizer(wxVERTICAL);
 
-	sizerMain->Add(panel, 1, wxEXPAND | wxALL, 5);
+	sizerMain->Add(panel, 1, wxEXPAND | wxALL, 10);
 
 	panel->SetSizer(gs);
 
