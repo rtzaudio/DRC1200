@@ -70,15 +70,17 @@ void TimePanel::Draw(wxDC& dc)
     // Fill the background with black
 
 	dc.SetPen(*wxBLACK_PEN);
-	dc.SetBrush(*wxBLACK_BRUSH);
+	dc.SetBrush(wxGetApp().m_colorTimeBkgnd);
 	dc.DrawRectangle(0, 0, size.GetWidth(), size.GetHeight());
 
-	// Format the tape time string as +HH:MM:SS
+	// ------------------------------------------------------
+	// Format & draw signed tape time as +HH:MM:SS:TENS
+	// ------------------------------------------------------
 
 	if (mainframe->IsConnected())
-		colorText = wxColor(*wxYELLOW);
+		colorText = wxGetApp().m_colorTime;
 	else
-		colorText = wxColor(wxT("#333333"));
+		colorText = wxGetApp().m_colorBtnTextDim;
 
 	char sign = (state.tapeTime.flags & F_TAPETIME_PLUS) ? wxT('+') : wxT('-');
 
@@ -112,9 +114,11 @@ void TimePanel::Draw(wxDC& dc)
 
 	wxCoord yTop = y + (wxCoord)((dc.GetCharHeight() * 0.33));
 
-	dc.DrawText(str, 15 + sizeText.GetWidth(), yTop);	// (sizeText.GetHeight() >> 2) + 5);
+	dc.DrawText(str, 15 + sizeText.GetWidth(), yTop);
 
-	// Draw the headings hours, mins, seconds and tens over time digits
+	// ------------------------------------------------------
+	// Draw the headings hours, mins, secs and tens
+	// ------------------------------------------------------
 
     dc.SetTextForeground(colorText);
 	dc.SetFont(mono3);
@@ -145,15 +149,15 @@ void TimePanel::Draw(wxDC& dc)
 
     dc.DrawText(wxT("TEN"), xpos, ypos);
 
-    //
+    // ------------------------------------------------------
     // Now draw the extra mode display stuff
-    //
+	// ------------------------------------------------------
 
     wxCoord vspace = sizeText.GetHeight() + dc.FromDIP(1);
 
-    xpos += dc.FromDIP(50);
-    //ypos += dc.FromDIP(3);
+	xpos += (sizeText.GetWidth() << 1) + sizeText.GetWidth();
 
+	// Get current transport mode string
     wxString strMode;
     mainframe->GetModeText(state, strMode);
 
@@ -162,7 +166,7 @@ void TimePanel::Draw(wxDC& dc)
         if (mainframe->IsTransportModeFlags(STC_M_RECORD) ||
             mainframe->IsTransportMode(STC_MODE_HALT))
         {
-            dc.SetTextForeground(*wxRED);
+            dc.SetTextForeground(wxGetApp().m_colorError);
         }
     }
 
@@ -170,7 +174,7 @@ void TimePanel::Draw(wxDC& dc)
 
 	dc.SetTextForeground(colorText);
 
-	ypos += vspace; // + dc.FromDIP(3);
+	ypos += vspace;
 
 	if (state.hardwareFlags & STC_HF_SMPTE)
 	{
@@ -199,9 +203,14 @@ void TimePanel::Draw(wxDC& dc)
 
     if (state.errorCount)
     {
-        dc.SetTextForeground(*wxRED);
+		if (mainframe->IsConnected())
+			colorText = wxGetApp().m_colorError;
+		else
+			colorText = wxGetApp().m_colorBtnTextDim;
 
-        str.Printf(wxT("ERRORS %u"), state.errorCount);
+        dc.SetTextForeground(colorText);
+
+        str.Printf(wxT("QE ERRORS %u"), state.errorCount);
         dc.DrawText(str, xpos, ypos);
     }
 }

@@ -72,6 +72,9 @@ public:
 	wxColor m_colorFrame;
 	wxColor m_colorPanel;
 	wxColor m_colorText;
+	wxColor m_colorTime;
+	wxColor m_colorTimeBkgnd;
+	wxColor m_colorError;
 	// Button text colors
 	wxColor m_colorBtnText;
 	wxColor m_colorBtnTextDim;
