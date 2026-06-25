@@ -1421,7 +1421,7 @@ void MainFrame::OnUpdateUITransportTapeLifter(wxUpdateUIEvent& event)
 		return;
 	}
 
-	event.Check(IsTransportMode(STC_M_LIFTERS) ? true : false);
+	//event.Check(IsTransportMode(STC_M_LIFTERS) ? true : false);
 	event.Enable(true);
 }
 
