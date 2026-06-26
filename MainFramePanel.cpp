@@ -13,7 +13,7 @@ OptionPanel::OptionPanel(wxPanel* parent)
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
-	sizer->Add(panel, 1, wxEXPAND | wxALL, 0);
+	sizer->Add(panel, 1, wxEXPAND | wxALL);
 
 	m_checkAutoPlay = new wxCheckBox(panel, ID_CHECK_AUTOPLAY, wxT("Auto Play"));
 	m_checkAutoPlay->SetForegroundColour(wxGetApp().m_colorText);
@@ -27,11 +27,11 @@ OptionPanel::OptionPanel(wxPanel* parent)
 	wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* vbox = new wxBoxSizer(wxVERTICAL);
 
-	hbox->Add(m_checkAutoPlay, 0, wxEXPAND | wxALL, 5);
-	hbox->Add(m_checkLibWind, 0, wxEXPAND | wxALL, 5);
+	hbox->Add(m_checkAutoPlay, 0, wxEXPAND | wxALL, 3);
+	hbox->Add(m_checkLibWind, 0, wxEXPAND | wxALL, 3);
 
 	vbox->Add(hbox, 0, wxEXPAND | wxALL, 0);
-    vbox->Add(m_checkStandbyMon, 0, wxEXPAND | wxALL, 5);
+    vbox->Add(m_checkStandbyMon, 0, wxEXPAND | wxALL, 3);
 
 	panel->SetSizer(vbox);
 
@@ -56,7 +56,6 @@ void CommandButton::OnCommandButtonClicked(wxCommandEvent& event)
     if (mainFrame)
     {
         wxCommandEvent* event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, GetId());
-        //event->SetEventObject(this);
         wxQueueEvent(mainFrame->GetEventHandler(), event);
     }
 }
@@ -157,7 +156,6 @@ void TransportButton::OnTransportButtonClicked(wxCommandEvent& event)
     if (mainFrame)
     {
         wxCommandEvent* event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, GetId());
-        //event->SetEventObject(this);
         wxQueueEvent(mainFrame->GetEventHandler(), event);
     }
 }
