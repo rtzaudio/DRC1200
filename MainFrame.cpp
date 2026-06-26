@@ -145,8 +145,8 @@ EVT_UPDATE_UI(ID_VIEW_SHOWTRACKS, MainFrame::OnUpdateUIViewShowTracks)
 // Controls in the MainFrame window
 //EVT_CHECKBOX(ID_CHECK_AUTOPLAY, MainFrame::OnCheckAutoPlay)
 //EVT_UPDATE_UI(ID_CHECK_AUTOPLAY, MainFrame::OnUpdateUICheckAutoPlay)
-//EVT_CHECKBOX(ID_CHECK_LIBRARYWIND, MainFrame::OnCheckLibraryWind)
-//EVT_UPDATE_UI(ID_CHECK_LIBRARYWIND, MainFrame::OnUpdateUICheckLibraryWind)
+EVT_CHECKBOX(ID_CHECK_LIBRARYWIND, MainFrame::OnCheckLibraryWind)
+EVT_UPDATE_UI(ID_CHECK_LIBRARYWIND, MainFrame::OnUpdateUICheckLibraryWind)
 //EVT_CHECKBOX(ID_CHECK_STANDBYMON, MainFrame::OnCheckStandbyMon)
 //EVT_UPDATE_UI(ID_CHECK_STANDBYMON, MainFrame::OnUpdateUICheckStandbyMon)
 // Help Menu
@@ -407,9 +407,9 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 			}
         }
 
-        m_ledMaskButton_prev    = 0xFFFFFFFF;
+		m_transportMode_prev    = 0xFFFF;
+		m_ledMaskButton_prev    = 0xFFFFFFFF;
         m_ledMaskTransport_prev = 0xFFFFFFFF;
-        m_transportMode_prev    = 0xFFFF;
 
         m_trackFrame->ResetTrackButtonStates(true);
 
@@ -2161,7 +2161,7 @@ void MainFrame::OnUpdateUICheckLibraryWind(wxUpdateUIEvent& event)
 	}
 
 	event.Enable(true);
-	event.Check(m_bLibWind);
+	//event.Check(m_bLibWind);
 }
 
 void MainFrame::OnCheckAutoPlay(wxCommandEvent& event)
