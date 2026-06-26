@@ -32,6 +32,10 @@ DRC1200App::DRC1200App()
 	m_colorPanel.SetRGB(0x333333);				// background panel color
 	m_colorText.SetRGB(0xE0E0E0);
 
+	m_colorTimeBkgnd = *wxBLACK;
+	m_colorTime = *wxYELLOW;
+	m_colorError = *wxRED;
+
 	// Button text colors
 	m_colorBtnText.SetRGB(0xFFFFFF);
 	m_colorBtnTextDim.SetRGB(0x222222);

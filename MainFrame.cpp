@@ -237,7 +237,7 @@ MainFrame::MainFrame() :
 		SetClientSize(FromDIP(wxSize(925, 300)));
 	}
 
-	int widths[] = { -1, 175, 130 };
+	int widths[] = { -1, 175, 130, 130 };
 
 	const size_t numWidths =  sizeof(widths) / sizeof(int);
 
@@ -437,6 +437,7 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
     m_connected = connected;
 
 	UpdateStatusBar();
+
     UpdateCommandButtonStates();
 
 	return connected;
@@ -655,6 +656,7 @@ void MainFrame::ConnectionClose(void)
 
     // Indicates DCS track controller not available
     wxGetApp().m_dcsFound = false;
+
 	UpdateStatusBar();
 
 	Refresh();
@@ -670,7 +672,6 @@ void MainFrame::OnSocketEvent(wxSocketEvent& event)
 
 	case wxSOCKET_LOST:
 		wxLogMessage("Socket connection failed");
-		UpdateStatusBar();
         m_trackFrame->ResetTrackButtonStates();
 		break;
 
@@ -1421,7 +1422,7 @@ void MainFrame::OnUpdateUITransportTapeLifter(wxUpdateUIEvent& event)
 		return;
 	}
 
-	event.Check(IsTransportMode(STC_M_LIFTERS) ? true : false);
+	//event.Check(IsTransportMode(STC_M_LIFTERS) ? true : false);
 	event.Enable(true);
 }
 
