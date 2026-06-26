@@ -27,11 +27,11 @@ OptionPanel::OptionPanel(wxPanel* parent)
 	wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* vbox = new wxBoxSizer(wxVERTICAL);
 
-	hbox->Add(m_checkAutoPlay, 0, wxEXPAND | wxALL, 10);
-	hbox->Add(m_checkLibWind, 0, wxEXPAND | wxALL, 10);
+	hbox->Add(m_checkAutoPlay, 0, wxEXPAND | wxALL, 5);
+	hbox->Add(m_checkLibWind, 0, wxEXPAND | wxALL, 5);
 
 	vbox->Add(hbox, 0, wxEXPAND | wxALL, 0);
-    vbox->Add(m_checkStandbyMon, 0, wxEXPAND | wxALL, 10);
+    vbox->Add(m_checkStandbyMon, 0, wxEXPAND | wxALL, 5);
 
 	panel->SetSizer(vbox);
 

@@ -316,19 +316,9 @@ void MainFrame::UpdateVelocityPanel(void)
 
 void MainFrame::UpdateStatusBar(void)
 {
-    STC_STATE_MSG& state = GetTransportState();
-
-#if wxUSE_IPV6
-    wxIPV6address addr;
-#else
     wxIPV4address addr;
-#endif
-	wxString str;
-
-	//STC_STATE_MSG& state = GetTransportState();
 
     // Display IP address connection state
-
 	if (!m_sockCommand.IsConnected())
 	{
         SetStatusText(wxT("(offline)"), 2);
@@ -336,42 +326,11 @@ void MainFrame::UpdateStatusBar(void)
 	}
 	else
 	{
-#if 0
-		wxString strMode;
-
-		if (state.hardwareFlags & STC_HF_SMPTE)
-        {
-            if (state.smpteMode == STC_SMPTE_ENCODER)
-                strMode = _T("STRIPE");
-            else if (state.smpteMode == STC_SMPTE_SLAVE)
-                strMode = _T("SLAVE");
-            else
-                strMode = _T("OFF");
-
-            str.Printf(wxT("SMPTE %s"), strMode);
-
-            // Display current smpte mode
-            SetStatusText(str, 1);
-        }
-#endif
         // Display the current host name
 		m_sockState->GetPeer(addr);
-
-        //str.Printf(wxT("%s : %s"), addr.Hostname(), m_strHostname);
-		//str.Printf(wxT("%s"), m_strHostname);
-        
         SetStatusText(addr.Hostname(), 1);
-
         SetStatusText(m_strHostname, 2);
     }
-
-    // Enable/disable connect menu options
-
-	m_menuConnect->Enable(ID_CONNECT_TCP, !m_sockCommand.IsConnected() && !m_busy);
-#if wxUSE_IPV6
-	//m_menuSocket->Enable(CLIENT_OPENIPV6, !m_sock->IsConnected() && !m_busy);
-#endif
-	m_menuConnect->Enable(ID_CONNECT_CLOSE, m_sockCommand.IsConnected());
 }
 
 ///////////////////////////////////////////////////////////////////////////////

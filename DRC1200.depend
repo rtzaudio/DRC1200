@@ -1982,10 +1982,10 @@
 1576881851 source:/home/bstarr/Development/DRC1200/VelocityPanel.cpp
 	"DRC1200.h"
 
-1782268718 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
+1782437471 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
 	"DRC1200.h"
 
-1782268718 /home/bob/Sandbox/DRC1200/DRC1200.h
+1782437471 /home/bob/Sandbox/DRC1200/DRC1200.h
 	"wx/wx.h"
 	"wx/event.h"
 	"wx/sizer.h"
@@ -3950,23 +3950,23 @@
 
 1782268718 /home/bob/Sandbox/DRC1200/TrackFrame.h
 
-1782272132 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
+1782438423 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
 1781919471 /home/bob/Sandbox/DRC1200/ConnectDialog.h
 
-1782271379 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
+1782438066 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
 1781919471 source:/home/bob/Sandbox/DRC1200/MainFrameMenu.cpp
 	"DRC1200.h"
 
-1782271529 source:/home/bob/Sandbox/DRC1200/MainFramePanel.cpp
+1782439462 source:/home/bob/Sandbox/DRC1200/MainFramePanel.cpp
 	"DRC1200.h"
 
-1782269914 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
+1782437471 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
 	"DRC1200.h"
 
 1781919471 source:/home/bob/Sandbox/DRC1200/STCCommand.cpp
