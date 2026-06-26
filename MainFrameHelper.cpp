@@ -336,13 +336,14 @@ void MainFrame::UpdateStatusBar(void)
 	}
 	else
 	{
+#if 0
 		wxString strMode;
 
 		if (state.hardwareFlags & STC_HF_SMPTE)
         {
-            if (state.smpteMode == 1)
+            if (state.smpteMode == STC_SMPTE_ENCODER)
                 strMode = _T("STRIPE");
-            else if (state.smpteMode == 2)
+            else if (state.smpteMode == STC_SMPTE_SLAVE)
                 strMode = _T("SLAVE");
             else
                 strMode = _T("OFF");
@@ -352,12 +353,16 @@ void MainFrame::UpdateStatusBar(void)
             // Display current smpte mode
             SetStatusText(str, 1);
         }
-
+#endif
         // Display the current host name
 		m_sockState->GetPeer(addr);
+
         //str.Printf(wxT("%s : %s"), addr.Hostname(), m_strHostname);
-		str.Printf(wxT("%s"), m_strHostname);
-        SetStatusText(str, 2);
+		//str.Printf(wxT("%s"), m_strHostname);
+        
+        SetStatusText(addr.Hostname(), 1);
+
+        SetStatusText(m_strHostname, 2);
     }
 
     // Enable/disable connect menu options
@@ -390,7 +395,7 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 	switch (mode)
 	{
 	case STC_MODE_HALT:
-		str = wxT("TAPE OUT!");
+		str = wxT("TAPE OUT HALT");
 		break;
 
 	case STC_MODE_THREAD:
