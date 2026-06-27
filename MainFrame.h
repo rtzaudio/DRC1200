@@ -241,6 +241,7 @@ private:
 	void HandleConnect(void);
 	void HandleDisconnect(void);
     void SearchOrStore(uint32_t cueIndex);
+    void UpdateAllControls();
     void UpdateLocatorButtonUI(wxUpdateUIEvent& event, uint32_t ledmask);
     void UpdateLocatorButton(LocatorButton* button, STC_STATE_MSG& state, uint32_t mask, int cueIndex=-1);
     void UpdateTransportButton(TransportButton* button, STC_STATE_MSG& state, uint32_t mask);
@@ -256,7 +257,7 @@ private:
 	TrackFrame*			m_trackFrame;
 	STCCommand			m_sockCommand;
 	wxSocketClient*		m_sockState;
-	
+
 	bool				m_bConnecting;
 	bool				m_bConnected;
 

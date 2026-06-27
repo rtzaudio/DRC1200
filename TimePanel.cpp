@@ -56,10 +56,7 @@ void TimePanel::Draw(wxDC& dc)
 
 	wxString str;
 	wxColor colorText;
-
 	wxSize size = GetClientSize();
-	wxRect rect = GetClientRect();
-
 	wxCoord center = size.GetHeight() >> 1;
 
 	// Create the various font sizes we'll need

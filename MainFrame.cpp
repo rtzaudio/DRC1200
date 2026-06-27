@@ -176,6 +176,7 @@ MainFrame::MainFrame() :
 	m_smpteSecs = 0;
 	m_smpteFrame = 0;
     m_dlgProgress = nullptr;
+    m_sockState = nullptr;
 
 	m_strHostname = wxT("");
 	m_nPortNumber = STC_PORT_STATE;
@@ -309,7 +310,6 @@ void MainFrame::OnConnectOpen(wxCommandEvent& WXUNUSED(event))
 bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 {
 	wxUnusedVar(family);			// unused in !wxUSE_IPV6 case
-	bool connected = false;
 	wxIPaddress* addr;
 	wxIPV4address addr4;
 
@@ -378,21 +378,33 @@ void MainFrame::ConnectionClose(void)
         m_sockCommand.ConnectionClose();
     }
 
-    // Update all buttons
-    UpdateTimePanel();
-	UpdateVelocityPanel();
-	UpdateCommandButtonStates();
-	UpdateTransportButtonStates(true);
-    UpdateLocatorButtonStates(true);
-
-    m_trackFrame->ResetTrackButtonStates();
-
-    // Indicates DCS track controller not available
-    wxGetApp().m_dcsFound = false;
-
-	UpdateStatusBar();
+    UpdateAllControls();
 
 	Refresh();
+}
+
+void MainFrame::UpdateAllControls()
+{
+    // Update all buttons
+    UpdateTimePanel();
+
+    // Update velocity control
+	UpdateVelocityPanel();
+
+	// Update any Command buttons
+	UpdateCommandButtonStates();
+
+    // Update any Transport buttons
+	UpdateTransportButtonStates();
+
+	// Update any Locator buttons
+	UpdateLocatorButtonStates();
+
+	// Update status bar connection status
+	UpdateStatusBar();
+
+	// Update any track assignment buttons
+	m_trackFrame->UpdateTrackButtonStates();
 }
 
 // Handle Socket Events for receive, connect and disconnect
@@ -484,9 +496,7 @@ void MainFrame::HandleConnect(void)
 		}
 	}
 
-	UpdateStatusBar();
-
-	UpdateCommandButtonStates();
+    UpdateAllControls();
 }
 
 void MainFrame::HandleDisconnect(void)
@@ -517,16 +527,12 @@ void MainFrame::HandleReceiveData(void)
 
 	// Update the time display if tape is moving
 	UpdateTimePanel();
-
 	// Update the velocity panel control if tape is moving
 	UpdateVelocityPanel();
-
 	// Update any Transport buttons
 	UpdateTransportButtonStates();
-
 	// Update any Locator buttons
 	UpdateLocatorButtonStates();
-
 	// Update any track assignment buttons
 	m_trackFrame->UpdateTrackButtonStates();
 
@@ -2023,8 +2029,6 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));
 	info.AddDeveloper(wxT("Robert E Starr, Jr."));
-    info.AddDeveloper(wxT("RTZ Professional Audio"));
-
 	info.SetWebSite(wxT("rtzaudio.com"), wxT("visit us at rtzaudio.com"));
 
 	wxAboutBox(info, this);
