@@ -92,6 +92,7 @@ void MainFrame::CreateMenuBar(void)
 	menuTrack->Append(ID_TRACK_ALLMONITOROFF,
 		wxT("All Monitor Off"),
 		wxT("Disable standby monitor on all tracks"));
+	menuTrack->AppendSeparator();
 	menuTrack->AppendCheckItem(ID_TRACK_STANDBYMONITOR,
 		wxT("Standby Monitor"),
 		wxT("Toggle global standby monitor mode on/off"));
@@ -136,7 +137,7 @@ void MainFrame::CreateMenuBar(void)
 		wxT("&Punch\t*"),
 		wxT("Toggle the tape lifters"));
 	menuTransport->Append(ID_TRANSPORT_TOGGLEPLAY,
-		wxT("Toggle Play/Stop"),
+		wxT("Toggle Play/Stop\tSpace"),
 		wxT("Toggle transport between play and stop"));
 	menuTransport->AppendSeparator();
 	menuTransport->Append(ID_TRANSPORT_TAPELIFTER,
@@ -155,6 +156,8 @@ void MainFrame::CreateMenuBar(void)
 	menuTransport->AppendSeparator();
 
     menuTransport->Append(ID_TRACK_CONFIGURATION, wxT("Tape Speed"), submenuSpeed);
+
+	menuTransport->AppendSeparator();
 
 	menuTransport->AppendCheckItem(ID_TRANSPORT_LIBRARYWIND,
 		wxT("&Library Wind"),

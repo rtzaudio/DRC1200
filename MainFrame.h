@@ -266,7 +266,6 @@ public:
 
 private:
 	bool				m_busy;
-	int					m_nReadCount;
 	bool				m_bRecord;
 	bool	            m_bLibWind;
 	bool	            m_bAutoPlay;
@@ -284,8 +283,8 @@ private:
 
 	STC_STATE_MSG		m_state;
 
-	int					m_velSampleIndex;
 	unsigned int		m_nRxPacketCount;
+	int					m_velSampleIndex;
 	float				m_velSample[MAX_VEL_SAMPLES];
 
     uint32_t            m_ledMaskButton_prev;

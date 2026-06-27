@@ -321,9 +321,9 @@ void MainFrame::UpdateStatusBar(void)
     // Display IP address connection state
 	if (!m_sockCommand.IsConnected())
 	{
-        SetStatusText(wxT("(offline)"), 2);
         SetStatusText(wxT(""), 1);
-	}
+        SetStatusText(wxT("(offline)"), 2);
+    }
 	else
 	{
         // Display the current host name

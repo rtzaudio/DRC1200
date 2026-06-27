@@ -167,7 +167,6 @@ MainFrame::MainFrame() :
     m_bShowTracks = true;
     m_bConnected = false;
 	m_busy = false;
-	m_nReadCount = 0;
 	m_nRxPacketCount = 0;
 	m_velSampleIndex = 0;
 
@@ -395,16 +394,16 @@ void MainFrame::UpdateAllControls()
 	UpdateCommandButtonStates();
 
     // Update any Transport buttons
-	UpdateTransportButtonStates();
+	UpdateTransportButtonStates(true);
 
 	// Update any Locator buttons
-	UpdateLocatorButtonStates();
+	UpdateLocatorButtonStates(true);
 
 	// Update status bar connection status
 	UpdateStatusBar();
 
 	// Update any track assignment buttons
-	m_trackFrame->UpdateTrackButtonStates();
+	m_trackFrame->ResetTrackButtonStates(true);
 }
 
 // Handle Socket Events for receive, connect and disconnect
@@ -542,6 +541,10 @@ void MainFrame::HandleReceiveData(void)
 	m_ledMaskButton_prev    = m_state.ledMaskButton;
 	m_ledMaskTransport_prev = m_state.ledMaskTransport;
 	m_transportMode_prev    = m_state.transportMode;
+
+	wxString str;
+	str.Printf(_T("%d"), m_nRxPacketCount);
+	SetStatusText(str, 3);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
