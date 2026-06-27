@@ -195,6 +195,8 @@ MainFrame::MainFrame() :
     // Set a unique name
     SetName("DRC1200_MainFrame");
 
+	LoadAccelerators();
+
 	wxConfig* config = wxGetApp().GetConfig();
 
     config->Read(_("AutoPlay"), &m_bAutoPlay);

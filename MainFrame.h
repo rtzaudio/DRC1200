@@ -233,6 +233,7 @@ public:
     void GetModeText(STC_STATE_MSG& msg, wxString& str);
 
 private:
+	void LoadAccelerators(void);
 	void CreateMenuBar(void);
 	bool ConnectionOpen(wxSockAddress::Family family, wxString hostname);
 	void ConnectionClose(void);
