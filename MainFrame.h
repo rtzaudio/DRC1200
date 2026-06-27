@@ -238,6 +238,8 @@ private:
 	void ConnectionClose(void);
 	void UpdateStatusBar(void);
 	void HandleReceiveData(void);
+	void HandleConnect(void);
+	void HandleDisconnect(void);
     void SearchOrStore(uint32_t cueIndex);
     void UpdateLocatorButtonUI(wxUpdateUIEvent& event, uint32_t ledmask);
     void UpdateLocatorButton(LocatorButton* button, STC_STATE_MSG& state, uint32_t mask, int cueIndex=-1);
@@ -254,7 +256,9 @@ private:
 	TrackFrame*			m_trackFrame;
 	STCCommand			m_sockCommand;
 	wxSocketClient*		m_sockState;
-    bool                m_connected;
+	
+	bool				m_bConnecting;
+	bool				m_bConnected;
 
 public:
 	wxProgressDialog*   m_dlgProgress;
@@ -302,8 +306,8 @@ private:
 
     bool Destroy();
 
+	void OnIdle(wxIdleEvent& event);
 	void OnConnectOpen(wxCommandEvent& WXUNUSED(event));
-	void OnConnect(wxCommandEvent& WXUNUSED(event));
 
 	void OnSocketEvent(wxSocketEvent& event);
 	void OnConnectTcp(wxCommandEvent& WXUNUSED(event));
