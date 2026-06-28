@@ -1,72 +1,5 @@
 #include "DRC1200.h"
 
-#if 0
-IDR_MAINFRAME ACCELERATORS
-BEGIN
-VK_RETURN, ID_ACCELERATOR33246, VIRTKEY, NOINVERT
-"0", ID_CUEPOINT_LOC0, VIRTKEY, NOINVERT
-"1", ID_CUEPOINT_LOC1, VIRTKEY, NOINVERT
-"2", ID_CUEPOINT_LOC2, VIRTKEY, NOINVERT
-"3", ID_CUEPOINT_LOC3, VIRTKEY, NOINVERT
-"4", ID_CUEPOINT_LOC4, VIRTKEY, NOINVERT
-"5", ID_CUEPOINT_LOC5, VIRTKEY, NOINVERT
-"6", ID_CUEPOINT_LOC6, VIRTKEY, NOINVERT
-"7", ID_CUEPOINT_LOC7, VIRTKEY, NOINVERT
-"8", ID_CUEPOINT_LOC8, VIRTKEY, NOINVERT
-"9", ID_CUEPOINT_LOC9, VIRTKEY, NOINVERT
-"C", ID_LOCATOR_CUEMODE, VIRTKEY, SHIFT, CONTROL, NOINVERT
-"S", ID_LOCATOR_STOREMODE, VIRTKEY, SHIFT, CONTROL, NOINVERT
-
-VK_F1, ID_TRACK_ALLSAFE, VIRTKEY, NOINVERT
-VK_F2, ID_TRACK_ALLREADY, VIRTKEY, NOINVERT
-VK_F3, ID_TRACK_ALLMONITORON, VIRTKEY, NOINVERT
-VK_F4, ID_TRACK_ALLMONITOROFF, VIRTKEY, NOINVERT
-VK_F5, ID_TRACK_ALLINPUT, VIRTKEY, NOINVERT
-VK_F6, ID_TRACK_ALLREPRO, VIRTKEY, NOINVERT
-VK_F7, ID_TRACK_ALLSYNC, VIRTKEY, NOINVERT
-VK_F9, ID_TRACK_STANDBYMONITOR, VIRTKEY, NOINVERT
-
-"F", ID_TRANSPORT_FORWARD, VIRTKEY, CONTROL, NOINVERT
-"P", ID_TRANSPORT_PLAY, VIRTKEY, CONTROL, NOINVERT
-VK_MULTIPLY, ID_TRANSPORT_PUNCH, VIRTKEY, NOINVERT
-"E", ID_TRANSPORT_RECORD, VIRTKEY, CONTROL, NOINVERT
-"R", ID_TRANSPORT_REWIND, VIRTKEY, CONTROL, NOINVERT
-"S", ID_TRANSPORT_STOP, VIRTKEY, CONTROL, NOINVERT
-"L", ID_TRANSPORT_TAPELIFTER, VIRTKEY, CONTROL, NOINVERT
-VK_SPACE, ID_TRANSPORT_TOGGLEPLAY, VIRTKEY, NOINVERT
-END
-#endif
-
-void MainFrame::LoadAccelerators(void)
-{
-	wxAcceleratorEntry entries[20];
-
-	entries[0].Set(wxACCEL_NORMAL, (int)'0', ID_CUEPOINT_LOC0);
-	entries[1].Set(wxACCEL_NORMAL, (int)'1', ID_CUEPOINT_LOC1);
-	entries[2].Set(wxACCEL_NORMAL, (int)'2', ID_CUEPOINT_LOC2);
-	entries[3].Set(wxACCEL_NORMAL, (int)'3', ID_CUEPOINT_LOC3);
-	entries[4].Set(wxACCEL_NORMAL, (int)'4', ID_CUEPOINT_LOC4);
-	entries[5].Set(wxACCEL_NORMAL, (int)'5', ID_CUEPOINT_LOC5);
-	entries[6].Set(wxACCEL_NORMAL, (int)'6', ID_CUEPOINT_LOC6);
-	entries[7].Set(wxACCEL_NORMAL, (int)'7', ID_CUEPOINT_LOC7);
-	entries[8].Set(wxACCEL_NORMAL, (int)'8', ID_CUEPOINT_LOC8);
-	entries[9].Set(wxACCEL_NORMAL, (int)'9', ID_CUEPOINT_LOC9);
-	entries[10].Set(wxACCEL_CTRL | wxACCEL_SHIFT, (int)'C', ID_LOCATOR_CUEMODE);
-	entries[11].Set(wxACCEL_CTRL | wxACCEL_SHIFT, (int)'S', ID_LOCATOR_STOREMODE);
-	entries[12].Set(wxACCEL_NORMAL, WXK_F1, ID_TRACK_ALLSAFE);
-	entries[13].Set(wxACCEL_NORMAL, WXK_F2, ID_TRACK_ALLREADY);
-	entries[14].Set(wxACCEL_NORMAL, WXK_F3, ID_TRACK_ALLMONITORON);
-	entries[15].Set(wxACCEL_NORMAL, WXK_F4, ID_TRACK_ALLMONITOROFF);
-	entries[16].Set(wxACCEL_NORMAL, WXK_F5, ID_TRACK_ALLINPUT);
-	entries[17].Set(wxACCEL_NORMAL, WXK_F6, ID_TRACK_ALLREPRO);
-	entries[18].Set(wxACCEL_NORMAL, WXK_F7, ID_TRACK_ALLSYNC);
-	entries[19].Set(wxACCEL_NORMAL, WXK_F9, ID_TRACK_STANDBYMONITOR);
-
-	wxAcceleratorTable accel(20, entries);
-
-	SetAcceleratorTable(accel);
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 
@@ -137,31 +70,31 @@ void MainFrame::CreateMenuBar(void)
 		wxT("Set the track monitor mode to input or tape"));
 	menuTrack->AppendSeparator();
 	menuTrack->Append(ID_TRACK_ALLSAFE,
-		wxT("All Safe"),
+		wxT("All Safe\tF1"),
 		wxT("Set all tracks to safe mode"));
 	menuTrack->Append(ID_TRACK_ALLREADY,
-		wxT("All Ready"),
+		wxT("All Ready\tF2"),
 		wxT("Set all tracks to ready mode"));
 	menuTrack->AppendSeparator();
 	menuTrack->Append(ID_TRACK_ALLINPUT,
-		wxT("All Input"),
+		wxT("All Input\tF3"),
 		wxT("Set all tracks to input mode"));
 	menuTrack->Append(ID_TRACK_ALLREPRO,
-		wxT("All Repro"),
+		wxT("All Repro\tF4"),
 		wxT("Set all tracks to reproduce mode"));
 	menuTrack->Append(ID_TRACK_ALLSYNC,
-		wxT("All Sync"),
+		wxT("All Sync\tF5"),
 		wxT("Set all tracks to sync mode"));
 	menuTrack->AppendSeparator();
 	menuTrack->Append(ID_TRACK_ALLMONITORON,
-		wxT("All Monitor On"),
+		wxT("All Monitor On\tF6"),
 		wxT("Enable standby monitor on all tracks"));
 	menuTrack->Append(ID_TRACK_ALLMONITOROFF,
-		wxT("All Monitor Off"),
+		wxT("All Monitor Off\tF7"),
 		wxT("Disable standby monitor on all tracks"));
 	menuTrack->AppendSeparator();
 	menuTrack->AppendCheckItem(ID_TRACK_STANDBYMONITOR,
-		wxT("Standby Monitor"),
+		wxT("Standby Monitor\tF9"),
 		wxT("Toggle global standby monitor mode on/off"));
 	menuTrack->AppendSeparator();
 
@@ -235,16 +168,16 @@ void MainFrame::CreateMenuBar(void)
 	wxMenu* menuLocate = new wxMenu;
 	wxMenu* submenuSearch = new wxMenu;
 
-	submenuSearch->Append(ID_CUEPOINT_LOC0, wxT("LOC &0"));
-	submenuSearch->Append(ID_CUEPOINT_LOC1, wxT("LOC &1"));
-	submenuSearch->Append(ID_CUEPOINT_LOC2, wxT("LOC &2"));
-	submenuSearch->Append(ID_CUEPOINT_LOC3, wxT("LOC &3"));
-	submenuSearch->Append(ID_CUEPOINT_LOC4, wxT("LOC &4"));
-	submenuSearch->Append(ID_CUEPOINT_LOC5, wxT("LOC &5"));
-	submenuSearch->Append(ID_CUEPOINT_LOC6, wxT("LOC &6"));
-	submenuSearch->Append(ID_CUEPOINT_LOC7, wxT("LOC &7"));
-	submenuSearch->Append(ID_CUEPOINT_LOC8, wxT("LOC &8"));
-	submenuSearch->Append(ID_CUEPOINT_LOC9, wxT("LOC &9"));
+	submenuSearch->Append(ID_CUEPOINT_LOC0, wxT("LOC &0\tAlt+0"));
+	submenuSearch->Append(ID_CUEPOINT_LOC1, wxT("LOC &1\tAlt+1"));
+	submenuSearch->Append(ID_CUEPOINT_LOC2, wxT("LOC &2\tAlt+2"));
+	submenuSearch->Append(ID_CUEPOINT_LOC3, wxT("LOC &3\tAlt+3"));
+	submenuSearch->Append(ID_CUEPOINT_LOC4, wxT("LOC &4\tAlt+4"));
+	submenuSearch->Append(ID_CUEPOINT_LOC5, wxT("LOC &5\tAlt+5"));
+	submenuSearch->Append(ID_CUEPOINT_LOC6, wxT("LOC &6\tAlt+6"));
+	submenuSearch->Append(ID_CUEPOINT_LOC7, wxT("LOC &7\tAlt+7"));
+	submenuSearch->Append(ID_CUEPOINT_LOC8, wxT("LOC &8\tAlt+8"));
+	submenuSearch->Append(ID_CUEPOINT_LOC9, wxT("LOC &9\tAlt+9"));
 	submenuSearch->AppendSeparator();
 	submenuSearch->Append(ID_SEARCH_MARKIN, wxT("Mark In"));
 	submenuSearch->Append(ID_SEARCH_MARKOUT, wxT("Mark Out"));
@@ -254,11 +187,11 @@ void MainFrame::CreateMenuBar(void)
 	submenuSearch->AppendSeparator();
 	submenuSearch->Append(ID_SEARCH_ZERORETURN, wxT("Zero Return"));
 
-	menuLocate->Append(ID_LOCATOR_CUEMODE, wxT("&Cue Mode"));
-	menuLocate->Append(ID_LOCATOR_STOREMODE, wxT("&Store Mode"));
+	menuLocate->Append(ID_LOCATOR_CUEMODE, wxT("&Cue Mode\tShift+Ctrl+C"));
+	menuLocate->Append(ID_LOCATOR_STOREMODE, wxT("&Store Mode\tShift+Ctrl+S"));
 	menuLocate->AppendSeparator();
 	menuLocate->Append(ID_LOCATOR_SEARCH, wxT("Search"), submenuSearch);
-	menuLocate->Append(ID_LOCATOR_CANCELSEARCH, wxT("Cancel Search"));
+	menuLocate->Append(ID_LOCATOR_CANCELSEARCH, wxT("Cancel Search\tCtrl+X"));
 	menuLocate->AppendSeparator();
 	menuLocate->Append(ID_LOCATOR_AUTOLOOP, wxT("Auto-Loop"));
 	menuLocate->Append(ID_LOCATOR_MARKIN, wxT("Mark In"));
@@ -268,7 +201,7 @@ void MainFrame::CreateMenuBar(void)
 	menuLocate->Append(ID_LOCATOR_PUNCHIN, wxT("Punch In"));
 	menuLocate->Append(ID_LOCATOR_PUNCHOUT, wxT("Punch Out"));
 	menuLocate->AppendSeparator();
-	menuLocate->Append(ID_LOCATOR_RESETCOUNTER, wxT("&Zero Reset Counter"));
+	menuLocate->Append(ID_LOCATOR_RESETCOUNTER, wxT("&Zero Reset Counter\tCtrl+Z"));
 	menuLocate->AppendSeparator();
 	menuLocate->AppendCheckItem(ID_LOCATOR_AUTOPLAY, wxT("Auto Play"));
 

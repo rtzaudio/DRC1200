@@ -2,9 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="MainFramePanel.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="MainFrameMenu.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="339" topLine="30" />
+			<Cursor1 position="6786" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="TrackFrame.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6253" topLine="313" />
 		</Cursor>
 	</File>
 	<File name="VelocityPanel.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -12,9 +17,29 @@
 			<Cursor1 position="584" topLine="6" />
 		</Cursor>
 	</File>
-	<File name="TrackFrame.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="DRC1200.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="363" topLine="0" />
+			<Cursor1 position="2627" topLine="92" />
+		</Cursor>
+	</File>
+	<File name="MainFramePanel.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="339" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="DRC1200App.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1835" topLine="50" />
+		</Cursor>
+	</File>
+	<File name="MainFrame.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10663" topLine="23" />
+		</Cursor>
+	</File>
+	<File name="MainFrameHelper.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="918" topLine="114" />
 		</Cursor>
 	</File>
 	<File name="TimePanel.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -27,44 +52,9 @@
 			<Cursor1 position="487" topLine="42" />
 		</Cursor>
 	</File>
-	<File name="MainFrame.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="16308" topLine="391" />
-		</Cursor>
-	</File>
-	<File name="TrackFrame.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6253" topLine="301" />
-		</Cursor>
-	</File>
-	<File name="STC1200TCP.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="11716" topLine="253" />
-		</Cursor>
-	</File>
-	<File name="MainFrame.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6435" topLine="230" />
-		</Cursor>
-	</File>
-	<File name="MainFrameMenu.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="306" topLine="242" />
-		</Cursor>
-	</File>
 	<File name="VelocityPanel.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1006" topLine="78" />
-		</Cursor>
-	</File>
-	<File name="DRC1200.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2627" topLine="92" />
-		</Cursor>
-	</File>
-	<File name="MainFrameHelper.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="918" topLine="114" />
 		</Cursor>
 	</File>
 	<File name="STCCommand.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -72,14 +62,24 @@
 			<Cursor1 position="1783" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="STC1200TCP.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11716" topLine="253" />
+		</Cursor>
+	</File>
 	<File name="TimePanel.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1727" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="DRC1200App.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="MainFrame.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1835" topLine="50" />
+			<Cursor1 position="6538" topLine="210" />
+		</Cursor>
+	</File>
+	<File name="TrackFrame.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="363" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
