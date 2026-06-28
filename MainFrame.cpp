@@ -1664,7 +1664,7 @@ void MainFrame::OnLocatorResetCounter(wxCommandEvent& WXUNUSED(event))
 	{
 	    wxString str("Reset the tape time counter to zero?");
 
-        int response = wxMessageBox(str, wxT("Confirm Action"), wxYES_NO | wxICON_QUESTION);
+        int response = wxMessageBox(str, wxT("DRC1200"), wxYES_NO | wxICON_QUESTION);
 
         if (response == wxYES)
         {
