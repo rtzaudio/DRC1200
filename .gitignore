@@ -26,3 +26,4 @@ x64/
 Debug/
 Release/
 DRC1200.layout
+*.layout
