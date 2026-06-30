@@ -386,26 +386,21 @@ void MainFrame::UpdateAllControls()
 {
     // Update all buttons
     UpdateTimePanel();
-
     // Update velocity control
 	UpdateVelocityPanel();
-
 	// Update any Command buttons
 	UpdateCommandButtonStates();
-
     // Update any Transport buttons
 	UpdateTransportButtonStates(true);
-
 	// Update any Locator buttons
 	UpdateLocatorButtonStates(true);
-
 	// Update status bar connection status
 	UpdateStatusBar();
-
 	// Update any track assignment buttons
 	m_trackFrame->ResetTrackButtonStates(true);
 }
 
+///////////////////////////////////////////////////////////////////////////////
 // Handle Socket Events for receive, connect and disconnect
 
 void MainFrame::OnSocketEvent(wxSocketEvent& event)
