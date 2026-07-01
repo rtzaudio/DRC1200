@@ -47,6 +47,10 @@
 		<Unit filename="STC1200TCP.h" />
 		<Unit filename="STCCommand.cpp" />
 		<Unit filename="STCCommand.h" />
+		<Unit filename="TCPConnectThread.cpp" />
+		<Unit filename="TCPConnectThread.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="TimePanel.cpp" />
 		<Unit filename="TimePanel.h" />
 		<Unit filename="TrackFrame.cpp" />

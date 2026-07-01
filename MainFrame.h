@@ -150,62 +150,6 @@ public:
 	LocatorButton* m_btnCancel;
 };
 
-
-class TCPConnectThread : public wxThread
-{
-public:
-    TCPConnectThread(wxEvtHandler* parent, const wxString& host, int port)
-    : wxThread(wxTHREAD_JOINABLE)
-    , m_pParent(parent)
-    , m_sHost(host)
-    , m_iPort(port)
-
-protected:
-    ExitCode Entry() override {
-
-        // Create the socket and perform connection here
-        wxIPV4address addr;
-        addr.Hostname(m_sHost);
-        addr.Service(m_iPort);
-
-        m_pSocket = new wxSocketClient();
-
-        // Connect asynchronously or use a timeout so you can check TestDestroy()
-        m_pSocket->Connect(addr, false); // false = don't block main loop
-
-        // Wait for connection or cancellation
-        while (!TestDestroy() && !m_pSocket->WaitOnConnect(100)) {
-            // Wait loop
-        }
-
-        if (TestDestroy()) {
-            if (m_pSocket) {
-                m_pSocket->Destroy();
-                m_pSocket = nullptr;
-            }
-            return (ExitCode)0;
-        }
-
-        // Notify parent on completion
-        wxThreadEvent event(wxEVT_THREAD, wxID_OK);
-        wxQueueEvent(m_pParent, event.Clone());
-
-        return (ExitCode)0;
-    }
-
-    void CancelConnect() {
-        if (m_pSocket) {
-            m_pSocket->Close();
-        }
-    }
-
-private:
-    int m_iPort;
-    wxString m_sHost;
-    wxEvtHandler* m_pParent;
-    wxSocketClient* m_pSocket = nullptr;
-};
-
 ///////////////////////////////////////////////////////////////////////////////
 // Main Application Window Frame
 
