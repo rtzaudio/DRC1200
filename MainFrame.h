@@ -307,8 +307,7 @@ private:
     bool Destroy();
 
 	void OnIdle(wxIdleEvent& event);
-	void OnConnectOpen(wxCommandEvent& WXUNUSED(event));
-
+	void OnConnectEvent(wxCommandEvent& WXUNUSED(event));
 	void OnSocketEvent(wxSocketEvent& event);
 	void OnConnectTcp(wxCommandEvent& WXUNUSED(event));
     void OnUpdateUIConnectTcp(wxUpdateUIEvent& event);

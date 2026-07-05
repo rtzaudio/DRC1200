@@ -8,7 +8,7 @@
 wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 // Socket Read Event
 EVT_SOCKET(SOCKET_ID, MainFrame::OnSocketEvent)
-EVT_MENU(ID_CONNECT_OPEN, MainFrame::OnConnectOpen)
+EVT_MENU(CONNECT_ID, MainFrame::OnConnectEvent)
 // Connect Menu
 EVT_MENU(ID_CONNECT_TCP, MainFrame::OnConnectTcp)
 EVT_UPDATE_UI(ID_CONNECT_TCP, MainFrame::OnUpdateUIConnectTcp)
@@ -259,7 +259,7 @@ MainFrame::MainFrame() :
         if (hostname.Length() > 0)
         {
             m_strHostname = hostname;
-            wxCommandEvent* event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, ID_CONNECT_OPEN);
+            wxCommandEvent* event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, CONNECT_ID);
             wxQueueEvent(GetEventHandler(), event);
         }
     }
@@ -296,7 +296,7 @@ bool MainFrame::Destroy()
 
 // Connection open event posted from main application task
 
-void MainFrame::OnConnectOpen(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnConnectEvent(wxCommandEvent& WXUNUSED(event))
 {
     if (m_strHostname.Length() > 0)
     {
