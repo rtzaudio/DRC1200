@@ -142,15 +142,15 @@ EVT_UPDATE_UI(ID_GENERATOR_EDITTIME, MainFrame::OnUpdateGeneratorEdittime)
 // View Menu
 EVT_MENU(ID_VIEW_SHOWTRACKS, MainFrame::OnViewShowTracks)
 EVT_UPDATE_UI(ID_VIEW_SHOWTRACKS, MainFrame::OnUpdateUIViewShowTracks)
-// Controls in the MainFrame window
-//EVT_CHECKBOX(ID_CHECK_AUTOPLAY, MainFrame::OnCheckAutoPlay)
-//EVT_UPDATE_UI(ID_CHECK_AUTOPLAY, MainFrame::OnUpdateUICheckAutoPlay)
-EVT_CHECKBOX(ID_CHECK_LIBRARYWIND, MainFrame::OnCheckLibraryWind)
-EVT_UPDATE_UI(ID_CHECK_LIBRARYWIND, MainFrame::OnUpdateUICheckLibraryWind)
-//EVT_CHECKBOX(ID_CHECK_STANDBYMON, MainFrame::OnCheckStandbyMon)
-//EVT_UPDATE_UI(ID_CHECK_STANDBYMON, MainFrame::OnUpdateUICheckStandbyMon)
 // Help Menu
 EVT_MENU(ID_ABOUT, MainFrame::OnAbout)
+// Controls in the MainFrame window
+EVT_CHECKBOX(ID_CHECK_AUTOPLAY, MainFrame::OnCheckAutoPlay)
+EVT_UPDATE_UI(ID_CHECK_AUTOPLAY, MainFrame::OnUpdateUICheckAutoPlay)
+EVT_CHECKBOX(ID_CHECK_LIBRARYWIND, MainFrame::OnCheckLibraryWind)
+EVT_UPDATE_UI(ID_CHECK_LIBRARYWIND, MainFrame::OnUpdateUICheckLibraryWind)
+EVT_CHECKBOX(ID_CHECK_STANDBYMON, MainFrame::OnCheckStandbyMon)
+EVT_UPDATE_UI(ID_CHECK_STANDBYMON, MainFrame::OnUpdateUICheckStandbyMon)
 wxEND_EVENT_TABLE()
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1974,7 +1974,7 @@ void MainFrame::OnUpdateUICheckLibraryWind(wxUpdateUIEvent& event)
 	}
 
 	event.Enable(true);
-	//event.Check(m_bLibWind);
+	event.Check(m_bLibWind);
 }
 
 void MainFrame::OnCheckAutoPlay(wxCommandEvent& event)
