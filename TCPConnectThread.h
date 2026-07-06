@@ -14,7 +14,8 @@ public:
     TCPConnectThread(wxEvtHandler* parent, const wxString& host, int port);
     virtual ~TCPConnectThread();
 
-    void CancelConnect() {
+    void CancelConnect()
+    {
         if (m_pSocket) {
             m_pSocket->Close();
         }
@@ -25,9 +26,9 @@ protected:
 
 private:
     wxEvtHandler* m_pParent;
+    wxSocketClient* m_pSocket;
     wxString m_host;
     int m_port;
-    wxSocketClient* m_pSocket;
 };
 
 #if 0
