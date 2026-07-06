@@ -33,7 +33,7 @@ void TimePanel::OnSize(wxSizeEvent& event)
 	Layout();
 }
 
-void TimePanel::OnPaint(wxPaintEvent& WXUNUSED(event))
+void TimePanel::OnPaint(wxPaintEvent& event)
 {
 #if DRAW_BUFFERED > 0
     wxAutoBufferedPaintDC dc(this);
@@ -42,6 +42,8 @@ void TimePanel::OnPaint(wxPaintEvent& WXUNUSED(event))
 #endif
     PrepareDC(dc);
 	Draw(dc);
+
+	event.Skip();
 }
 
 void TimePanel::OnEraseBackground(wxEraseEvent& event)

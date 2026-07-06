@@ -40,7 +40,7 @@ void VelocityPanel::OnSize(wxSizeEvent& event)
 	Layout();
 }
 
-void VelocityPanel::OnPaint(wxPaintEvent& WXUNUSED(event))
+void VelocityPanel::OnPaint(wxPaintEvent& event)
 {
 #if DRAW_BUFFERED > 0
     // 2. Create the DC. It automatically handles buffering.
@@ -50,6 +50,8 @@ void VelocityPanel::OnPaint(wxPaintEvent& WXUNUSED(event))
 #endif
 	PrepareDC(dc);
 	Draw(dc);
+
+	event.Skip();
 }
 
 void VelocityPanel::OnEraseBackground(wxEraseEvent& event)

@@ -1908,17 +1908,17 @@ void MainFrame::OnGeneratorEdittime(wxCommandEvent& event)
 	INT_PTR rc;
 	CEditSMPTETimeDlg dlg;
 
-	dlg.m_nHour  = m_smpteHour;
-	dlg.m_nMins  = m_smpteMins;
-	dlg.m_nSecs  = m_smpteSecs;
+	dlg.m_nHour = m_smpteHour;
+	dlg.m_nMins = m_smpteMins;
+	dlg.m_nSecs = m_smpteSecs;
 	dlg.m_nFrame = m_smpteFrame;
 
 	// Prompt the edit time dialog
 	if ((rc = dlg.DoModal()) == IDOK)
 	{
-		m_smpteHour  = dlg.m_nHour;
-		m_smpteMins  = dlg.m_nMins;
-		m_smpteSecs  = dlg.m_nSecs;
+		m_smpteHour = dlg.m_nHour;
+		m_smpteMins = dlg.m_nMins;
+		m_smpteSecs = dlg.m_nSecs;
 		m_smpteFrame = dlg.m_nFrame;
 	}
 #endif
@@ -1941,20 +1941,20 @@ void MainFrame::OnViewShowTracks(wxCommandEvent& event)
 {
 	if (event.IsChecked())
 	{
-	    m_bShowTracks = true;
-        m_trackFrame->Show();
+		m_bShowTracks = true;
+		m_trackFrame->Show();
 	}
 	else
 	{
-        m_bShowTracks = false;
-        m_trackFrame->Hide();
+		m_bShowTracks = false;
+		m_trackFrame->Hide();
 	}
 }
 
 void MainFrame::OnUpdateUIViewShowTracks(wxUpdateUIEvent& event)
 {
 	event.Enable(true);
-    event.Check(m_trackFrame->IsVisible());
+	event.Check(m_trackFrame->IsVisible());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1974,7 +1974,7 @@ void MainFrame::OnUpdateUICheckLibraryWind(wxUpdateUIEvent& event)
 	}
 
 	event.Enable(true);
-	event.Check(m_bLibWind);
+	//event.Check(m_bLibWind);
 }
 
 void MainFrame::OnCheckAutoPlay(wxCommandEvent& event)
@@ -1991,7 +1991,11 @@ void MainFrame::OnUpdateUICheckAutoPlay(wxUpdateUIEvent& event)
 	}
 
 	event.Enable(true);
-	event.Check(m_bAutoPlay);
+
+	if (event.GetSetChecked() != m_bAutoPlay)
+	{
+		//event.Check(m_bAutoPlay);
+	}
 }
 
 void MainFrame::OnCheckStandbyMon(wxCommandEvent& event)
@@ -2010,7 +2014,7 @@ void MainFrame::OnUpdateUICheckStandbyMon(wxUpdateUIEvent& event)
 	}
 
 	event.Enable(TRUE);
-	event.Check(IsStandbyMonitor());
+	//event.Check(IsStandbyMonitor());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
