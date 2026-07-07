@@ -371,7 +371,7 @@ void MainFrame::ConnectionClose(void)
 
     m_sockState->Notify(false);
 
-    if (m_bConnected)
+    if (m_sockState->IsConnected())
     {
         m_sockState->Close();
         m_sockCommand.ConnectionClose();
@@ -430,7 +430,6 @@ void MainFrame::HandleConnect(void)
 		m_dlgProgress = nullptr;
 	}
 
-	m_bConnected = true;
 	m_bConnecting = false;
 
 	m_bConnected = m_sockCommand.ConnectionOpen(m_strHostname);

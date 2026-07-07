@@ -8,6 +8,8 @@ OptionPanel::OptionPanel(wxPanel* parent)
 {
 	m_parent = parent;
 
+	wxGetApp().m_panelOption = this;
+
 	wxPanel* panel = new wxPanel(this, wxID_ANY);
 	panel->SetBackgroundColour(wxGetApp().m_colorFrame);
 

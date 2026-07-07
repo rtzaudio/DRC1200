@@ -115,6 +115,11 @@ void MainFrame::UpdateTransportButtonStates(bool repaint)
             }
 
             panel->m_btnLift->SetForegroundColour(wxGetApp().m_colorBtnText);
+
+
+            bool checked = (state.transportMode & STC_M_LIBWIND) ? true : false;
+
+            wxGetApp().m_panelOption->m_checkLibWind->SetValue(checked);
         }
     }
 
