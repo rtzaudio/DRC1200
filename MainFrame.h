@@ -243,10 +243,11 @@ private:
     void SearchOrStore(uint32_t cueIndex);
     void UpdateAllControls();
     void UpdateLocatorButtonUI(wxUpdateUIEvent& event, uint32_t ledmask);
-    void UpdateLocatorButton(LocatorButton* button, STC_STATE_MSG& state, uint32_t mask, int cueIndex=-1);
-    void UpdateLocateButtonDelta(LocatorButton* button, STC_STATE_MSG& state, uint32_t mask, int cueIndex=-1);
-    void UpdateTransportButton(TransportButton* button, STC_STATE_MSG& state, uint32_t mask);
-    void UpdateCommandButton(CommandButton* button, STC_STATE_MSG& state, uint32_t mask);
+    void UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, int cueIndex=-1);
+	void UpdateLocatorButton(LocatorButton* button, uint32_t mask, int cueIndex = -1);
+	void UpdateTransportButtonDelta(TransportButton* button, uint32_t mask);
+    void UpdateTransportButton(TransportButton* button, uint32_t mask);
+    void UpdateCommandButton(CommandButton* button, uint32_t mask);
 
 	wxMenu*				m_menuConnect;
 	wxPanel*			m_panel;
@@ -283,14 +284,11 @@ private:
 	int					m_nPortNumber;
 
 	STC_STATE_MSG		m_state;
+	STC_STATE_MSG		m_state_prev;
 
 	unsigned int		m_nRxPacketCount;
 	int					m_velSampleIndex;
 	float				m_velSample[MAX_VEL_SAMPLES];
-
-    uint32_t            m_ledMaskButton_prev;
-    uint32_t            m_ledMaskTransport_prev;
-    uint16_t            m_transportMode_prev;
 
 	uint8_t				m_mac[6];
 	uint8_t				m_stcSN[16];

@@ -184,13 +184,11 @@ MainFrame::MainFrame() :
 		m_velSample[i] = 0.0f;
 
 	memset(&m_state, 0, sizeof(STC_STATE_MSG));
+	memset(&m_state_prev, -1, sizeof(STC_STATE_MSG));
+
 	memset(&m_mac[0], 0, sizeof(m_mac));
 	memset(&m_stcSN[0], 0, sizeof(m_stcSN));
 	memset(&m_dtcSN[0], 0, sizeof(m_dtcSN));
-
-    m_transportMode_prev = 0xFFFF;
-    m_ledMaskButton_prev = 0xFFFFFFFF;
-    m_ledMaskTransport_prev = 0xFFFFFFFF;
 
     // Set a unique name
     SetName("DRC1200_MainFrame");
@@ -345,9 +343,7 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
                          this,
                          wxPD_CAN_ABORT | wxPD_APP_MODAL);
 
-	m_transportMode_prev = 0xFFFF;
-	m_ledMaskButton_prev = 0xFFFFFFFF;
-	m_ledMaskTransport_prev = 0xFFFFFFFF;
+	memset(&m_state_prev, -1, sizeof(STC_STATE_MSG));
 
 	m_trackFrame->ResetTrackButtonStates(true);
 
@@ -532,9 +528,7 @@ void MainFrame::HandleReceiveData(void)
 	// Save previous states for selective updates. We only want
 	// to redraw the buttons that have changed states.
 
-	m_ledMaskButton_prev    = m_state.ledMaskButton;
-	m_ledMaskTransport_prev = m_state.ledMaskTransport;
-	m_transportMode_prev    = m_state.transportMode;
+	memcpy(&m_state_prev, &m_state, sizeof(STC_STATE_MSG));
 
 	wxString str;
 	str.Printf(_T("%d"), m_nRxPacketCount);
@@ -2026,7 +2020,7 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	info.SetName(wxT("DRC1200"));
 	info.SetIcon(wxIcon(wxT("DRC1200.png")));
 	//info.SetIcon(wxIcon(wxT("AAAA_DRC1200")));
-	info.SetVersion(wxT("1.03"), wxT("Version 1.03"));
+	info.SetVersion(wxT("1.04"), wxT("Version 1.04"));
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));
 	info.AddDeveloper(wxT("Robert E Starr, Jr."));
