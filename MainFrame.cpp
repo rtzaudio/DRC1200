@@ -393,7 +393,7 @@ void MainFrame::UpdateAllControls()
     // Update any Transport buttons
 	UpdateTransportButtonStates(true);
 	// Update any Locator buttons
-	UpdateLocatorButtonStates(true);
+	UpdateLocateButtonStates(true);
 	// Update status bar connection status
 	UpdateStatusBar();
 	// Update any track assignment buttons
@@ -525,7 +525,7 @@ void MainFrame::HandleReceiveData(void)
 	// Update any Transport buttons
 	UpdateTransportButtonStates();
 	// Update any Locator buttons
-	UpdateLocatorButtonStates();
+	UpdateLocateButtonStates();
 	// Update any track assignment buttons
 	m_trackFrame->UpdateTrackButtonStates();
 

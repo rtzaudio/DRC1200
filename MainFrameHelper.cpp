@@ -181,7 +181,7 @@ void MainFrame::UpdateCommandButton(CommandButton* button, STC_STATE_MSG& state,
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-void MainFrame::UpdateLocatorButtonStates(bool repaint)
+void MainFrame::UpdateLocateButtonStates(bool repaint)
 {
     STC_STATE_MSG& state = GetTransportState();
 
@@ -192,26 +192,26 @@ void MainFrame::UpdateLocatorButtonStates(bool repaint)
     if ((m_ledMaskButton_prev != m_state.ledMaskButton) || repaint)
     {
         // Locate Buttons
-        UpdateLocatorButton(panel->m_btnDigit0, state, STC_L_LOC0, 0);
-        UpdateLocatorButton(panel->m_btnDigit1, state, STC_L_LOC1, 1);
-        UpdateLocatorButton(panel->m_btnDigit2, state, STC_L_LOC2, 2);
-        UpdateLocatorButton(panel->m_btnDigit3, state, STC_L_LOC3, 3);
-        UpdateLocatorButton(panel->m_btnDigit4, state, STC_L_LOC4, 4);
-        UpdateLocatorButton(panel->m_btnDigit5, state, STC_L_LOC5, 5);
-        UpdateLocatorButton(panel->m_btnDigit6, state, STC_L_LOC6, 6);
-        UpdateLocatorButton(panel->m_btnDigit7, state, STC_L_LOC7, 7);
-        UpdateLocatorButton(panel->m_btnDigit8, state, STC_L_LOC8, 8);
-        UpdateLocatorButton(panel->m_btnDigit9, state, STC_L_LOC9, 9);
-        UpdateLocatorButton(panel->m_btnCueMode, state, STC_L_CUE);
-        UpdateLocatorButton(panel->m_btnStoreMode, state, STC_L_STORE);
+        UpdateLocateButtonDelta(panel->m_btnDigit0, state, STC_L_LOC0, 0);
+        UpdateLocateButtonDelta(panel->m_btnDigit1, state, STC_L_LOC1, 1);
+        UpdateLocateButtonDelta(panel->m_btnDigit2, state, STC_L_LOC2, 2);
+        UpdateLocateButtonDelta(panel->m_btnDigit3, state, STC_L_LOC3, 3);
+        UpdateLocateButtonDelta(panel->m_btnDigit4, state, STC_L_LOC4, 4);
+        UpdateLocateButtonDelta(panel->m_btnDigit5, state, STC_L_LOC5, 5);
+        UpdateLocateButtonDelta(panel->m_btnDigit6, state, STC_L_LOC6, 6);
+        UpdateLocateButtonDelta(panel->m_btnDigit7, state, STC_L_LOC7, 7);
+        UpdateLocateButtonDelta(panel->m_btnDigit8, state, STC_L_LOC8, 8);
+        UpdateLocateButtonDelta(panel->m_btnDigit9, state, STC_L_LOC9, 9);
+        UpdateLocateButtonDelta(panel->m_btnCueMode, state, STC_L_CUE);
+        UpdateLocateButtonDelta(panel->m_btnStoreMode, state, STC_L_STORE);
         // Auto Punch Buttons
-        UpdateLocatorButton(panel->m_btnAutoPunch, state, STC_L_AUTO_LOOP);
-        UpdateLocatorButton(panel->m_btnPunchIn, state, STC_L_PUNCH_IN);
-        UpdateLocatorButton(panel->m_btnPunchOut, state, STC_L_PUNCH_OUT);
+        UpdateLocateButtonDelta(panel->m_btnAutoPunch, state, STC_L_AUTO_LOOP);
+        UpdateLocateButtonDelta(panel->m_btnPunchIn, state, STC_L_PUNCH_IN);
+        UpdateLocateButtonDelta(panel->m_btnPunchOut, state, STC_L_PUNCH_OUT);
         // Auto Loop Buttons
-        UpdateLocatorButton(panel->m_btnAutoLoop, state, STC_L_AUTO_LOOP);
-        UpdateLocatorButton(panel->m_btnMarkIn, state, STC_L_MARK_IN);
-        UpdateLocatorButton(panel->m_btnMarkOut, state, STC_L_MARK_OUT);
+        UpdateLocateButtonDelta(panel->m_btnAutoLoop, state, STC_L_AUTO_LOOP);
+        UpdateLocateButtonDelta(panel->m_btnMarkIn, state, STC_L_MARK_IN);
+        UpdateLocateButtonDelta(panel->m_btnMarkOut, state, STC_L_MARK_OUT);
     }
 
     if ((m_transportMode_prev != m_state.transportMode) || repaint)
@@ -257,6 +257,14 @@ void MainFrame::UpdateLocatorButtonStates(bool repaint)
     {
         panel->m_btnZeroReturn->SetForegroundColour(wxGetApp().m_colorBtnText);
         panel->m_btnZeroReturn->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+    }
+}
+
+void MainFrame::UpdateLocateButtonDelta(LocatorButton* button, STC_STATE_MSG& state, uint32_t mask, int cueIndex)
+{
+    if ((m_state.ledMaskButton & mask) != (m_ledMaskButton_prev & mask))
+    {
+        UpdateLocatorButton(button, state, mask, cueIndex);
     }
 }
 

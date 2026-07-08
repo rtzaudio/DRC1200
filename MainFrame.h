@@ -221,7 +221,7 @@ public:
 	void UpdateTimePanel(void);
 	void UpdateVelocityPanel(void);
     void UpdateTransportButtonStates(bool repain=false);
-    void UpdateLocatorButtonStates(bool repaint=false);
+    void UpdateLocateButtonStates(bool repaint=false);
     void UpdateCommandButtonStates(void);
 
     bool IsTrackControllerReady(void);
@@ -244,6 +244,7 @@ private:
     void UpdateAllControls();
     void UpdateLocatorButtonUI(wxUpdateUIEvent& event, uint32_t ledmask);
     void UpdateLocatorButton(LocatorButton* button, STC_STATE_MSG& state, uint32_t mask, int cueIndex=-1);
+    void UpdateLocateButtonDelta(LocatorButton* button, STC_STATE_MSG& state, uint32_t mask, int cueIndex=-1);
     void UpdateTransportButton(TransportButton* button, STC_STATE_MSG& state, uint32_t mask);
     void UpdateCommandButton(CommandButton* button, STC_STATE_MSG& state, uint32_t mask);
 
