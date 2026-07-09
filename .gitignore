@@ -6,6 +6,8 @@
 *.pdb
 *.ilk
 *.idb
+*.depend
+*.layout
 
 # Visual Studio files
 .vs/
