@@ -199,6 +199,7 @@ void TimePanel::Draw(wxDC& dc)
 	dc.DrawText(str, xpos, ypos);
 
     ypos += vspace;
+	ypos += dc.FromDIP(10);
 
     if (state.errorCount)
     {
@@ -212,4 +213,17 @@ void TimePanel::Draw(wxDC& dc)
         str.Printf(wxT("QE ERRORS %u"), state.errorCount);
         dc.DrawText(str, xpos, ypos);
     }
+
+	// Format the SMPTE time string as +h:mm:ss:fn
+
+	if (state.hardwareFlags & STC_HF_SMPTE)
+	{
+		str.Printf(wxT("T/C %2.2u:%2.2u:%2.2u:%2.2u"),
+			state.smpteTime.hour,
+			state.smpteTime.mins,
+			state.smpteTime.secs,
+			state.smpteTime.frame);
+
+		dc.DrawText(str, size.GetWidth() >> 2, ypos);
+	}
 }
