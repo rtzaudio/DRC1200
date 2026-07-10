@@ -59,7 +59,8 @@ bool MainFrame::IsAnyTracksArmed(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//
+// Update transport buttons, but only those that have changed state
+
 
 void MainFrame::UpdateTransportButtonStates(bool repaint)
 {
@@ -77,23 +78,26 @@ void MainFrame::UpdateTransportButtonStates(bool repaint)
         }
         else
         {
-            if (m_state.transportMode & STC_M_RECORD)
+            if (((m_state.transportMode & STC_M_RECORD) != (m_state_prev.transportMode & STC_M_RECORD)) || repaint)
             {
-                panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecActive);
-            }
-            else
-            {
-                if (m_bRecord)
+                if (m_state.transportMode & STC_M_RECORD)
                 {
-                    panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecReady);
+                    panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecActive);
                 }
                 else
                 {
-                    panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+                    if (m_bRecord)
+                    {
+                        panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecReady);
+                    }
+                    else
+                    {
+                        panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+                    }
                 }
-            }
 
-            panel->m_btnRec->SetForegroundColour(wxGetApp().m_colorBtnText);
+                panel->m_btnRec->SetForegroundColour(wxGetApp().m_colorBtnText);
+            }
         }
 
         /////////////////////////////////////////////////////
@@ -106,19 +110,22 @@ void MainFrame::UpdateTransportButtonStates(bool repaint)
         }
         else
         {
-            if (m_state.transportMode & STC_M_LIFTERS)
+            if (((m_state.transportMode & STC_M_LIFTERS) != (m_state_prev.transportMode & STC_M_LIFTERS)) || repaint)
             {
-                panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnActive);
-            }
-            else
-            {
-                panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnFace);
-            }
+                if (m_state.transportMode & STC_M_LIFTERS)
+                {
+                    panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+                }
+                else
+                {
+                    panel->m_btnLift->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+                }
 
-            panel->m_btnLift->SetForegroundColour(wxGetApp().m_colorBtnText);
+                panel->m_btnLift->SetForegroundColour(wxGetApp().m_colorBtnText);
 
-            //bool checked = (state.transportMode & STC_M_LIBWIND) ? true : false;
-            //wxGetApp().m_panelOption->m_checkLibWind->SetValue(checked);
+                //bool checked = (state.transportMode & STC_M_LIBWIND) ? true : false;
+                //wxGetApp().m_panelOption->m_checkLibWind->SetValue(checked);
+            }
         }
     }
 
@@ -131,9 +138,20 @@ void MainFrame::UpdateTransportButtonStates(bool repaint)
         UpdateTransportButtonDelta(panel->m_btnFwd, STC_L_FWD);
         UpdateTransportButtonDelta(panel->m_btnStop, STC_L_STOP);
     }
+
+    // Check the standby monitor checkbox in the frame window, another user may 
+    // have put the machine into standby monitor mode as well.
+
+    if ((m_state_prev.monitorFlags != m_state.monitorFlags) || repaint)
+    {
+        bool standby = (bool)m_state.monitorFlags;
+
+        wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(standby);
+    }
+
 }
 
-// Update a locator button, but only if it's changed state
+// Update a transport button, but only if it's changed state
 
 void MainFrame::UpdateTransportButtonDelta(TransportButton* button, uint32_t mask)
 {

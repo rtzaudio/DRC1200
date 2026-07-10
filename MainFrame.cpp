@@ -247,6 +247,10 @@ MainFrame::MainFrame() :
     // Hide or show the child track assign window
     m_trackFrame->Show(m_bShowTracks);
 
+	// Set check boxes in frame window to initial state
+	wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
+	wxGetApp().m_panelOption->m_checkAutoPlay->SetValue(m_bAutoPlay);
+
     // If a host name was provided on the application command line
     // at startup, then queue up a message to open this connection
     // after this function returns.
@@ -261,8 +265,6 @@ MainFrame::MainFrame() :
             wxQueueEvent(GetEventHandler(), event);
         }
     }
-
-    UpdateCommandButtonStates();
 
 	UpdateStatusBar();
 }
@@ -382,18 +384,30 @@ void MainFrame::UpdateAllControls()
 {
     // Update all buttons
     UpdateTimePanel();
+
     // Update velocity control
 	UpdateVelocityPanel();
+
 	// Update any Command buttons
 	UpdateCommandButtonStates();
+
     // Update any Transport buttons
 	UpdateTransportButtonStates(true);
+
 	// Update any Locator buttons
 	UpdateLocateButtonStates(true);
+
 	// Update status bar connection status
 	UpdateStatusBar();
+
 	// Update any track assignment buttons
 	m_trackFrame->ResetTrackButtonStates(true);
+
+	bool standby = IsStandbyMonitor();
+
+	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(standby);
+	wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
+	wxGetApp().m_panelOption->m_checkAutoPlay->SetValue(m_bAutoPlay);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -966,7 +980,10 @@ void MainFrame::OnUpdateTrackAllMonitorOff(wxUpdateUIEvent& event)
 void MainFrame::OnTrackStandbymonitor(wxCommandEvent& event)
 {
 	bool state = IsStandbyMonitor() ? false : true;
+
 	GetSocketCommand().MonitorSet(state);
+	
+	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(state);
 }
 
 void MainFrame::OnUpdateTrackStandbymonitor(wxUpdateUIEvent& event)
@@ -1297,6 +1314,8 @@ void MainFrame::OnUpdateTapespeedLowspeed(wxUpdateUIEvent& event)
 void MainFrame::OnLocatorAutoPlay(wxCommandEvent& event)
 {
 	m_bAutoPlay = (event.IsChecked()) ? true : false;
+
+	wxGetApp().m_panelOption->m_checkAutoPlay->SetValue(m_bAutoPlay);
 }
 
 void MainFrame::OnUpdateUILocatorAutoPlay(wxUpdateUIEvent& event)
@@ -1987,10 +2006,7 @@ void MainFrame::OnUpdateUICheckAutoPlay(wxUpdateUIEvent& event)
 
 	event.Enable(true);
 
-	if (event.GetSetChecked() != m_bAutoPlay)
-	{
-		//event.Check(m_bAutoPlay);
-	}
+	//event.Check(m_bAutoPlay);
 }
 
 void MainFrame::OnCheckStandbyMon(wxCommandEvent& event)
@@ -2022,7 +2038,7 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	info.SetName(wxT("DRC1200"));
 	info.SetIcon(wxIcon(wxT("DRC1200.png")));
 	//info.SetIcon(wxIcon(wxT("AAAA_DRC1200")));
-	info.SetVersion(wxT("1.04"), wxT("Version 1.04"));
+	info.SetVersion(wxT("1.04"), wxT("Version 1.05"));
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));
 	info.AddDeveloper(wxT("Robert E Starr, Jr."));
