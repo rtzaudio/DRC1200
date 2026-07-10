@@ -1238,6 +1238,8 @@ void MainFrame::OnUpdateUITransportTapeLifter(wxUpdateUIEvent& event)
 void MainFrame::OnTransportLibraryWind(wxCommandEvent& WXUNUSED(event))
 {
 	m_bLibWind = (m_bLibWind) ? false : true;
+
+    wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
 }
 
 void MainFrame::OnUpdateUITransportLibraryWind(wxUpdateUIEvent& event)
