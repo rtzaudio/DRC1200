@@ -2,9 +2,29 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="TCPConnectThread.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="VelocityPanel.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="314" topLine="0" />
+			<Cursor1 position="195" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="TCPConnectThread.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="585" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="MainFrame.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="15870" topLine="330" />
+		</Cursor>
+	</File>
+	<File name="MainFrameHelper.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10990" topLine="248" />
+		</Cursor>
+	</File>
+	<File name="STCCommand.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1783" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="TimePanel.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -14,17 +34,37 @@
 	</File>
 	<File name="STCCommand.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="487" topLine="42" />
+			<Cursor1 position="487" topLine="49" />
 		</Cursor>
 	</File>
 	<File name="TrackFrame.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6253" topLine="313" />
+			<Cursor1 position="3070" topLine="86" />
 		</Cursor>
 	</File>
-	<File name="MainFramePanel.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="VelocityPanel.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="509" topLine="0" />
+			<Cursor1 position="1006" topLine="78" />
+		</Cursor>
+	</File>
+	<File name="MainFrame.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="50746" topLine="1865" />
+		</Cursor>
+	</File>
+	<File name="TCPConnectThread.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="314" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="STC1200TCP.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="12294" topLine="295" />
+		</Cursor>
+	</File>
+	<File name="MainFrameMenu.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8998" topLine="213" />
 		</Cursor>
 	</File>
 	<File name="TimePanel.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
@@ -32,24 +72,14 @@
 			<Cursor1 position="684" topLine="12" />
 		</Cursor>
 	</File>
+	<File name="MainFramePanel.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="509" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="TrackFrame.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="363" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="MainFrame.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8506" topLine="118" />
-		</Cursor>
-	</File>
-	<File name="VelocityPanel.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="195" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="STC1200TCP.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8249" topLine="173" />
+			<Cursor1 position="95" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="DRC1200App.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -57,39 +87,9 @@
 			<Cursor1 position="360" topLine="29" />
 		</Cursor>
 	</File>
-	<File name="STCCommand.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1783" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="MainFrameHelper.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3077" topLine="106" />
-		</Cursor>
-	</File>
-	<File name="MainFrameMenu.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6786" topLine="141" />
-		</Cursor>
-	</File>
 	<File name="DRC1200.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1189" topLine="33" />
-		</Cursor>
-	</File>
-	<File name="MainFrame.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="37543" topLine="1233" />
-		</Cursor>
-	</File>
-	<File name="TCPConnectThread.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="585" topLine="12" />
-		</Cursor>
-	</File>
-	<File name="VelocityPanel.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1006" topLine="78" />
+			<Cursor1 position="2580" topLine="167" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

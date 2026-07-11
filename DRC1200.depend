@@ -3933,7 +3933,7 @@
 1743203047 /usr/local/include/wx-3.2/wx/overlay.h
 	"wx/defs.h"
 
-1783572807 /home/bob/Sandbox/DRC1200/MainFrame.h
+1783746340 /home/bob/Sandbox/DRC1200/MainFrame.h
 	"STC1200TCP.h"
 	"TimePanel.h"
 	"VelocityPanel.h"
@@ -3950,13 +3950,13 @@
 
 1782268718 /home/bob/Sandbox/DRC1200/TrackFrame.h
 
-1783642797 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
+1783747670 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
 1781919471 /home/bob/Sandbox/DRC1200/ConnectDialog.h
 
-1783572807 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
+1783745682 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
@@ -3969,11 +3969,11 @@
 1783637868 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
 	"DRC1200.h"
 
-1781919471 source:/home/bob/Sandbox/DRC1200/STCCommand.cpp
+1783733644 source:/home/bob/Sandbox/DRC1200/STCCommand.cpp
 	"DRC1200.h"
 	"STCCommand.h"
 
-1782268718 source:/home/bob/Sandbox/DRC1200/TrackFrame.cpp
+1783734041 source:/home/bob/Sandbox/DRC1200/TrackFrame.cpp
 	"wx/wx.h"
 	"wx/sizer.h"
 	"wx/gbsizer.h"

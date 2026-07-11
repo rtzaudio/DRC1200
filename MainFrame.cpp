@@ -130,6 +130,9 @@ EVT_MENU(ID_SEARCH_ZERORETURN, MainFrame::OnLocatorZeroreturn)
 EVT_UPDATE_UI(ID_SEARCH_ZERORETURN, MainFrame::OnUpdateLocatorZeroreturn)
 EVT_MENU(ID_LOCATOR_CANCELSEARCH, MainFrame::OnLocatorCancelsearch)
 EVT_UPDATE_UI(ID_LOCATOR_CANCELSEARCH, MainFrame::OnUpdateLocatorCancelsearch)
+// Memory Menu
+EVT_MENU(ID_MEMORY_CLEARALL, MainFrame::OnMemoryClearAll)
+EVT_UPDATE_UI(ID_MEMORY_CLEARALL, MainFrame::OnUpdateMemoryClearAll)
 // SMPTE Menu
 EVT_MENU(ID_GENERATOR_START, MainFrame::OnGeneratorStart)
 EVT_UPDATE_UI(ID_GENERATOR_START, MainFrame::OnUpdateGeneratorStart)
@@ -987,7 +990,7 @@ void MainFrame::OnTrackStandbymonitor(wxCommandEvent& event)
 	bool state = IsStandbyMonitor() ? false : true;
 
 	GetSocketCommand().MonitorSet(state);
-	
+
 	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(state);
 }
 
@@ -1678,7 +1681,7 @@ void MainFrame::OnLocatorResetCounter(wxCommandEvent& WXUNUSED(event))
 	{
 	    wxString str("Reset the tape time counter to zero?");
 
-        int response = wxMessageBox(str, wxT("DRC1200"), wxYES_NO | wxICON_QUESTION);
+        int response = wxMessageBox(str, wxT("Confirm Action"), wxYES_NO | wxICON_QUESTION);
 
         if (response == wxYES)
         {
@@ -1833,6 +1836,28 @@ void MainFrame::OnUpdateLocatorPunchOut(wxUpdateUIEvent& event)
 ///////////////////////////////////////////////////////////////////////////////
 // MEMORY Menu Handlers
 
+void MainFrame::OnMemoryClearAll(wxCommandEvent& WXUNUSED(event))
+{
+    wxString str("Clear all cue point memories?\n\nAll cue points will be reset and cleared!");
+
+    int response = wxMessageBox(str, wxT("Confirm Action"), wxYES_NO | wxICON_QUESTION);
+
+	if (response == wxYES)
+    {
+        GetSocketCommand().CuePointClear(STC_ALL_CUEPOINTS);
+	}
+}
+
+void MainFrame::OnUpdateMemoryClearAll(wxUpdateUIEvent& event)
+{
+    if (!IsConnected())
+	{
+		event.Enable(false);
+		return;
+	}
+
+    event.Enable(IsConnected());
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // SMPTE - START SMPTE GENERATOR

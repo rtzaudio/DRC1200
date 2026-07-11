@@ -243,10 +243,9 @@ private:
     void SearchOrStore(uint32_t cueIndex);
     void UpdateAllControls();
     void UpdateLocatorButtonUI(wxUpdateUIEvent& event, uint32_t ledmask);
-    void UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, int cueIndex=-1);
-	void UpdateLocatorButton(LocatorButton* button, uint32_t mask, int cueIndex = -1);
-	void UpdateTransportButtonDelta(TransportButton* button, uint32_t mask);
-    void UpdateTransportButton(TransportButton* button, uint32_t mask);
+    void UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, bool repaint);
+	void UpdateCueButtonDelta(LocatorButton* button, uint32_t mask, int cueIndex, bool repaint);
+	void UpdateTransportButtonDelta(TransportButton* button, uint32_t mask, bool repaint);
     void UpdateCommandButton(CommandButton* button, uint32_t mask);
 
 	wxMenu*				m_menuConnect;
@@ -432,6 +431,9 @@ private:
     void OnUpdateLocatorPunchIn(wxUpdateUIEvent& event);
     void OnLocatorPunchOut(wxCommandEvent& WXUNUSED(event));
     void OnUpdateLocatorPunchOut(wxUpdateUIEvent& event);
+
+    void OnMemoryClearAll(wxCommandEvent& WXUNUSED(event));
+    void OnUpdateMemoryClearAll(wxUpdateUIEvent& event);
 
     void OnGeneratorStop(wxCommandEvent& event);
     void OnUpdateGeneratorStop(wxUpdateUIEvent& event);

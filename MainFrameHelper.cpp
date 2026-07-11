@@ -133,13 +133,13 @@ void MainFrame::UpdateTransportButtonStates(bool repaint)
 
     if ((m_state_prev.ledMaskTransport != m_state.ledMaskTransport) || repaint)
     {
-        UpdateTransportButtonDelta(panel->m_btnPlay, STC_L_PLAY);
-        UpdateTransportButtonDelta(panel->m_btnRew, STC_L_REW);
-        UpdateTransportButtonDelta(panel->m_btnFwd, STC_L_FWD);
-        UpdateTransportButtonDelta(panel->m_btnStop, STC_L_STOP);
+        UpdateTransportButtonDelta(panel->m_btnPlay, STC_L_PLAY, repaint);
+        UpdateTransportButtonDelta(panel->m_btnRew, STC_L_REW, repaint);
+        UpdateTransportButtonDelta(panel->m_btnFwd, STC_L_FWD, repaint);
+        UpdateTransportButtonDelta(panel->m_btnStop, STC_L_STOP, repaint);
     }
 
-    // Check the standby monitor checkbox in the frame window, another user may 
+    // Check the standby monitor checkbox in the frame window, another user may
     // have put the machine into standby monitor mode as well.
 
     if ((m_state_prev.monitorFlags != m_state.monitorFlags) || repaint)
@@ -153,33 +153,28 @@ void MainFrame::UpdateTransportButtonStates(bool repaint)
 
 // Update a transport button, but only if it's changed state
 
-void MainFrame::UpdateTransportButtonDelta(TransportButton* button, uint32_t mask)
+void MainFrame::UpdateTransportButtonDelta(TransportButton* button, uint32_t mask, bool repaint)
 {
-    if ((m_state.ledMaskTransport & mask) != (m_state_prev.ledMaskTransport & mask))
+    if  (((m_state.ledMaskTransport & mask) != (m_state_prev.ledMaskTransport & mask)) || repaint)
     {
-        UpdateTransportButton(button, mask);
-    }
-}
-
-void MainFrame::UpdateTransportButton(TransportButton* button, uint32_t mask)
-{
-    if (!IsConnected())
-    {
-        button->SetForegroundColour(wxGetApp().m_colorBtnGrey);
-        button->SetBackgroundColour(wxGetApp().m_colorBtnDark);
-    }
-    else
-    {
-        if (m_state.ledMaskTransport & mask)
+        if (!IsConnected())
         {
-            button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+            button->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+            button->SetBackgroundColour(wxGetApp().m_colorBtnDark);
         }
         else
         {
-            button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
-        }
+            if (m_state.ledMaskTransport & mask)
+            {
+                button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+            }
+            else
+            {
+                button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+            }
 
-        button->SetForegroundColour(wxGetApp().m_colorBtnText);
+            button->SetForegroundColour(wxGetApp().m_colorBtnText);
+        }
     }
 }
 
@@ -194,30 +189,31 @@ void MainFrame::UpdateLocateButtonStates(bool repaint)
 
     if ((m_state_prev.ledMaskButton != m_state.ledMaskButton) || repaint)
     {
-        // Locate Buttons
-        UpdateLocateButtonDelta(panel->m_btnDigit0, STC_L_LOC0, 0);
-        UpdateLocateButtonDelta(panel->m_btnDigit1, STC_L_LOC1, 1);
-        UpdateLocateButtonDelta(panel->m_btnDigit2, STC_L_LOC2, 2);
-        UpdateLocateButtonDelta(panel->m_btnDigit3, STC_L_LOC3, 3);
-        UpdateLocateButtonDelta(panel->m_btnDigit4, STC_L_LOC4, 4);
-        UpdateLocateButtonDelta(panel->m_btnDigit5, STC_L_LOC5, 5);
-        UpdateLocateButtonDelta(panel->m_btnDigit6, STC_L_LOC6, 6);
-        UpdateLocateButtonDelta(panel->m_btnDigit7, STC_L_LOC7, 7);
-        UpdateLocateButtonDelta(panel->m_btnDigit8, STC_L_LOC8, 8);
-        UpdateLocateButtonDelta(panel->m_btnDigit9, STC_L_LOC9, 9);
-        UpdateLocateButtonDelta(panel->m_btnCueMode, STC_L_CUE);
-        UpdateLocateButtonDelta(panel->m_btnStoreMode, STC_L_STORE);
+        // Cue Point Buttons
+        UpdateCueButtonDelta(panel->m_btnDigit0, STC_L_LOC0, 0, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit1, STC_L_LOC1, 1, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit2, STC_L_LOC2, 2, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit3, STC_L_LOC3, 3, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit4, STC_L_LOC4, 4, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit5, STC_L_LOC5, 5, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit6, STC_L_LOC6, 6, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit7, STC_L_LOC7, 7, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit8, STC_L_LOC8, 8, repaint);
+        UpdateCueButtonDelta(panel->m_btnDigit9, STC_L_LOC9, 9, repaint);
+        // Locate Mode Buttons
+        UpdateLocateButtonDelta(panel->m_btnCueMode, STC_L_CUE, repaint);
+        UpdateLocateButtonDelta(panel->m_btnStoreMode, STC_L_STORE, repaint);
         // Auto Punch Buttons
-        UpdateLocateButtonDelta(panel->m_btnAutoPunch, STC_L_AUTO_LOOP);
-        UpdateLocateButtonDelta(panel->m_btnPunchIn, STC_L_PUNCH_IN);
-        UpdateLocateButtonDelta(panel->m_btnPunchOut, STC_L_PUNCH_OUT);
+        UpdateLocateButtonDelta(panel->m_btnAutoPunch, STC_L_AUTO_LOOP, repaint);
+        UpdateLocateButtonDelta(panel->m_btnPunchIn, STC_L_PUNCH_IN, repaint);
+        UpdateLocateButtonDelta(panel->m_btnPunchOut, STC_L_PUNCH_OUT, repaint);
         // Auto Loop Buttons
-        UpdateLocateButtonDelta(panel->m_btnAutoLoop, STC_L_AUTO_LOOP);
-        UpdateLocateButtonDelta(panel->m_btnMarkIn, STC_L_MARK_IN);
-        UpdateLocateButtonDelta(panel->m_btnMarkOut, STC_L_MARK_OUT);
+        UpdateLocateButtonDelta(panel->m_btnAutoLoop, STC_L_AUTO_LOOP, repaint);
+        UpdateLocateButtonDelta(panel->m_btnMarkIn, STC_L_MARK_IN, repaint);
+        UpdateLocateButtonDelta(panel->m_btnMarkOut, STC_L_MARK_OUT, repaint);
     }
 
-    if ((m_state_prev.ledMaskButton != m_state.transportMode) || repaint)
+    if ((m_state_prev.transportMode != m_state.transportMode) || repaint)
     {
         // Auto Punch Buttons
 /*
@@ -265,15 +261,7 @@ void MainFrame::UpdateLocateButtonStates(bool repaint)
 
 // Update a locator button, but only if it's changed state
 
-void MainFrame::UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, int cueIndex)
-{
-    //if ((m_state.ledMaskButton & mask) != (m_ledMaskButton_prev & mask))
-    {
-        UpdateLocatorButton(button, mask, cueIndex);
-    }
-}
-
-void MainFrame::UpdateLocatorButton(LocatorButton* button, uint32_t mask, int cueIndex)
+void MainFrame::UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, bool repaint)
 {
     if (!IsConnected())
     {
@@ -282,27 +270,41 @@ void MainFrame::UpdateLocatorButton(LocatorButton* button, uint32_t mask, int cu
     }
     else
     {
-        if (cueIndex >= 0)
+        if (((m_state.ledMaskButton & mask) != (m_state_prev.ledMaskButton & mask)) || repaint)
+        {
+            button->SetForegroundColour(wxGetApp().m_colorBtnText);
+
+            if (m_state.ledMaskButton & mask)
+                button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+            else
+                button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+        }
+    }
+}
+
+void MainFrame::UpdateCueButtonDelta(LocatorButton* button, uint32_t mask, int cueIndex, bool repaint)
+{
+    if (!IsConnected())
+    {
+        button->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+        button->SetBackgroundColour(wxGetApp().m_colorBtnDark);
+    }
+    else
+    {
+        if (((m_state.ledMaskButton & mask) != (m_state_prev.ledMaskButton & mask)) ||
+            ((m_state.cueState[cueIndex] & STC_CF_ACTIVE)) != ((m_state_prev.cueState[cueIndex] & STC_CF_ACTIVE)) || repaint)
         {
             // If cue point button is active, draw it in active color
             if (m_state.cueState[cueIndex] & STC_CF_ACTIVE)
-            {
                 button->SetForegroundColour(wxGetApp().m_colorBtnTextActive);
-            }
             else
-            {
                 button->SetForegroundColour(wxGetApp().m_colorBtnTextDim);
-            }
-        }
-        else
-        {
-            button->SetForegroundColour(wxGetApp().m_colorBtnText);
-        }
 
-        if (m_state.ledMaskButton & mask)
-            button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
-        else
-            button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+            if (m_state.ledMaskButton & mask)
+                button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
+            else
+                button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+        }
     }
 }
 
