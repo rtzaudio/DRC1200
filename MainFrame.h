@@ -215,8 +215,7 @@ public:
 	OptionPanel* GetOptionPanel(void)
 	{ return m_panelOptions; }
 
-    //BottomContainer* GetBottomContainer()
-    //{ return m_panelBottom; }
+    void ResetStateBuffer();
 
 	void UpdateTimePanel(void);
 	void UpdateVelocityPanel(void);

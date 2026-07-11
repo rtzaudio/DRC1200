@@ -186,8 +186,7 @@ MainFrame::MainFrame() :
 	for(int i=0; i < MAX_VEL_SAMPLES; i++)
 		m_velSample[i] = 0.0f;
 
-	memset(&m_state, 0, sizeof(STC_STATE_MSG));
-	memset(&m_state_prev, -1, sizeof(STC_STATE_MSG));
+    ResetStateBuffer();
 
 	memset(&m_mac[0], 0, sizeof(m_mac));
 	memset(&m_stcSN[0], 0, sizeof(m_stcSN));
@@ -261,6 +260,7 @@ MainFrame::MainFrame() :
     if (m_bAutoConnect)
     {
         wxString hostname = wxGetApp().m_strHostArg;
+
         if (hostname.Length() > 0)
         {
             m_strHostname = hostname;
@@ -292,6 +292,14 @@ bool MainFrame::Destroy()
     m_trackFrame->Destroy();
     // Continue destroying this frame window
     return wxFrame::Destroy();
+}
+
+void MainFrame::ResetStateBuffer()
+{
+	memset(&m_state, 0, sizeof(STC_STATE_MSG));
+	memset(&m_state_prev, 0, sizeof(STC_STATE_MSG));
+
+	m_nRxPacketCount = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -348,9 +356,7 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
                          this,
                          wxPD_CAN_ABORT | wxPD_APP_MODAL);
 
-	memset(&m_state_prev, -1, sizeof(STC_STATE_MSG));
-
-	m_trackFrame->ResetTrackButtonStates(true);
+    ResetStateBuffer();
 
 	// Connect to streaming STC machine status socket
 
@@ -428,12 +434,15 @@ void MainFrame::OnSocketEvent(wxSocketEvent& event)
 	case wxSOCKET_INPUT:
 		HandleReceiveData();
 		break;
+
 	case wxSOCKET_LOST:
 		HandleDisconnect();
 		break;
+
 	case wxSOCKET_CONNECTION:
 		HandleConnect();
 		break;
+
 	default:
 		wxLogMessage("Unknown socket event!!!");
 		break;
@@ -525,9 +534,9 @@ void MainFrame::HandleReceiveData(void)
 
 	if (index >= MAX_VEL_SAMPLES)
 	{
-		memmove(&m_velSample[0], &m_velSample[1], sizeof(float) * (MAX_VEL_SAMPLES - 1));
+		memmove(&m_velSample[0], &m_velSample[1], sizeof(float) * (MAX_VEL_SAMPLES-1));
 
-		m_velSample[MAX_VEL_SAMPLES - 1] = (float)m_state.tapeVelocity;
+		m_velSample[MAX_VEL_SAMPLES-1] = (float)m_state.tapeVelocity;
 	}
 	else
 	{
@@ -538,12 +547,16 @@ void MainFrame::HandleReceiveData(void)
 
 	// Update the time display if tape is moving
 	UpdateTimePanel();
+
 	// Update the velocity panel control if tape is moving
 	UpdateVelocityPanel();
+
 	// Update any Transport buttons
 	UpdateTransportButtonStates();
+
 	// Update any Locator buttons
 	UpdateLocateButtonStates();
+
 	// Update any track assignment buttons
 	m_trackFrame->UpdateTrackButtonStates();
 
