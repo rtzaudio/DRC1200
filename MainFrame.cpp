@@ -406,8 +406,13 @@ void MainFrame::UpdateAllControls()
 	bool standby = IsStandbyMonitor();
 
 	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(standby);
+	wxGetApp().m_panelOption->m_checkStandbyMon->Enable(IsConnected());
+
 	wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
+	wxGetApp().m_panelOption->m_checkLibWind->Enable(IsConnected());
+
 	wxGetApp().m_panelOption->m_checkAutoPlay->SetValue(m_bAutoPlay);
+	wxGetApp().m_panelOption->m_checkAutoPlay->Enable(IsConnected());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
