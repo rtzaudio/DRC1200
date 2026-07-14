@@ -25,7 +25,8 @@
 #include "DRC1200.h"
 #include "TrackFrame.h"
 
-#define WIN_STYLE	(wxRESIZE_BORDER | wxCAPTION | wxPOPUP_WINDOW | wxFRAME_TOOL_WINDOW)
+#define WIN_STYLE	(wxRESIZE_BORDER | wxCAPTION | wxPOPUP_WINDOW | wxFRAME_TOOL_WINDOW | wxCLOSE_BOX)
+//#define WIN_STYLE	(wxCAPTION | wxCLOSE_BOX | wxFRAME_TOOL_WINDOW)
 
 wxBEGIN_EVENT_TABLE(TrackFrame, wxMiniFrame)
 EVT_CLOSE(TrackFrame::OnClose)
@@ -153,7 +154,6 @@ TrackFrame::TrackFrame(wxFrame* parent) :
 		str.Printf(wxT("%s"), wxT("MON"));
 
 		m_btnTrackMon[i] = new TrackButton(m_midPan, ID_MONITOR_TRACK1+i, str);
-
 		m_btnTrackMon[i]->SetBackgroundColour(wxGetApp().m_colorBtnDark);
 		m_btnTrackMon[i]->SetForegroundColour(wxGetApp().m_colorBtnGrey);
 		m_btnTrackMon[i]->Enable(false);
@@ -203,8 +203,16 @@ void TrackFrame::SetTrackConfig(int numtracks)
 void TrackFrame::OnClose(wxCloseEvent& event)
 {
 	//Hide();
-	//event.CanVeto();
-	//Close();
+
+    // Get pointer to MainFrame (passed in constructor or via wxGetApp)
+    wxWindow* mainFrame = wxGetApp().GetMainFrame();
+    // Forward the event
+    if (mainFrame)
+    {
+        wxCommandEvent* event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, ID_VIEW_SHOWTRACKS);
+        //event->SetEventObject(this);
+        wxQueueEvent(mainFrame->GetEventHandler(), event);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
