@@ -195,6 +195,18 @@ MainFrame::MainFrame() :
     // Set a unique name
     SetName("DRC1200_MainFrame");
 
+    // Explicitly loading a bundle with multiple sizes (Cleaner for high-DPI)
+    wxIconBundle iconBundle;
+    #ifdef __WXMSW__
+        // Loads embedded multi-res ICO from Windows Resource
+        iconBundle.AddIcon(wxIcon("aaaa_DRC1200", wxBITMAP_TYPE_ICO_RESOURCE));
+    #else
+        // Loads a standard standalone image file on Linux/Mac
+        iconBundle.AddIcon(wxIcon("DRC1200.png", wxBITMAP_TYPE_PNG));
+    #endif
+    SetIcons(iconBundle);
+
+
 	wxConfig* config = wxGetApp().GetConfig();
 
     config->Read(_("AutoPlay"), &m_bAutoPlay);
@@ -224,12 +236,9 @@ MainFrame::MainFrame() :
 	SetMinSize(wxSize(760, 285));
 	//SetMaxSize(wxSize(-1, 250));
 
-	m_trackFrame = new TrackFrame(this);
-
 	// Restore the previously saved geometry, if any, and register this frame
 	// for its geometry to be saved when it is closed using the given wxConfig
 	// key name.
-
 	if (!wxPersistentRegisterAndRestore(this, "DRC1200_MainFrame"))
 	{
 		// Choose some custom default size for the first run -- or don't do
@@ -238,7 +247,6 @@ MainFrame::MainFrame() :
 	}
 
 	int widths[] = { -1, 175, 130, 130 };
-
 	const size_t numWidths =  sizeof(widths) / sizeof(int);
 
     // Status bar
@@ -246,7 +254,8 @@ MainFrame::MainFrame() :
 	SetStatusWidths(numWidths, widths);
 	SetStatusText(wxT("Ready"), 0);
 
-    // Hide or show the child track assign window
+    // Create and hide/show the child track assign window
+    m_trackFrame = new TrackFrame(this);
     m_trackFrame->Show(m_bShowTracks);
 
 	// Set check boxes in frame window to initial state
@@ -260,7 +269,6 @@ MainFrame::MainFrame() :
     if (m_bAutoConnect)
     {
         wxString hostname = wxGetApp().m_strHostArg;
-
         if (hostname.Length() > 0)
         {
             m_strHostname = hostname;
@@ -2077,10 +2085,14 @@ void MainFrame::OnUpdateUICheckStandbyMon(wxUpdateUIEvent& event)
 void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 	wxAboutDialogInfo info;
-
-	info.SetName(wxT("DRC1200"));
-	//info.SetIcon(wxIcon(wxT("DRC1200.png")));
+#if defined(__WXMSW__)
 	info.SetIcon(wxIcon(wxT("AAAA_DRC1200")));
+#elif defined(__WXMAC__)
+	info.SetIcon(wxIcon(wxT("DRC1200.png")));
+#elif defined(__UNIX__)
+	info.SetIcon(wxIcon(wxT("DRC1200.png")));
+#endif
+	info.SetName(wxT("DRC1200"));
 	info.SetVersion(wxT("1.04"), wxT("Version 1.05"));
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));
@@ -2089,3 +2101,5 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 	wxAboutBox(info, this);
 }
+
+

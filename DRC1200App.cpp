@@ -75,7 +75,7 @@ bool DRC1200App::OnInit()
 
     // Read the track count configuration parameter if found, otherwise
     // assume 24-track. This value may get changed later when the user
-    // connects to the machine and reads it supported track count.
+    // connects to the machine and reads the supported track count.
 
     m_trackCount = 24;
 
@@ -85,7 +85,7 @@ bool DRC1200App::OnInit()
         m_trackCount = 24;
     }
 
-    // If host name was passed on command line at startup,
+    // If host name was passed on the command line at startup,
     // save the name and the mainframe will attempt to connect
     // after initializing the main frame.
 

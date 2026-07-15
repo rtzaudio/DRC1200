@@ -1982,7 +1982,7 @@
 1576881851 source:/home/bstarr/Development/DRC1200/VelocityPanel.cpp
 	"DRC1200.h"
 
-1782437471 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
+1784080382 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
 	"DRC1200.h"
 
 1783294487 /home/bob/Sandbox/DRC1200/DRC1200.h
@@ -3950,7 +3950,7 @@
 
 1782268718 /home/bob/Sandbox/DRC1200/TrackFrame.h
 
-1783993076 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
+1784080810 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
