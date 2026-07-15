@@ -295,8 +295,7 @@ bool MainFrame::Destroy()
 {
     // Close any connection open
     ConnectionClose();
-    // Close the track assign window
-    //m_trackFrame->Close(true);
+    // Destroy the track assign window
     m_trackFrame->Destroy();
     // Continue destroying this frame window
     return wxFrame::Destroy();
@@ -384,13 +383,16 @@ void MainFrame::ConnectionClose(void)
 		m_dlgProgress = nullptr;
 	}
 
-    m_sockState->Notify(false);
+	if (m_sockState)
+	{
+		m_sockState->Notify(false);
 
-    if (m_sockState->IsConnected())
-    {
-        m_sockState->Close();
-        m_sockCommand.ConnectionClose();
-    }
+		if (m_sockState->IsConnected())
+		{
+			m_sockState->Close();
+			m_sockCommand.ConnectionClose();
+		}
+	}
 
     UpdateAllControls();
 
