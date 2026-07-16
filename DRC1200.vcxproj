@@ -26,6 +26,7 @@
     <ClCompile Include="MainFrameMenu.cpp" />
     <ClCompile Include="MainFramePanel.cpp" />
     <ClCompile Include="STCCommand.cpp" />
+    <ClCompile Include="TCPConnectThread.cpp" />
     <ClCompile Include="TimePanel.cpp" />
     <ClCompile Include="TrackFrame.cpp" />
     <ClCompile Include="VelocityPanel.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="STC1200TCP.h" />
     <ClInclude Include="STCCommand.h" />
+    <ClInclude Include="TCPConnectThread.h" />
     <ClInclude Include="TimePanel.h" />
     <ClInclude Include="TrackFrame.h" />
     <ClInclude Include="VelocityPanel.h" />
