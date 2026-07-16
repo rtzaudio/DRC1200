@@ -426,15 +426,17 @@ void MainFrame::UpdateAllControls()
 	m_trackFrame->ResetTrackButtonStates(true);
 
 	bool standby = IsStandbyMonitor();
-
+	bool connected = IsConnected();
+#if 0
 	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(standby);
-	wxGetApp().m_panelOption->m_checkStandbyMon->Enable(IsConnected());
+	wxGetApp().m_panelOption->m_checkStandbyMon->Enable(connected);
 	
 	wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
-	wxGetApp().m_panelOption->m_checkLibWind->Enable(IsConnected());
+	wxGetApp().m_panelOption->m_checkLibWind->Enable(connected);
 
 	wxGetApp().m_panelOption->m_checkAutoPlay->SetValue(m_bAutoPlay);
-	wxGetApp().m_panelOption->m_checkAutoPlay->Enable(IsConnected());
+	wxGetApp().m_panelOption->m_checkAutoPlay->Enable(connected);
+#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////
