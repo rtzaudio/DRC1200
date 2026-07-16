@@ -328,7 +328,9 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	wxIPV4address addr4;
 
 	if (m_sockState)
+	{
 		m_sockState->Destroy();
+	}
 
 	// Create the socket
 	m_sockState = new wxSocketClient(wxSOCKET_NOWAIT);
@@ -385,10 +387,14 @@ void MainFrame::ConnectionClose(void)
 		m_sockState->Notify(false);
 
 		if (m_sockState->IsConnected())
-		{
 			m_sockState->Close();
+
+		if (m_sockCommand.IsConnected())
 			m_sockCommand.ConnectionClose();
-		}
+
+		m_sockState->Destroy();
+		
+		m_sockState = nullptr;
 	}
 
     UpdateAllControls();
@@ -423,7 +429,7 @@ void MainFrame::UpdateAllControls()
 
 	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(standby);
 	wxGetApp().m_panelOption->m_checkStandbyMon->Enable(IsConnected());
-
+	
 	wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
 	wxGetApp().m_panelOption->m_checkLibWind->Enable(IsConnected());
 
@@ -2055,7 +2061,6 @@ void MainFrame::OnUpdateUICheckAutoPlay(wxUpdateUIEvent& event)
 	}
 
 	event.Enable(true);
-
 	//event.Check(m_bAutoPlay);
 }
 
@@ -2070,11 +2075,11 @@ void MainFrame::OnUpdateUICheckStandbyMon(wxUpdateUIEvent& event)
 {
 	if (!IsTrackControllerReady())
 	{
-		event.Enable(FALSE);
+		event.Enable(false);
 		return;
 	}
 
-	event.Enable(TRUE);
+	event.Enable(true);
 	//event.Check(IsStandbyMonitor());
 }
 
@@ -2084,6 +2089,7 @@ void MainFrame::OnUpdateUICheckStandbyMon(wxUpdateUIEvent& event)
 void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 	wxAboutDialogInfo info;
+
 #if defined(__WXMSW__)
 	info.SetIcon(wxIcon(wxT("AAAA_DRC1200")));
 #elif defined(__WXMAC__)
@@ -2101,4 +2107,4 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	wxAboutBox(info, this);
 }
 
-
+// End-Of-File
