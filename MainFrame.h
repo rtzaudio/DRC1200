@@ -257,37 +257,24 @@ private:
 	TrackFrame*			m_trackFrame;
 	STCCommand			m_sockCommand;
 	wxSocketClient*		m_sockState;
-
-	bool				m_bConnecting;
-	bool				m_bConnected;
-
 public:
 	wxProgressDialog*   m_dlgProgress;
 
 private:
-	bool				m_busy;
+	bool				m_bConnecting;
+	bool				m_bConnected;
 	bool				m_bRecord;
 	bool	            m_bLibWind;
 	bool	            m_bAutoPlay;
     bool	            m_bAutoConnect;
-
 	bool	            m_bShowTracks;
 	bool                m_bConfirmZeroReset;
-
 	int		            m_nShowVelocity;
 	bool	            m_bShowTimecode;
 	bool	            m_bShowTimeDate;
 	bool	            m_bUseTapeMachineTime;
-	wxString			m_strHostname;
 	int					m_nPortNumber;
-
-	STC_STATE_MSG		m_state;
-	STC_STATE_MSG		m_state_prev;
-
-	unsigned int		m_nRxPacketCount;
-	int					m_velSampleIndex;
-	float				m_velSample[MAX_VEL_SAMPLES];
-
+	wxString			m_strHostname;
 	uint8_t				m_mac[6];
 	uint8_t				m_stcSN[16];
 	uint8_t				m_dtcSN[16];
@@ -297,6 +284,11 @@ private:
 	int					m_smpteMins;
 	int					m_smpteSecs;
 	int					m_smpteFrame;
+	unsigned int		m_nRxPacketCount;
+	int					m_velSampleIndex;
+	float				m_velSample[MAX_VEL_SAMPLES];
+	STC_STATE_MSG		m_state;
+	STC_STATE_MSG		m_state_prev;
 
 	// Event Handlers
 	wxDECLARE_EVENT_TABLE();

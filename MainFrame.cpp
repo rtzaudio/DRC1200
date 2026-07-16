@@ -169,7 +169,6 @@ MainFrame::MainFrame() :
     m_bConfirmZeroReset = true;
     m_bShowTracks = true;
     m_bConnected = false;
-	m_busy = false;
 	m_nRxPacketCount = 0;
 	m_velSampleIndex = 0;
 
@@ -179,36 +178,34 @@ MainFrame::MainFrame() :
 	m_smpteFrame = 0;
     m_dlgProgress = nullptr;
     m_sockState = nullptr;
-
 	m_strHostname = wxT("");
 	m_nPortNumber = STC_PORT_STATE;
 
 	for(int i=0; i < MAX_VEL_SAMPLES; i++)
 		m_velSample[i] = 0.0f;
 
-    ResetStateBuffer();
-
 	memset(&m_mac[0], 0, sizeof(m_mac));
 	memset(&m_stcSN[0], 0, sizeof(m_stcSN));
 	memset(&m_dtcSN[0], 0, sizeof(m_dtcSN));
+
+    ResetStateBuffer();
 
     // Set a unique name
     SetName("DRC1200_MainFrame");
 
     // Explicitly loading a bundle with multiple sizes (Cleaner for high-DPI)
     wxIconBundle iconBundle;
-    #ifdef __WXMSW__
-        // Loads embedded multi-res ICO from Windows Resource
-        iconBundle.AddIcon(wxIcon("aaaa_DRC1200", wxBITMAP_TYPE_ICO_RESOURCE));
-    #else
-        // Loads a standard standalone image file on Linux/Mac
-        iconBundle.AddIcon(wxIcon("DRC1200.png", wxBITMAP_TYPE_PNG));
-    #endif
+#ifdef __WXMSW__
+    // Loads embedded multi-res ICO from Windows Resource
+    iconBundle.AddIcon(wxIcon("aaaa_DRC1200", wxBITMAP_TYPE_ICO_RESOURCE));
+#else
+    // Loads a standard standalone image file on Linux/Mac
+    iconBundle.AddIcon(wxIcon("DRC1200.png", wxBITMAP_TYPE_PNG));
+#endif
     SetIcons(iconBundle);
 
-
+    // Load config parameters
 	wxConfig* config = wxGetApp().GetConfig();
-
     config->Read(_("AutoPlay"), &m_bAutoPlay);
     config->Read(_("AutoConnect"), &m_bAutoConnect);
     config->Read(_("LibWind"), &m_bLibWind);
