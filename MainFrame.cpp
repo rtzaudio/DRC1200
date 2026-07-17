@@ -393,7 +393,7 @@ void MainFrame::ConnectionClose(void)
 			m_sockCommand.ConnectionClose();
 
 		m_sockState->Destroy();
-		
+
 		m_sockState = nullptr;
 	}
 
@@ -425,12 +425,13 @@ void MainFrame::UpdateAllControls()
 	// Update any track assignment buttons
 	m_trackFrame->ResetTrackButtonStates(true);
 
+#if 0
 	bool standby = IsStandbyMonitor();
 	bool connected = IsConnected();
-#if 0
+
 	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(standby);
 	wxGetApp().m_panelOption->m_checkStandbyMon->Enable(connected);
-	
+
 	wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
 	wxGetApp().m_panelOption->m_checkLibWind->Enable(connected);
 
