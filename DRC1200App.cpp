@@ -32,10 +32,6 @@ DRC1200App::DRC1200App()
 	m_colorPanel.SetRGB(0x333333);				// background panel color
 	m_colorText.SetRGB(0xE0E0E0);
 
-	m_colorTimeBkgnd = *wxBLACK;
-	m_colorTime = *wxYELLOW;
-	m_colorError = *wxRED;
-
 	// Button text colors
 	m_colorBtnText.SetRGB(0xFFFFFF);
 	m_colorBtnTextDim.SetRGB(0x222222);
@@ -52,6 +48,10 @@ DRC1200App::DRC1200App()
 	m_colorBtnModeRepro.SetRGB(0x54A835);
 	m_colorBtnModeSync.SetRGB(0xEEA200);
 	m_colorBtnModeMon.SetRGB(0xA0A0A0);
+
+	m_colorError = *wxRED;
+	m_colorTime = *wxYELLOW;
+	m_colorTimeBkgnd = *wxBLACK;
 }
 
 DRC1200App::~DRC1200App()
