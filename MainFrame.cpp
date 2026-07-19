@@ -389,13 +389,13 @@ void MainFrame::ConnectionClose(void)
 		if (m_sockState->IsConnected())
 			m_sockState->Close();
 
-		if (m_sockCommand.IsConnected())
-			m_sockCommand.ConnectionClose();
-
 		m_sockState->Destroy();
 
 		m_sockState = nullptr;
 	}
+
+	// Close the STC command request socket if open.
+	m_sockCommand.ConnectionClose();
 
     UpdateAllControls();
 
