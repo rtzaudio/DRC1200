@@ -241,7 +241,7 @@ void TrackFrame::UpdateTrackButtonStates(void)
 
 	bool enabled = pMainFrame->IsTrackControllerReady();
 
-	size_t numTracks = state.trackCount;
+    size_t numTracks = wxGetApp().m_trackCount;
 
 	for (size_t i = 0; i < numTracks; i++)
 	{
