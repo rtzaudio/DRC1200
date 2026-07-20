@@ -52,6 +52,8 @@ DRC1200App::DRC1200App()
 	m_colorError = *wxRED;
 	m_colorTime = *wxYELLOW;
 	m_colorTimeBkgnd = *wxBLACK;
+
+    //m_colorTime.SetRGB(0x00FF00);
 }
 
 DRC1200App::~DRC1200App()
