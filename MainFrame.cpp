@@ -176,7 +176,6 @@ MainFrame::MainFrame() :
 	m_smpteMins = 0;
 	m_smpteSecs = 0;
 	m_smpteFrame = 0;
-    m_dlgProgress = nullptr;
     m_sockState = nullptr;
 	m_strHostname = wxT("");
 	m_nPortNumber = STC_PORT_STATE;
@@ -266,6 +265,7 @@ MainFrame::MainFrame() :
     if (m_bAutoConnect)
     {
         wxString hostname = wxGetApp().m_strHostArg;
+
         if (hostname.Length() > 0)
         {
             m_strHostname = hostname;
@@ -327,20 +327,12 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	wxIPaddress* addr;
 	wxIPV4address addr4;
 
+	addr = &addr4;
+
 	if (m_sockState)
 	{
 		m_sockState->Destroy();
 	}
-
-	// Create the socket
-	m_sockState = new wxSocketClient(wxSOCKET_NOWAIT);
-
-	// Setup the event handler and subscribe to most events
-	m_sockState->SetEventHandler(*this, SOCKET_ID);
-	m_sockState->SetNotify(wxSOCKET_CONNECTION_FLAG | wxSOCKET_INPUT_FLAG | wxSOCKET_LOST_FLAG);
-	m_sockState->Notify(true);
-
-	addr = &addr4;
 
 	m_menuConnect->Enable(ID_CONNECT_TCP, false);
 	m_menuConnect->Enable(ID_CONNECT_CLOSE, false);
@@ -355,33 +347,126 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	msg.Printf(wxT("Connecting..."), hostname, addr->Service());
 	SetStatusText(msg, 2);
 
-    m_dlgProgress = new wxProgressDialog(
-                         wxT("Progress dialog"),
-                         wxT("Connecting to MM1200"),
-                         100,
-                         this,
-                         wxPD_CAN_ABORT | wxPD_APP_MODAL);
-
     ResetStateBuffer();
-
-	// Connect to streaming STC machine status socket
 
 	m_bConnecting = true;
 	m_bConnected  = false;
 
-	m_sockState->Connect(*addr, false);
+    // 1. Start background thread
+    m_pThread = new TCPConnectThread(this, m_strHostname, STC_PORT_STATE);
 
-	return true;
+    if (m_pThread->Run() != wxTHREAD_NO_ERROR)
+    {
+        wxLogError("Can't create the thread!");
+        return false;
+    }
+
+    // 2. Show Progress Dialog
+    wxProgressDialog progressDialog(
+        "Connecting",
+        "Attempting to connect to server...",
+        100,
+        this,
+        wxPD_CAN_ABORT | wxPD_APP_MODAL | wxPD_AUTO_HIDE
+    );
+
+    // 3. Keep UI responsive and check for abort
+    bool continueLoop = true;
+
+    while (m_pThread && m_pThread->IsRunning())
+    {
+        if (!progressDialog.Pulse())
+        {
+            // User pressed Cancel!
+            m_pThread->CancelConnect();
+            m_pThread->Delete(); // Request thread to exit
+            continueLoop = false;
+            break;
+        }
+
+        wxMilliSleep(100); // Give CPU some rest, or use events
+    }
+
+    m_sockState = progressDialog.m_sockState->Clone();
+
+
+    // 4. Clean up
+    progressDialog.Destroy();
+
+    if (!continueLoop)
+    {
+        wxMessageBox("Connection cancelled.");
+        return false;
+    }
+
+	m_bConnecting = false;
+
+	m_sockState = new wxSocketClient(wxSOCKET_NOWAIT);
+
+	// Setup the event handler and subscribe to most events
+	m_sockState->SetEventHandler(*this, SOCKET_ID);
+	m_sockState->SetNotify(wxSOCKET_INPUT_FLAG | wxSOCKET_LOST_FLAG);
+	m_sockState->Notify(true);
+
+    // Connected, get and check the STC and DTC versions to make sure we are compatible
+
+    wxSocketError err;
+
+    uint32_t rev_stc, rev_dtc;
+
+    rev_stc = rev_dtc = 0;
+
+    err = GetSocketCommand().VersionGet(&rev_stc, &rev_dtc, m_stcSN, m_dtcSN, m_mac);
+
+    if (err != wxSOCKET_NOERROR)
+    {
+        rev_stc = rev_dtc = 0;
+        wxLogMessage(_("Error getting version info - DTC may not be present!"));
+    }
+    else
+    {
+        m_stcVersion = rev_stc;
+        m_dtcVersion = rev_dtc;
+
+		// Requires STC version 3.0 or greater!
+		if (((rev_stc >> 16) >= 3) && (((rev_stc & 0xFF) >= 0) || (rev_stc == 0)))
+		{
+			// Query the STC to see how many tracks it's configured to support
+			// if the DCS channel controller is installed in the machine.
+
+			bool dcsFound;
+			uint32_t numTracks;
+
+			err = GetSocketCommand().TrackGetCount(&numTracks, &dcsFound);
+
+			if (err == wxSOCKET_NOERROR)
+			{
+				if (numTracks != wxGetApp().m_trackCount)
+				{
+					if ((numTracks >= 8) && (numTracks <= 24))
+						wxGetApp().m_trackCount = numTracks;
+					else
+						wxGetApp().m_trackCount = numTracks = 24;
+
+					// Save the real number of tracks found
+					wxGetApp().GetConfig()->Write(_("NumTracks"), wxGetApp().m_trackCount);
+				}
+
+				// Indicates if the STC has a DCS track controller available
+				wxGetApp().m_dcsFound = dcsFound;
+			}
+
+			m_trackFrame->SetTrackConfig(numTracks);
+		}
+	}
+
+    UpdateAllControls();
+
+    return true;
 }
 
 void MainFrame::ConnectionClose(void)
 {
-	if (m_dlgProgress)
-	{
-		m_dlgProgress->Destroy();
-		m_dlgProgress = nullptr;
-	}
-
 	if (m_sockState)
 	{
 		m_sockState->Notify(false);
@@ -424,20 +509,6 @@ void MainFrame::UpdateAllControls()
 
 	// Update any track assignment buttons
 	m_trackFrame->ResetTrackButtonStates(true);
-
-#if 0
-	bool standby = IsStandbyMonitor();
-	bool connected = IsConnected();
-
-	wxGetApp().m_panelOption->m_checkStandbyMon->SetValue(standby);
-	wxGetApp().m_panelOption->m_checkStandbyMon->Enable(connected);
-
-	wxGetApp().m_panelOption->m_checkLibWind->SetValue(m_bLibWind);
-	wxGetApp().m_panelOption->m_checkLibWind->Enable(connected);
-
-	wxGetApp().m_panelOption->m_checkAutoPlay->SetValue(m_bAutoPlay);
-	wxGetApp().m_panelOption->m_checkAutoPlay->Enable(connected);
-#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -455,84 +526,10 @@ void MainFrame::OnSocketEvent(wxSocketEvent& event)
 		HandleDisconnect();
 		break;
 
-	case wxSOCKET_CONNECTION:
-		HandleConnect();
-		break;
-
 	default:
 		wxLogMessage("Unknown socket event!!!");
 		break;
 	}
-}
-
-void MainFrame::HandleConnect(void)
-{
-	if (m_dlgProgress)
-	{
-		m_dlgProgress->Destroy();
-		m_dlgProgress = nullptr;
-	}
-
-	m_bConnecting = false;
-
-	m_bConnected = m_sockCommand.ConnectionOpen(m_strHostname);
-
-	if (m_bConnected)
-	{
-		// Get and check the STC and DTC versions to make sure we are compatible
-
-		wxSocketError err;
-
-		uint32_t rev_stc, rev_dtc;
-
-		rev_stc = rev_dtc = 0;
-
-		err = GetSocketCommand().VersionGet(&rev_stc, &rev_dtc, m_stcSN, m_dtcSN, m_mac);
-
-		if (err != wxSOCKET_NOERROR)
-		{
-			rev_stc = rev_dtc = 0;
-			wxLogMessage(_("Error getting version info - DTC may not be present!"));
-		}
-		else
-		{
-			m_stcVersion = rev_stc;
-			m_dtcVersion = rev_dtc;
-
-			// Requires STC version 3.0 or greater!
-			if (((rev_stc >> 16) >= 3) && (((rev_stc & 0xFF) >= 0) || (rev_stc == 0)))
-			{
-				// Query the STC to see how many tracks it's configured to support
-				// if the DCS channel controller is installed in the machine.
-
-				bool dcsFound;
-				uint32_t numTracks;
-
-				err = GetSocketCommand().TrackGetCount(&numTracks, &dcsFound);
-
-				if (err == wxSOCKET_NOERROR)
-				{
-					if (numTracks != wxGetApp().m_trackCount)
-					{
-						if ((numTracks >= 8) && (numTracks <= 24))
-							wxGetApp().m_trackCount = numTracks;
-						else
-							wxGetApp().m_trackCount = numTracks = 24;
-
-						// Save the real number of tracks found
-						wxGetApp().GetConfig()->Write(_("NumTracks"), wxGetApp().m_trackCount);
-					}
-
-					// Indicates if the STC has a DCS track controller available
-					wxGetApp().m_dcsFound = dcsFound;
-				}
-
-				m_trackFrame->SetTrackConfig(numTracks);
-			}
-		}
-	}
-
-    UpdateAllControls();
 }
 
 void MainFrame::HandleDisconnect(void)

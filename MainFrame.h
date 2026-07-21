@@ -3,6 +3,7 @@
 #include "TimePanel.h"
 #include "VelocityPanel.h"
 #include "STCCommand.h"
+#include "TCPConnectThread.h"
 
 #define MAX_VEL_SAMPLES	500
 
@@ -237,7 +238,6 @@ private:
 	void ConnectionClose(void);
 	void UpdateStatusBar(void);
 	void HandleReceiveData(void);
-	void HandleConnect(void);
 	void HandleDisconnect(void);
     void SearchOrStore(uint32_t cueIndex);
     void UpdateAllControls();
@@ -257,8 +257,7 @@ private:
 	TrackFrame*			m_trackFrame;
 	STCCommand			m_sockCommand;
 	wxSocketClient*		m_sockState;
-public:
-	wxProgressDialog*   m_dlgProgress;
+	TCPConnectThread*   m_pThread;
 
 private:
 	bool				m_bConnecting;
