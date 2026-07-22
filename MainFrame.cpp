@@ -387,7 +387,7 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
         wxMilliSleep(100); // Give CPU some rest, or use events
     }
 
-    m_sockState = progressDialog.m_sockState->Clone();
+    //m_sockState = progressDialog.m_sockState->Clone();
 
 
     // 4. Clean up
@@ -524,6 +524,10 @@ void MainFrame::OnSocketEvent(wxSocketEvent& event)
 
 	case wxSOCKET_LOST:
 		HandleDisconnect();
+		break;
+
+	case wxSOCKET_CONNECTION:
+		HandleConnect();
 		break;
 
 	default:
