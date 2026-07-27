@@ -239,6 +239,8 @@ private:
 	void UpdateStatusBar(void);
 	void HandleReceiveData(void);
 	void HandleDisconnect(void);
+    void HandleConnect(void);
+
     void SearchOrStore(uint32_t cueIndex);
     void UpdateAllControls();
     void UpdateLocatorButtonUI(wxUpdateUIEvent& event, uint32_t ledmask);
@@ -257,7 +259,8 @@ private:
 	TrackFrame*			m_trackFrame;
 	STCCommand			m_sockCommand;
 	wxSocketClient*		m_sockState;
-	TCPConnectThread*   m_pThread;
+	//TCPConnectThread*   m_pThread;
+    wxProgressDialog*   m_dlgProgress;
 
 private:
 	bool				m_bConnecting;
