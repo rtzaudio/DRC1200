@@ -265,6 +265,7 @@ private:
 private:
 	bool				m_bConnecting;
 	bool				m_bConnected;
+	bool                m_connectionFailed;
 	bool				m_bRecord;
 	bool	            m_bLibWind;
 	bool	            m_bAutoPlay;

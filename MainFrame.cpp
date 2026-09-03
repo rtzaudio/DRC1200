@@ -500,6 +500,9 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	wxIPaddress* addr;
 	wxIPV4address addr4;
 
+	m_menuConnect->Enable(ID_CONNECT_TCP, false);
+	m_menuConnect->Enable(ID_CONNECT_CLOSE, false);
+
 	if (m_sockState)
 		m_sockState->Destroy();
 
@@ -511,10 +514,9 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	m_sockState->SetNotify(wxSOCKET_CONNECTION_FLAG | wxSOCKET_INPUT_FLAG | wxSOCKET_LOST_FLAG);
 	m_sockState->Notify(true);
 
-	addr = &addr4;
+    Bind(wxEVT_SOCKET, &MainFrame::OnSocketEvent, this, SOCKET_ID);
 
-	m_menuConnect->Enable(ID_CONNECT_TCP, false);
-	m_menuConnect->Enable(ID_CONNECT_CLOSE, false);
+	addr = &addr4;
 
 	addr->Hostname(hostname);
 	addr->Service(m_nPortNumber);
@@ -539,10 +541,45 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 
 	m_bConnecting = true;
 	m_bConnected  = false;
+    m_connectionFailed = false;
 
 	m_sockState->Connect(*addr, false);
 
-	return true;
+
+    int progress = 0;
+
+    // 3. Monitor state while pumping the event loop
+    while (!m_bConnected && !m_connectionFailed)
+    {
+        // Animate progress bar slightly to show activity
+        progress = (progress + 5) % 100;
+
+        // Update returns false if the user clicks "Cancel"
+        if (!m_dlgProgress->Update(progress))
+        {
+            m_sockState->Close();
+            m_dlgProgress->Destroy();
+            return false;
+        }
+
+        // Yield briefly to let the event loop process socket changes
+        wxMilliSleep(50);
+
+        wxTheApp->Yield(true);
+    }
+
+    // 4. Handle final outcome after loop exits
+    m_dlgProgress->Update(100); // Max out bar on success
+
+    m_dlgProgress->Destroy();
+
+    if (!m_bConnected) {
+    //    wxMessageBox("Connected successfully!", "Success", wxOK | wxICON_INFORMATION);
+    //} else {
+        wxMessageBox("Connection failed or timed out.", "Error", wxOK | wxICON_ERROR);
+    }
+
+	return m_bConnected;
 }
 #endif
 
@@ -601,6 +638,7 @@ void MainFrame::HandleConnect(void)
 		m_dlgProgress = nullptr;
 	}
 
+    m_connectionFailed = false;
 	m_bConnecting = false;
 
 	m_bConnected = m_sockCommand.ConnectionOpen(m_strHostname);
@@ -665,6 +703,8 @@ void MainFrame::HandleConnect(void)
 
 void MainFrame::HandleDisconnect(void)
 {
+    m_connectionFailed = true;
+
 	ConnectionClose();
 }
 
