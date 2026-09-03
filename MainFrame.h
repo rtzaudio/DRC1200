@@ -259,8 +259,6 @@ private:
 	TrackFrame*			m_trackFrame;
 	STCCommand			m_sockCommand;
 	wxSocketClient*		m_sockState;
-	//TCPConnectThread*   m_pThread;
-    wxProgressDialog*   m_dlgProgress;
 
 private:
 	bool				m_bConnecting;

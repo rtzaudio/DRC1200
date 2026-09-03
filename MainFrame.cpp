@@ -343,156 +343,8 @@ void MainFrame::OnConnectEvent(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-// Connection Open Handler
 
-#if 0
-bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
-{
-	wxUnusedVar(family);			// unused in !wxUSE_IPV6 case
-	wxIPaddress* addr;
-	wxIPV4address addr4;
-
-	addr = &addr4;
-
-	if (m_sockState)
-	{
-		m_sockState->Destroy();
-	}
-
-	m_menuConnect->Enable(ID_CONNECT_TCP, false);
-	m_menuConnect->Enable(ID_CONNECT_CLOSE, false);
-
-	addr->Hostname(hostname);
-	addr->Service(m_nPortNumber);
-
-	// we connect asynchronously and will get a wxSOCKET_CONNECTION event when
-	// the connection is really established
-
-	wxString msg;
-	msg.Printf(wxT("Connecting..."), hostname, addr->Service());
-	SetStatusText(msg, 2);
-
-    ResetStateBuffer();
-
-	m_bConnecting = true;
-	m_bConnected  = false;
-
-    // 1. Start background thread
-    m_pThread = new TCPConnectThread(this, m_strHostname, STC_PORT_STATE);
-
-    if (m_pThread->Run() != wxTHREAD_NO_ERROR)
-    {
-        wxLogError("Can't create the thread!");
-        return false;
-    }
-
-    // 2. Show Progress Dialog
-    wxProgressDialog progressDialog(
-        "Connecting",
-        "Attempting to connect to server...",
-        100,
-        this,
-        wxPD_CAN_ABORT | wxPD_APP_MODAL | wxPD_AUTO_HIDE
-    );
-
-    // 3. Keep UI responsive and check for abort
-    bool continueLoop = true;
-
-    while (m_pThread && m_pThread->IsRunning())
-    {
-        if (!progressDialog.Pulse())
-        {
-            // User pressed Cancel!
-            m_pThread->CancelConnect();
-            m_pThread->Delete(); // Request thread to exit
-            continueLoop = false;
-            break;
-        }
-
-        wxMilliSleep(100); // Give CPU some rest, or use events
-    }
-
-    //m_sockState = progressDialog.m_sockState->Clone();
-
-
-    // 4. Clean up
-    progressDialog.Destroy();
-
-    if (!continueLoop)
-    {
-        wxMessageBox("Connection cancelled.");
-        return false;
-    }
-
-	m_bConnecting = false;
-
-	m_sockState = new wxSocketClient(wxSOCKET_NOWAIT);
-
-	// Setup the event handler and subscribe to most events
-	m_sockState->SetEventHandler(*this, SOCKET_ID);
-	m_sockState->SetNotify(wxSOCKET_INPUT_FLAG | wxSOCKET_LOST_FLAG);
-	m_sockState->Notify(true);
-
-    // Connected, get and check the STC and DTC versions to make sure we are compatible
-
-    wxSocketError err;
-
-    uint32_t rev_stc, rev_dtc;
-
-    rev_stc = rev_dtc = 0;
-
-    err = GetSocketCommand().VersionGet(&rev_stc, &rev_dtc, m_stcSN, m_dtcSN, m_mac);
-
-    if (err != wxSOCKET_NOERROR)
-    {
-        rev_stc = rev_dtc = 0;
-        wxLogMessage(_("Error getting version info - DTC may not be present!"));
-    }
-    else
-    {
-        m_stcVersion = rev_stc;
-        m_dtcVersion = rev_dtc;
-
-		// Requires STC version 3.0 or greater!
-		if (((rev_stc >> 16) >= 3) && (((rev_stc & 0xFF) >= 0) || (rev_stc == 0)))
-		{
-			// Query the STC to see how many tracks it's configured to support
-			// if the DCS channel controller is installed in the machine.
-
-			bool dcsFound;
-			uint32_t numTracks;
-
-			err = GetSocketCommand().TrackGetCount(&numTracks, &dcsFound);
-
-			if (err == wxSOCKET_NOERROR)
-			{
-				if (numTracks != wxGetApp().m_trackCount)
-				{
-					if ((numTracks >= 8) && (numTracks <= 24))
-						wxGetApp().m_trackCount = numTracks;
-					else
-						wxGetApp().m_trackCount = numTracks = 24;
-
-					// Save the real number of tracks found
-					wxGetApp().GetConfig()->Write(_("NumTracks"), wxGetApp().m_trackCount);
-				}
-
-				// Indicates if the STC has a DCS track controller available
-				wxGetApp().m_dcsFound = dcsFound;
-			}
-
-			m_trackFrame->SetTrackConfig(numTracks);
-		}
-	}
-
-    UpdateAllControls();
-
-    return true;
-}
-
-#else
-
-// Connection Open Handler
+// Open a network connection to a STC-1200 server out there somewhere
 
 bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 {
@@ -528,12 +380,12 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	msg.Printf(wxT("Connecting..."), hostname, addr->Service());
 	SetStatusText(msg, 2);
 
-    m_dlgProgress = new wxProgressDialog(
-                         wxT("Progress dialog"),
-                         wxT("Connecting to MM1200"),
-                         100,
-                         this,
-                         wxPD_CAN_ABORT | wxPD_APP_MODAL);
+	wxProgressDialog dlg(
+		wxT("TCP/IP Connect"),
+		wxT("Connecting to MM1200..."),
+        100,
+        this,
+        wxPD_CAN_ABORT | wxPD_APP_MODAL | wxPD_AUTO_HIDE);
 
     ResetStateBuffer();
 
@@ -555,10 +407,9 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
         progress = (progress + 5) % 100;
 
         // Update returns false if the user clicks "Cancel"
-        if (!m_dlgProgress->Update(progress))
+        if (!dlg.Update(progress))
         {
             m_sockState->Close();
-            m_dlgProgress->Destroy();
             return false;
         }
 
@@ -568,20 +419,15 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
         wxTheApp->Yield(true);
     }
 
-    // 4. Handle final outcome after loop exits
-    m_dlgProgress->Update(100); // Max out bar on success
-
-    m_dlgProgress->Destroy();
+    // 4. Handle final outcome after loop exits, max out bar on success
+    dlg.Update(100);
 
     if (!m_bConnected) {
-    //    wxMessageBox("Connected successfully!", "Success", wxOK | wxICON_INFORMATION);
-    //} else {
         wxMessageBox("Connection failed or timed out.", "Error", wxOK | wxICON_ERROR);
     }
 
 	return m_bConnected;
 }
-#endif
 
 void MainFrame::ConnectionClose(void)
 {
@@ -632,12 +478,6 @@ void MainFrame::OnSocketEvent(wxSocketEvent& event)
 
 void MainFrame::HandleConnect(void)
 {
-	if (m_dlgProgress)
-	{
-		m_dlgProgress->Destroy();
-		m_dlgProgress = nullptr;
-	}
-
     m_connectionFailed = false;
 	m_bConnecting = false;
 
