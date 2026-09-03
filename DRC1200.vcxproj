@@ -19,14 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConnectDialog.cpp" />
+    <ClCompile Include="ConnectDialog.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WXWIN)\include;$(WXWIN)\include\msvc</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="DRC1200App.cpp" />
     <ClCompile Include="MainFrameHelper.cpp" />
     <ClCompile Include="MainFrameMenu.cpp" />
     <ClCompile Include="MainFramePanel.cpp" />
     <ClCompile Include="STCCommand.cpp" />
-    <ClCompile Include="TCPConnectThread.cpp" />
     <ClCompile Include="TimePanel.cpp" />
     <ClCompile Include="TrackFrame.cpp" />
     <ClCompile Include="VelocityPanel.cpp" />
@@ -38,7 +39,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="STC1200TCP.h" />
     <ClInclude Include="STCCommand.h" />
-    <ClInclude Include="TCPConnectThread.h" />
     <ClInclude Include="TimePanel.h" />
     <ClInclude Include="TrackFrame.h" />
     <ClInclude Include="VelocityPanel.h" />
@@ -114,6 +114,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(WXWIN)\include;$(WXWIN)\include\msvc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -182,12 +183,14 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(WXWIN)\include;$(WXWIN)\include\msvc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_x64_lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

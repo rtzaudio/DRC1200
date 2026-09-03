@@ -3,7 +3,6 @@
 #include "TimePanel.h"
 #include "VelocityPanel.h"
 #include "STCCommand.h"
-#include "TCPConnectThread.h"
 
 #define MAX_VEL_SAMPLES	500
 
