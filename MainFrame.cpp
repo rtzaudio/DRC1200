@@ -349,8 +349,8 @@ void MainFrame::OnConnectEvent(wxCommandEvent& WXUNUSED(event))
 bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 {
 	wxUnusedVar(family);			// unused in !wxUSE_IPV6 case
-	wxIPaddress* addr;
 	wxIPV4address addr4;
+	wxIPaddress* addr = &addr4;
 
 	m_menuConnect->Enable(ID_CONNECT_TCP, false);
 	m_menuConnect->Enable(ID_CONNECT_CLOSE, false);
@@ -367,8 +367,6 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
 	m_sockState->Notify(true);
 
     Bind(wxEVT_SOCKET, &MainFrame::OnSocketEvent, this, SOCKET_ID);
-
-	addr = &addr4;
 
 	addr->Hostname(hostname);
 	addr->Service(m_nPortNumber);
@@ -423,7 +421,7 @@ bool MainFrame::ConnectionOpen(wxSockAddress::Family family, wxString hostname)
     dlg.Update(100);
 
     if (!m_bConnected) {
-        wxMessageBox("Connection failed or timed out.", "Error", wxOK | wxICON_ERROR);
+        wxMessageBox("Connection failed or timed out.", "Connect Error", wxOK | wxICON_ERROR);
     }
 
 	return m_bConnected;
@@ -589,9 +587,9 @@ void MainFrame::HandleReceiveData(void)
 
 	memcpy(&m_state_prev, &m_state, sizeof(STC_STATE_MSG));
 
-	wxString str;
-	str.Printf(_T("%d"), m_nRxPacketCount);
-	SetStatusText(str, 3);
+	//wxString str;
+	//str.Printf(_T("%d"), m_nRxPacketCount);
+	//SetStatusText(str, 3);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
