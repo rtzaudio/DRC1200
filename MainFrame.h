@@ -44,34 +44,10 @@ public:
 	wxStaticText* m_txtStatus;
 };
 
-class CommandButton : public wxButton
-{
-public:
-	CommandButton(wxPanel* panel, int id, const wxString& label);
-
-	void OnCommandButtonClicked(wxCommandEvent& event);
-};
-
-class CommandPanel : public wxPanel
-{
-public:
-	CommandPanel(wxPanel* parent);
-
-	CommandButton* m_cmdButton[9];
-};
-
 class TopContainer : public wxPanel
 {
 public:
 	TopContainer(wxPanel* parent);
-};
-
-class MiddleContainer : public wxPanel
-{
-public:
-	MiddleContainer(wxPanel* parent);
-
-	wxStaticText* m_txtStatus;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -85,10 +61,10 @@ public:
 	void OnTransportButtonClicked(wxCommandEvent& event);
 };
 
-class BottomContainer : public wxPanel
+class TransportButtonContainer : public wxPanel
 {
 public:
-	BottomContainer(wxPanel* parent);
+	TransportButtonContainer(wxPanel* parent);
 
 public:
 	TransportButton* m_btnRec;
@@ -108,8 +84,7 @@ public:
 	LeftContainer(wxWindow* parent);
 
 	TopContainer* m_panelTop;
-	MiddleContainer* m_panelMiddle;
-	BottomContainer* m_panelBottom;
+	TransportButtonContainer* m_panelBottom;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -221,7 +196,6 @@ public:
 	void UpdateVelocityPanel(void);
     void UpdateTransportButtonStates(bool repain=false);
     void UpdateLocateButtonStates(bool repaint=false);
-    void UpdateCommandButtonStates(void);
 
     bool IsTrackControllerReady(void);
     bool IsAnyTracksArmed(void);
@@ -246,7 +220,6 @@ private:
     void UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, bool repaint);
 	void UpdateCueButtonDelta(LocatorButton* button, uint32_t mask, int cueIndex, bool repaint);
 	void UpdateTransportButtonDelta(TransportButton* button, uint32_t mask, bool repaint);
-    void UpdateCommandButton(CommandButton* button, uint32_t mask);
 
 	wxMenu*				m_menuConnect;
 	wxPanel*			m_panel;

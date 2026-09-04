@@ -314,9 +314,6 @@ void MainFrame::UpdateAllControls()
     // Update velocity control
 	UpdateVelocityPanel();
 
-	// Update any Command buttons
-	UpdateCommandButtonStates();
-
     // Update any Transport buttons
 	UpdateTransportButtonStates(true);
 

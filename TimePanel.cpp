@@ -62,9 +62,9 @@ void TimePanel::Draw(wxDC& dc)
 	wxCoord center = size.GetHeight() >> 1;
 
 	// Create the various font sizes we'll need
-	wxFont mono1(wxFontInfo(size.GetHeight() >> 1).Family(wxFONTFAMILY_TELETYPE).Bold());
-	wxFont mono2(wxFontInfo(size.GetHeight() >> 2).Family(wxFONTFAMILY_TELETYPE).Bold());
-    wxFont mono3(wxFontInfo(size.GetHeight() / 10).Family(wxFONTFAMILY_TELETYPE).Bold());
+	wxFont mono1(wxFontInfo(size.GetHeight() >> 2).Family(wxFONTFAMILY_TELETYPE).Bold());
+	wxFont mono2(wxFontInfo(size.GetHeight() >> 3).Family(wxFONTFAMILY_TELETYPE).Bold());
+    wxFont mono3(wxFontInfo(size.GetHeight() / 20).Family(wxFONTFAMILY_TELETYPE).Bold());
 
     // Fill the background with black
 

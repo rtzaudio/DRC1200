@@ -40,67 +40,6 @@ OptionPanel::OptionPanel(wxPanel* parent)
 	SetSizer(sizer);
 }
 
-CommandButton::CommandButton(wxPanel* mypanel, int id, const wxString& label)
-	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(40, 20))
-{
-    SetBackgroundColour(wxGetApp().m_colorBtnDark);
-	SetForegroundColour(wxGetApp().m_colorBtnText);
-
-	Connect(id, wxEVT_BUTTON, wxCommandEventHandler(CommandButton::OnCommandButtonClicked));
-}
-
-void CommandButton::OnCommandButtonClicked(wxCommandEvent& event)
-{
-    // Get pointer to MainFrame (passed in constructor or via wxGetApp)
-    wxWindow* mainFrame = wxGetApp().GetMainFrame();
-
-    // Forward the event
-    if (mainFrame)
-    {
-        wxCommandEvent* event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, GetId());
-        wxQueueEvent(mainFrame->GetEventHandler(), event);
-    }
-}
-
-CommandPanel::CommandPanel(wxPanel* parent)
-	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(150, 50))
-{
-	m_parent = parent;
-
-	wxPanel* panel = new wxPanel(this, wxID_ANY);
-
-    panel->SetBackgroundColour(wxGetApp().m_colorPanel);
-
-    m_cmdButton[0]  = new CommandButton(panel, ID_TRACK_ALLINPUT, wxT("All Tracks Input"));
-	m_cmdButton[1]  = new CommandButton(panel, ID_TRACK_ALLREPRO, wxT("All Tracks Repro"));
-	m_cmdButton[2]  = new CommandButton(panel, ID_TRACK_ALLSYNC, wxT("All Tracks Sync"));
-
-	m_cmdButton[3]  = new CommandButton(panel, ID_TRACK_ALLSAFE, wxT("All Tracks Safe"));
-    m_cmdButton[4]  = new CommandButton(panel, ID_TRACK_ALLREADY, wxT("All Tracks Ready"));
-	m_cmdButton[5]  = new CommandButton(panel, ID_LOCATOR_RESETCOUNTER, wxT("Zero Reset"));
-
- 	m_cmdButton[6]  = new CommandButton(panel, ID_TRACK_ALLMONITORON, wxT("All Monitor On"));
-	m_cmdButton[7]  = new CommandButton(panel, ID_TRACK_ALLMONITOROFF, wxT("All Monitor Off"));
-    m_cmdButton[8]  = new CommandButton(panel, ID_TRANSPORT_TOGGLEPLAY, wxT("Play/Stop"));
-
-	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-
-	const int spacing = 0;
-
-	wxGridSizer* gs = new wxGridSizer(3, 3, spacing, spacing);
-
-	for (size_t i = 0; i <= 8; i++)
-    {
-        gs->Add(m_cmdButton[i], 1, wxEXPAND);
-    }
-
-	sizer->Add(panel, 1, wxEXPAND | wxALL);
-
-	panel->SetSizer(gs);
-
-	SetSizer(sizer);
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // Left Top Panel - Tape Time and Status pane
 
@@ -111,37 +50,23 @@ TopContainer::TopContainer(wxPanel* parent)
 
 	SetBackgroundColour(wxGetApp().m_colorPanel);
 
-	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* vsizer = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* hsizer = new wxBoxSizer(wxHORIZONTAL);
 
-	sizer->Add(new TimePanel(this), 2, wxEXPAND | wxALL, 5);
-	sizer->Add(new OptionPanel(this), 1, wxEXPAND | wxALL, 5);
+	vsizer->Add(new OptionPanel(this), 1, wxEXPAND | wxALL, 5);
+	vsizer->Add(new VelocityPanel(this), 1, wxEXPAND | wxALL, 5);
 
-	SetSizer(sizer);
-}
+	hsizer->Add(new TimePanel(this), 2, wxEXPAND | wxALL, 5);
+    hsizer->Add(vsizer, 1, wxEXPAND | wxALL, 5);
 
-///////////////////////////////////////////////////////////////////////////////
-// Left Middle Panel - Velocity Graph Panel
-
-MiddleContainer::MiddleContainer(wxPanel* parent)
-	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(150, 50), wxBORDER_NONE)
-{
-	m_parent = parent;
-
-	SetBackgroundColour(wxGetApp().m_colorPanel);
-
-	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-
-	sizer->Add(new CommandPanel(this), 2, wxEXPAND | wxALL, 5);
-	sizer->Add(new VelocityPanel(this), 1, wxEXPAND | wxALL, 5);
-
-	SetSizer(sizer);
+	SetSizer(hsizer);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Left Bottom Panel - Transport Control Buttons
 
 TransportButton::TransportButton(wxPanel* mypanel, int id, const wxString& label)
-	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(50, 30))
+	: wxButton(mypanel, id, label, wxDefaultPosition, wxSize(50, 25))
 {
     SetBackgroundColour(wxGetApp().m_colorBtnDark);
 	SetForegroundColour(wxGetApp().m_colorBtnText);
@@ -162,8 +87,8 @@ void TransportButton::OnTransportButtonClicked(wxCommandEvent& event)
     }
 }
 
-BottomContainer::BottomContainer(wxPanel* parent)
-	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(270, 150), wxBORDER_NONE)
+TransportButtonContainer::TransportButtonContainer(wxPanel* parent)
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(150, 50), wxBORDER_NONE)
 {
 	m_parent = parent;
 
@@ -210,21 +135,21 @@ LeftContainer::LeftContainer(wxWindow* parent)
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
 	wxPanel* panel = new wxPanel(this, -1);
-    //panel->SetBackgroundColour(wxGetApp().m_colorPanel);
 
 	m_panelTop    = new TopContainer(panel);
-	m_panelMiddle = new MiddleContainer(panel);
-	m_panelBottom = new BottomContainer(panel);
+	m_panelBottom = new TransportButtonContainer(panel);
 
-	wxGridSizer* gs = new wxGridSizer(3, 1, 5, 5);
+	wxBoxSizer* vsizer = new wxBoxSizer(wxVERTICAL);
 
-	gs->Add(m_panelTop, 1, wxEXPAND);
-	gs->Add(m_panelMiddle, 1, wxEXPAND);
-	gs->Add(m_panelBottom, 1, wxEXPAND);
+	// proportion 2 vs 1 => TopContainer gets ~2/3 of the vertical space,
+	// TransportButtonContainer gets ~1/3
+
+	vsizer->Add(m_panelTop, 2, wxEXPAND | wxALL, 5);
+	vsizer->Add(m_panelBottom, 1, wxEXPAND | wxALL, 5);
 
 	sizer->Add(panel, 1, wxEXPAND | wxALL, 5);
 
-	panel->SetSizer(gs);
+	panel->SetSizer(vsizer);
 
 	SetSizer(sizer);
 }

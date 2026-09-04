@@ -63,7 +63,7 @@ bool MainFrame::IsAnyTracksArmed(void)
 
 void MainFrame::UpdateTransportButtonStates(bool repaint)
 {
-    BottomContainer* panel = m_panelLeft->m_panelBottom;
+    TransportButtonContainer* panel = m_panelLeft->m_panelBottom;
 
     if (!IsConnected())
     {
@@ -300,28 +300,6 @@ void MainFrame::UpdateCueButtonDelta(LocatorButton* button, uint32_t mask, int c
                 button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
         }
     }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//
-
-void MainFrame::UpdateCommandButtonStates(void)
-{
-    //BottomContainer* panel = m_panelLeft->m_panelBottom;
-}
-
-void MainFrame::UpdateCommandButton(CommandButton* button, uint32_t mask)
-{
-    if (IsConnected() && IsHardwareDCS())
-    {
-        button->SetBackgroundColour(wxGetApp().m_colorBtnActive);
-    }
-    else
-    {
-        button->SetBackgroundColour(wxGetApp().m_colorBtnFace);
-    }
-
-    button->SetForegroundColour(wxGetApp().m_colorBtnText);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
