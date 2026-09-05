@@ -59,12 +59,14 @@ void TimePanel::Draw(wxDC& dc)
 	wxString str;
 	wxColor colorText;
 	wxSize size = GetClientSize();
-	wxCoord center = size.GetHeight() >> 1;
+
+	wxCoord center = (size.GetHeight() >> 1) + dc.FromDIP(10);
 
 	// Create the various font sizes we'll need
-	wxFont mono1(wxFontInfo(size.GetHeight() >> 2).Family(wxFONTFAMILY_TELETYPE).Bold());
-	wxFont mono2(wxFontInfo(size.GetHeight() >> 3).Family(wxFONTFAMILY_TELETYPE).Bold());
+	wxFont mono1(wxFontInfo(size.GetHeight() / 3).Family(wxFONTFAMILY_TELETYPE).Bold());
+	wxFont mono2(wxFontInfo(size.GetHeight() / 8).Family(wxFONTFAMILY_TELETYPE).Bold());
     wxFont mono3(wxFontInfo(size.GetHeight() / 20).Family(wxFONTFAMILY_TELETYPE).Bold());
+    wxFont mono4(wxFontInfo(size.GetHeight() / 12).Family(wxFONTFAMILY_TELETYPE).Bold());
 
     // Fill the background with black
 
@@ -152,6 +154,81 @@ void TimePanel::Draw(wxDC& dc)
     // Now draw the extra mode display stuff
 	// ------------------------------------------------------
 
+   	dc.SetTextForeground(colorText);
+	dc.SetFont(mono3);
+
+	wxCoord xSpace = (wxCoord)((dc.GetCharWidth() * 2));
+
+    str.Printf(wxT("SPEED:%u-IPS"), state.tapeSpeed);
+    sizeText = dc.GetTextExtent(str);
+    xpos = dc.FromDIP(15);
+    ypos = sizeText.GetHeight() + dc.FromDIP(1);
+	dc.DrawText(str, xpos, ypos);
+    xpos += sizeText.GetWidth() + xSpace;
+
+    str.Printf(wxT("TAPE:%u\""), state.tapeSize);
+    sizeText = dc.GetTextExtent(str);
+	dc.DrawText(str, xpos, ypos);
+	xpos += sizeText.GetWidth() + xSpace;
+
+    str.Printf(wxT("TRACKS:%u"), state.trackCount);
+	dc.DrawText(str, xpos, ypos);
+    sizeText = dc.GetTextExtent(str);
+	xpos += sizeText.GetWidth() + xSpace;
+
+	if (state.hardwareFlags & STC_HF_SMPTE)
+	{
+	    wxString strMode;
+
+		if (state.smpteMode == 1)
+			strMode = _T("STRIPE");
+		else if (state.smpteMode == 2)
+			strMode = _T("SLAVE");
+		else
+			strMode = _T("OFF");
+
+        str.Printf(wxT("SMPTE:") + strMode);
+        dc.DrawText(str, xpos, ypos);
+        xpos += sizeText.GetWidth() + xSpace;
+	}
+
+	// Get current transport mode string
+    wxString strMode;
+    mainframe->GetModeText(state, strMode);
+
+    if (mainframe->IsConnected())
+    {
+        if (mainframe->IsTransportModeFlags(STC_M_RECORD) ||
+            mainframe->IsTransportMode(STC_MODE_HALT))
+        {
+            dc.SetTextForeground(wxGetApp().m_colorError);
+        }
+    }
+
+	dc.DrawText(strMode, xpos, ypos);
+	dc.SetTextForeground(colorText);
+
+	// Format the SMPTE time string as +h:mm:ss:fn
+
+	if (state.hardwareFlags & STC_HF_SMPTE)
+	{
+        dc.SetFont(mono4);
+
+		str.Printf(wxT("T/C %2.2u:%2.2u:%2.2u:%2.2u"),
+			state.smpteTime.hour,
+			state.smpteTime.mins,
+			state.smpteTime.secs,
+			state.smpteTime.frame);
+
+        sizeText = dc.GetTextExtent(str);
+
+		xpos = (size.GetWidth() >> 1) - (sizeText.GetWidth() >> 1);
+        ypos = size.GetHeight() - (dc.GetCharHeight() + dc.FromDIP(10));
+
+		dc.DrawText(str, xpos, ypos);
+	}
+
+#if 0
     wxCoord vspace = sizeText.GetHeight() + dc.FromDIP(1);
 
 	xpos += (sizeText.GetWidth() << 1) + sizeText.GetWidth();
@@ -226,4 +303,5 @@ void TimePanel::Draw(wxDC& dc)
 
 		dc.DrawText(str, size.GetWidth() >> 2, ypos);
 	}
+#endif
 }

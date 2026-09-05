@@ -2104,7 +2104,7 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	info.SetIcon(wxIcon(wxT("DRC1200.png")));
 #endif
 	info.SetName(wxT("DRC1200"));
-	info.SetVersion(wxT("1.04"), wxT("Version 1.05"));
+	info.SetVersion(wxT("1.07"), wxT("Version 1.07"));
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));
 	info.AddDeveloper(wxT("Robert E Starr, Jr."));
