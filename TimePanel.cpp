@@ -230,18 +230,19 @@ void TimePanel::Draw(wxDC& dc)
 		dc.DrawText(str, xpos, ypos);
 	}
 
-    //if (state.errorCount >= 0)
-
-    if (1)
+    if (state.errorCount > 0)
 	{
+        dc.SetFont(mono4);
+
+        str.Printf(wxT("ENCODER ERRORS %u"), state.errorCount);
+
+        sizeText = dc.GetTextExtent(str);
 
 		xpos = (size.GetWidth() >> 1) - (sizeText.GetWidth() >> 1);
-        ypos = size.GetHeight() - (dc.GetCharHeight() + dc.FromDIP(10));
+        ypos = (size.GetHeight() >> 1) - (sizeText.GetHeight() >> 2);
 
         dc.SetTextForeground(wxGetApp().m_colorError);
 
-		err.Format(wxT("ENCODER ERRORS %u"), state.errorCount);
-
-        dc.DrawText(err, xpos, center);
+        dc.DrawText(str, xpos, ypos);
 	}
 }
