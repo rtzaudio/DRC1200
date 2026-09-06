@@ -157,24 +157,21 @@ void TimePanel::Draw(wxDC& dc)
    	dc.SetTextForeground(colorText);
 	dc.SetFont(mono3);
 
-	wxCoord xSpace = (wxCoord)((dc.GetCharWidth() * 2));
+	wxCoord xSpace = (wxCoord)((dc.GetCharWidth() * 4));
 
-    str.Printf(wxT("SPEED:%u-IPS"), state.tapeSpeed);
+    str.Printf(wxT("SPEED: %u-IPS"), state.tapeSpeed);
     sizeText = dc.GetTextExtent(str);
     xpos = dc.FromDIP(15);
     ypos = sizeText.GetHeight() + dc.FromDIP(1);
 	dc.DrawText(str, xpos, ypos);
     xpos += sizeText.GetWidth() + xSpace;
 
-    str.Printf(wxT("TAPE:%u\""), state.tapeSize);
+#if 0
+    str.Printf(wxT("TAPE:%u\" %u-Trk"), state.tapeSize, state.trackCount);
     sizeText = dc.GetTextExtent(str);
 	dc.DrawText(str, xpos, ypos);
 	xpos += sizeText.GetWidth() + xSpace;
-
-    str.Printf(wxT("TRACKS:%u"), state.trackCount);
-	dc.DrawText(str, xpos, ypos);
-    sizeText = dc.GetTextExtent(str);
-	xpos += sizeText.GetWidth() + xSpace;
+#endif
 
 	if (state.hardwareFlags & STC_HF_SMPTE)
 	{
@@ -187,7 +184,7 @@ void TimePanel::Draw(wxDC& dc)
 		else
 			strMode = _T("OFF");
 
-        str.Printf(wxT("SMPTE:") + strMode);
+        str.Printf(wxT("SMPTE: ") + strMode);
         sizeText = dc.GetTextExtent(str);
         dc.DrawText(str, xpos, ypos);
         xpos += sizeText.GetWidth() + xSpace;
@@ -208,8 +205,10 @@ void TimePanel::Draw(wxDC& dc)
 
 	dc.DrawText(strMode, xpos, ypos);
 	dc.SetTextForeground(colorText);
-
-	// Format the SMPTE time string as +h:mm:ss:fn
+	
+	// ------------------------------------------------------
+	// Format and draw SMPTE time string as +h:mm:ss:fn
+	// ------------------------------------------------------
 
 	if (state.hardwareFlags & STC_HF_SMPTE)
 	{
@@ -228,81 +227,4 @@ void TimePanel::Draw(wxDC& dc)
 
 		dc.DrawText(str, xpos, ypos);
 	}
-
-#if 0
-    wxCoord vspace = sizeText.GetHeight() + dc.FromDIP(1);
-
-	xpos += (sizeText.GetWidth() << 1) + sizeText.GetWidth();
-
-	// Get current transport mode string
-    wxString strMode;
-    mainframe->GetModeText(state, strMode);
-
-    if (mainframe->IsConnected())
-    {
-        if (mainframe->IsTransportModeFlags(STC_M_RECORD) ||
-            mainframe->IsTransportMode(STC_MODE_HALT))
-        {
-            dc.SetTextForeground(wxGetApp().m_colorError);
-        }
-    }
-
-	dc.DrawText(strMode, xpos, ypos);
-
-	dc.SetTextForeground(colorText);
-
-	ypos += vspace;
-
-	if (state.hardwareFlags & STC_HF_SMPTE)
-	{
-		if (state.smpteMode == 1)
-			strMode = _T("STRIPE");
-		else if (state.smpteMode == 2)
-			strMode = _T("SLAVE");
-		else
-			strMode = _T("OFF");
-
-        str.Printf(wxT("SMPTE ") + strMode);
-        dc.DrawText(str, xpos, ypos);
-	}
-
-    ypos += vspace;
-
-    str.Printf(wxT("SPEED %u IPS"), state.tapeSpeed);
-	dc.DrawText(str, xpos, ypos);
-
-    ypos += vspace;
-
-    str.Printf(wxT("TAPE %u\" %u-TRK"), state.tapeSize, state.trackCount);
-	dc.DrawText(str, xpos, ypos);
-
-    ypos += vspace;
-	ypos += dc.FromDIP(10);
-
-    if (state.errorCount)
-    {
-		if (mainframe->IsConnected())
-			colorText = wxGetApp().m_colorError;
-		else
-			colorText = wxGetApp().m_colorBtnTextDim;
-
-        dc.SetTextForeground(colorText);
-
-        str.Printf(wxT("QE ERRORS %u"), state.errorCount);
-        dc.DrawText(str, xpos, ypos);
-    }
-
-	// Format the SMPTE time string as +h:mm:ss:fn
-
-	if (state.hardwareFlags & STC_HF_SMPTE)
-	{
-		str.Printf(wxT("T/C %2.2u:%2.2u:%2.2u:%2.2u"),
-			state.smpteTime.hour,
-			state.smpteTime.mins,
-			state.smpteTime.secs,
-			state.smpteTime.frame);
-
-		dc.DrawText(str, size.GetWidth() >> 2, ypos);
-	}
-#endif
 }
