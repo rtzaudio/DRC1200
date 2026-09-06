@@ -56,8 +56,10 @@ void TimePanel::Draw(wxDC& dc)
 
 	STC_STATE_MSG& state = mainframe->GetTransportState();
 
+    wxString err;
 	wxString str;
 	wxColor colorText;
+
 	wxSize size = GetClientSize();
 
 	wxCoord center = (size.GetHeight() >> 1) + dc.FromDIP(10);
@@ -205,7 +207,7 @@ void TimePanel::Draw(wxDC& dc)
 
 	dc.DrawText(strMode, xpos, ypos);
 	dc.SetTextForeground(colorText);
-	
+
 	// ------------------------------------------------------
 	// Format and draw SMPTE time string as +h:mm:ss:fn
 	// ------------------------------------------------------
@@ -226,5 +228,20 @@ void TimePanel::Draw(wxDC& dc)
         ypos = size.GetHeight() - (dc.GetCharHeight() + dc.FromDIP(10));
 
 		dc.DrawText(str, xpos, ypos);
+	}
+
+    //if (state.errorCount >= 0)
+
+    if (1)
+	{
+
+		xpos = (size.GetWidth() >> 1) - (sizeText.GetWidth() >> 1);
+        ypos = size.GetHeight() - (dc.GetCharHeight() + dc.FromDIP(10));
+
+        dc.SetTextForeground(wxGetApp().m_colorError);
+
+		err.Format(wxT("ENCODER ERRORS %u"), state.errorCount);
+
+        dc.DrawText(err, xpos, center);
 	}
 }
