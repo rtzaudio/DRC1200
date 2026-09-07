@@ -25,7 +25,6 @@
 #include "wx/dcgraph.h"
 #include "wx/overlay.h"
 #include "wx/graphics.h"
-#include "wx/minifram.h"
 #include "wx/config.h"
 #include "MainFrame.h"
 #include "TrackFrame.h"

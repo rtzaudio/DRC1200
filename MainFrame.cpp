@@ -1,5 +1,5 @@
 #include "DRC1200.h"
-#include "ConnectDialog.h"
+//#include "ConnectDialog.h"
 //#include "DRC1200.xpm"
 
 ///////////////////////////////////////////////////////////////////////////////

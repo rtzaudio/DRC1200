@@ -19,9 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConnectDialog.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WXWIN)\include;$(WXWIN)\include\msvc</AdditionalIncludeDirectories>
-    </ClCompile>
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="DRC1200App.cpp" />
     <ClCompile Include="MainFrameHelper.cpp" />
@@ -33,7 +30,6 @@
     <ClCompile Include="VelocityPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConnectDialog.h" />
     <ClInclude Include="DRC1200.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="resource.h" />

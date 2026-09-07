@@ -10,8 +10,8 @@ EVT_BUTTON(wxID_CANCEL, ConnectDialog::OnCancel)
 wxEND_EVENT_TABLE()
 
 ConnectDialog::ConnectDialog(wxWindow* parent, wxWindowID id, const wxString& title,
-		const wxPoint& position, const wxSize& size, long style)
-	: wxDialog(parent, id, title, position, size, style)
+		const wxPoint& position, const wxSize& size, long style) 
+	: wxDialog(parent, id, title, position, size, style, name) 
 {
 	wxFlexGridSizer* flexSizer = new wxFlexGridSizer(2);
 
