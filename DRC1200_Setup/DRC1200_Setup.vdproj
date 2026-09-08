@@ -15,68 +15,68 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "MsmKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_146E07A885EDF0D3828D254C0AA50EA8"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_26271C74C5A099E0493F3790EB78E9AF"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_32920F08E4BF6087BF35555247F92D4F"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_329A74EE0826FA65AB5CD75B83E6E330"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_3CD9280548A67F387871C099F433CD68"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_484C1E118D9E21959ACB69F71FE28AA9"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_51FD7A0FA0AD7BDF6588AE1A2A465E8D"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5B907E52E97327B8F7EA74D624E17841"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_EC5B8B44D41F7E18B230642B939FB3CE"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_F723331AD8E8F39201EE414471A8CE00"
-        "OwnerKey" = "8:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -97,6 +97,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -113,6 +129,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -170,7 +202,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -230,7 +262,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -250,7 +282,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -290,7 +322,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -349,6 +381,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_163F0B3AD2CC4F5283778701C9E76996"
+                    {
+                    "Name" = "8:DRC1200 Remote"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_465572CD5CA64321A2662C78DE48DC85"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_0D2FE8F7510D4057911E18C8D06758AB"
@@ -391,7 +434,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DRC1200"
         "ProductCode" = "8:{54B85905-A8DD-47E6-AD67-591AEEA92B9B}"
-        "PackageCode" = "8:{72C7E242-7019-435F-8E59-378E46218A5E}"
+        "PackageCode" = "8:{2E7A3360-748E-441E-AEAD-1B676CD13AA4}"
         "UpgradeCode" = "8:{E34EC84A-D3D9-4F4F-8D2A-C649119E9558}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -511,6 +554,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_29265B327319435F90B5C99A096F5AC1"
+            {
+            "Name" = "8:DRC1200"
+            "Arguments" = "8:"
+            "Description" = "8:DRC1200  Software Remote"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_0403449BA2DE410DB162834C0B439EBD"
+            "Folder" = "8:_163F0B3AD2CC4F5283778701C9E76996"
+            "WorkingFolder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E435C7EC42954E12814EC0A0FA9B5C47"
+            {
+            "Name" = "8:DRC1200"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_0403449BA2DE410DB162834C0B439EBD"
+            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "WorkingFolder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -910,7 +981,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B7ADA3FE38D4FF7B8416626AE1D1590"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0403449BA2DE410DB162834C0B439EBD"
             {
             "SourcePath" = "8:..\\x64\\Debug\\DRC1200.exe"
             "TargetName" = "8:"
