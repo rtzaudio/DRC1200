@@ -560,16 +560,12 @@ void MainFrame::HandleReceiveData(void)
 
 	// Update the time display if tape is moving
 	UpdateTimePanel();
-
 	// Update the velocity panel control if tape is moving
 	UpdateVelocityPanel();
-
 	// Update any Transport buttons
 	UpdateTransportButtonStates();
-
 	// Update any Locator buttons
 	UpdateLocateButtonStates();
-
 	// Update any track assignment buttons
 	m_trackFrame->UpdateTrackButtonStates();
 
