@@ -37,6 +37,8 @@
 		<Linker>
 			<Add option="`wx-config --libs`" />
 		</Linker>
+		<Unit filename="ConnectDialog.cpp" />
+		<Unit filename="ConnectDialog.h" />
 		<Unit filename="DRC1200.h" />
 		<Unit filename="DRC1200App.cpp" />
 		<Unit filename="MainFrame.cpp" />

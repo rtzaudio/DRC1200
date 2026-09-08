@@ -1,5 +1,5 @@
 #include "DRC1200.h"
-//#include "ConnectDialog.h"
+#include "ConnectDialog.h"
 //#include "DRC1200.xpm"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -310,19 +310,14 @@ void MainFrame::UpdateAllControls()
 {
     // Update all buttons
     UpdateTimePanel();
-
     // Update velocity control
 	UpdateVelocityPanel();
-
     // Update any Transport buttons
 	UpdateTransportButtonStates(true);
-
 	// Update any Locator buttons
 	UpdateLocateButtonStates(true);
-
 	// Update status bar connection status
 	UpdateStatusBar();
-
 	// Update any track assignment buttons
 	m_trackFrame->ResetTrackButtonStates(true);
 }
@@ -339,7 +334,6 @@ void MainFrame::OnConnectEvent(wxCommandEvent& WXUNUSED(event))
         ConnectionOpen(wxSockAddress::IPV4, m_strHostname);
     }
 }
-
 
 // Open a network connection to a STC-1200 server out there somewhere
 
@@ -591,6 +585,11 @@ void MainFrame::HandleReceiveData(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 // CONNECT Menu Handlers
+
+//   ConnectDialog dialog(this, wxID_ANY, wxT("Connect"));
+//   if (dialog.ShowModal() == wxID_OK)
+//   {
+//   }
 
 void MainFrame::OnConnectTcp(wxCommandEvent& WXUNUSED(event))
 {

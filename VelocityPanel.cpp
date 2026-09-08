@@ -114,12 +114,6 @@ void VelocityPanel::PlotVelocity(wxDC& dc)
 	if (state.tapeVelocity == 0)
         return;
 
-    //OptionPanel* optpanel = mainframe->GetOptionPanel();
-    //if (optpanel != nullptr)
-    //{
-        //optpanel->SetProgress(state.searchProgress);
-    //}
-
 	wxRect rect = GetClientRect();
 
 	// Now plot the velocity graph data
@@ -181,5 +175,21 @@ void VelocityPanel::PlotVelocity(wxDC& dc)
             dc.SetPen(penLine);
             dc.DrawLine(x, rect.GetTop(), x, rect.GetBottom());
 		}
+	}
+
+    // Display any quadrature encoder errors.
+
+    if (state.errorCount > 0)
+	{
+        wxString str;
+        str.Printf(wxT("ENCODER\nERRORS %u"), state.errorCount);
+        wxSize sizeText = dc.GetTextExtent(str);
+
+		wxCoord xpos = (rect.GetWidth() >> 1) - (sizeText.GetWidth() >> 1);
+        wxCoord ypos = (rect.GetHeight() >> 1) - (sizeText.GetHeight() >> 1);
+
+        dc.SetTextForeground(wxGetApp().m_colorError);
+
+        dc.DrawText(str, xpos, ypos);
 	}
 }
