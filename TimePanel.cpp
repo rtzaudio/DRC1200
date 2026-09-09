@@ -230,6 +230,7 @@ void TimePanel::Draw(wxDC& dc)
 		dc.DrawText(str, xpos, ypos);
 	}
 
+#ifdef SHOW_ENCODER_ERRORS
     if (state.errorCount > 0)
 	{
         dc.SetFont(mono4);
@@ -245,4 +246,5 @@ void TimePanel::Draw(wxDC& dc)
 
         dc.DrawText(str, xpos, ypos);
 	}
+#endif
 }
