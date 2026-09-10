@@ -1,0 +1,13 @@
+app-id: org.flatpak.DRC1200
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: DRC1200
+modules:
+  - name: DRC1200
+    buildsystem: simple
+    build-commands:
+      - install -D DRC1200 /app/bin/DRC1200
+    sources:
+      - type: file
+        path: DRC1200
