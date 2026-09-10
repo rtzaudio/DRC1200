@@ -15,68 +15,104 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_146E07A885EDF0D3828D254C0AA50EA8"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_26271C74C5A099E0493F3790EB78E9AF"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_32920F08E4BF6087BF35555247F92D4F"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_329A74EE0826FA65AB5CD75B83E6E330"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_3CD9280548A67F387871C099F433CD68"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_484C1E118D9E21959ACB69F71FE28AA9"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_493E522B6465490FB1B9BF1C78096F45"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4E0C444B16AE440082C13CD04B6815AF"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_51FD7A0FA0AD7BDF6588AE1A2A465E8D"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5B907E52E97327B8F7EA74D624E17841"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6C80C05C1F634333803C217FBE7D9CFC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8E1B7BE9B3F9494A9F762B3FB8DDBC81"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_EC5B8B44D41F7E18B230642B939FB3CE"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED50E0FE1CD94B76BB8E3F78BCC70A95"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F11D275A52CE4F4188731C9FE5057ED8"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_F723331AD8E8F39201EE414471A8CE00"
-        "OwnerKey" = "8:_0403449BA2DE410DB162834C0B439EBD"
+        "OwnerKey" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -286,6 +322,46 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_493E522B6465490FB1B9BF1C78096F45"
+            {
+            "SourcePath" = "8:splash4.bmp"
+            "TargetName" = "8:splash4.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4E0C444B16AE440082C13CD04B6815AF"
+            {
+            "SourcePath" = "8:splash3.bmp"
+            "TargetName" = "8:splash3.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_51FD7A0FA0AD7BDF6588AE1A2A465E8D"
             {
             "SourcePath" = "8:RPCRT4.dll"
@@ -326,6 +402,46 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6C80C05C1F634333803C217FBE7D9CFC"
+            {
+            "SourcePath" = "8:splash5.bmp"
+            "TargetName" = "8:splash5.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8E1B7BE9B3F9494A9F762B3FB8DDBC81"
+            {
+            "SourcePath" = "8:splash2.bmp"
+            "TargetName" = "8:splash2.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EC5B8B44D41F7E18B230642B939FB3CE"
             {
             "SourcePath" = "8:COMDLG32.dll"
@@ -346,12 +462,52 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ED50E0FE1CD94B76BB8E3F78BCC70A95"
+            {
+            "SourcePath" = "8:..\\res\\DRC1200.ico"
+            "TargetName" = "8:DRC1200.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F11D275A52CE4F4188731C9FE5057ED8"
+            {
+            "SourcePath" = "8:splash1.bmp"
+            "TargetName" = "8:splash1.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F723331AD8E8F39201EE414471A8CE00"
             {
             "SourcePath" = "8:UxTheme.dll"
             "TargetName" = "8:UxTheme.dll"
             "Tag" = "8:"
-            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Folder" = "8:_076ED2EBCEAD47839A3B7121EF8AFAB4"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -375,19 +531,19 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_076ED2EBCEAD47839A3B7121EF8AFAB4"
             {
             "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_163F0B3AD2CC4F5283778701C9E76996"
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_ED254ABBE9584C74AB84736DAB63180C"
                     {
                     "Name" = "8:DRC1200 Remote"
-                    "AlwaysCreate" = "11:FALSE"
+                    "AlwaysCreate" = "11:TRUE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
-                    "Property" = "8:_465572CD5CA64321A2662C78DE48DC85"
+                    "Property" = "8:_034A77EAAA9245D1A1447BFE160DD35D"
                         "Folders"
                         {
                         }
@@ -398,7 +554,7 @@
             {
             "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:TARGETDIR"
@@ -409,7 +565,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_C73D28693696489C842C1DB403F05C55"
             {
             "Name" = "8:#1916"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:DesktopFolder"
@@ -433,19 +589,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DRC1200"
-        "ProductCode" = "8:{54B85905-A8DD-47E6-AD67-591AEEA92B9B}"
-        "PackageCode" = "8:{C29E2EFD-5FFD-4446-9F86-C1133E67521F}"
+        "ProductCode" = "8:{5B01C02F-A7D7-47A6-8132-4B1DC73E10A8}"
+        "PackageCode" = "8:{14C4954D-1785-471D-97DA-EB5ED6791CAA}"
         "UpgradeCode" = "8:{E34EC84A-D3D9-4F4F-8D2A-C649119E9558}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.7.0"
         "Manufacturer" = "8:RTZ Professional Audio"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:DRC1200_Setup"
+        "Title" = "8:DRC1200"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Robert Starr"
         "Keywords" = "8:"
@@ -554,21 +710,21 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_29265B327319435F90B5C99A096F5AC1"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BD7A6F419B4F47838C394C01C4365745"
             {
-            "Name" = "8:DRC1200"
+            "Name" = "8:DRC1200 Remote"
             "Arguments" = "8:"
-            "Description" = "8:DRC1200  Software Remote"
+            "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_0403449BA2DE410DB162834C0B439EBD"
-            "Folder" = "8:_163F0B3AD2CC4F5283778701C9E76996"
+            "Target" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
+            "Folder" = "8:_C73D28693696489C842C1DB403F05C55"
             "WorkingFolder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
-            "Icon" = "8:"
+            "Icon" = "8:_ED50E0FE1CD94B76BB8E3F78BCC70A95"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E435C7EC42954E12814EC0A0FA9B5C47"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BE055AF71AF843C2A991D3FC22D10817"
             {
             "Name" = "8:DRC1200"
             "Arguments" = "8:"
@@ -576,24 +732,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_0403449BA2DE410DB162834C0B439EBD"
-            "Folder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
+            "Target" = "8:_7B0051521B9B4010BA9D031CF8AC8B67"
+            "Folder" = "8:_ED254ABBE9584C74AB84736DAB63180C"
             "WorkingFolder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FC133325FFBF43BC9C070EB50B92BC7E"
-            {
-            "Name" = "8:DRC1200 Remote"
-            "Arguments" = "8:"
-            "Description" = "8:DRC1200"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_0403449BA2DE410DB162834C0B439EBD"
-            "Folder" = "8:_C73D28693696489C842C1DB403F05C55"
-            "WorkingFolder" = "8:_0D2FE8F7510D4057911E18C8D06758AB"
-            "Icon" = "8:"
+            "Icon" = "8:_ED50E0FE1CD94B76BB8E3F78BCC70A95"
             "Feature" = "8:"
             }
         }
@@ -667,7 +809,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_493E522B6465490FB1B9BF1C78096F45"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -893,7 +1036,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_8E1B7BE9B3F9494A9F762B3FB8DDBC81"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -928,7 +1072,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_4E0C444B16AE440082C13CD04B6815AF"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -950,7 +1095,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_F11D275A52CE4F4188731C9FE5057ED8"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -995,7 +1141,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0403449BA2DE410DB162834C0B439EBD"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7B0051521B9B4010BA9D031CF8AC8B67"
             {
             "SourcePath" = "8:..\\x64\\Debug\\DRC1200.exe"
             "TargetName" = "8:"
