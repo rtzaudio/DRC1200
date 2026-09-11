@@ -12,7 +12,7 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 {
     wxString wxbuild(wxVERSION_STRING);
 
-    if (format == long_f )
+    if (format == long_f)
     {
 #if defined(__WXMSW__)
         wxbuild << _T("-Windows");
@@ -367,7 +367,7 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 		break;
 
 	case STC_MODE_THREAD:
-		str = wxT("THREAD");
+		str = wxT("THREAD TAPE");
 		break;
 
 	case STC_MODE_STOP:
@@ -379,13 +379,13 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 		break;
 
 	case STC_MODE_FWD:
-		str = wxT("FWD");
+		str = wxT("FORWARD");
 		if (msg.transportMode & STC_M_LIBWIND)
 			str += wxT(" (LIB)");
 		break;
 
 	case STC_MODE_REW:
-		str = wxT("REW");
+		str = wxT("REWIND");
 		if (msg.transportMode & STC_M_LIBWIND)
 			str += wxT(" (LIB)");
 		break;
@@ -395,59 +395,3 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 		break;
 	}
 }
-
-#if 0
-
-Use code with caution.
-2. Manage the Dialog and Thread
-In your main window or dialog initiating the connection, hook the thread up to the wxProgressDialog.
-cpp
-
-void MyClass::ConnectToServer()
-{
-    // 1. Start background thread
-    m_pThread = new TCPConnectThread(this, "192.168.1.100", 80);
-
-    if (m_pThread->Run() != wxTHREAD_NO_ERROR)
-    {
-        wxLogError("Can't create the thread!");
-        return;
-    }
-
-    // 2. Show Progress Dialog
-    wxProgressDialog progressDialog(
-        "Connecting",
-        "Attempting to connect to server...",
-        100,
-        this,
-        wxPD_CAN_ABORT | wxPD_APP_MODAL | wxPD_AUTO_HIDE
-    );
-
-    // 3. Keep UI responsive and check for abort
-    bool continueLoop = true;
-
-    while (m_pThread && m_pThread->IsRunning())
-    {
-        if (!progressDialog.Pulse())
-        {
-            // User pressed Cancel!
-            m_pThread->CancelConnect();
-            m_pThread->Delete(); // Request thread to exit
-            continueLoop = false;
-            break;
-        }
-
-        wxMilliSleep(100); // Give CPU some rest, or use events
-    }
-
-    // 4. Clean up
-    progressDialog.Destroy();
-
-    if (!continueLoop) {
-        wxMessageBox("Connection cancelled.");
-    } else {
-        wxMessageBox("Successfully connected!");
-    }
-}
-
-#endif
