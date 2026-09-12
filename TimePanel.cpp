@@ -161,7 +161,11 @@ void TimePanel::Draw(wxDC& dc)
 
 	wxCoord xSpace = (wxCoord)((dc.GetCharWidth() * 4));
 
-    str.Printf(wxT("SPEED: %u-IPS"), state.tapeSpeed);
+    str.Printf(wxT("%u-IPS %u\" %u-TRK"), 
+		state.tapeSpeed,
+		state.tapeSize,
+		state.trackCount);
+
     sizeText = dc.GetTextExtent(str);
     xpos = dc.FromDIP(15);
     ypos = sizeText.GetHeight() + dc.FromDIP(1);
@@ -169,7 +173,7 @@ void TimePanel::Draw(wxDC& dc)
     xpos += sizeText.GetWidth() + xSpace;
 
 #if 0
-    str.Printf(wxT("TAPE:%u\" %u-Trk"), state.tapeSize, state.trackCount);
+    str.Printf(wxT("TAPE %u\" %u-Trk"), state.tapeSize, state.trackCount);
     sizeText = dc.GetTextExtent(str);
 	dc.DrawText(str, xpos, ypos);
 	xpos += sizeText.GetWidth() + xSpace;
@@ -186,7 +190,7 @@ void TimePanel::Draw(wxDC& dc)
 		else
 			strMode = _T("OFF");
 
-        str.Printf(wxT("SMPTE: ") + strMode);
+        str.Printf(wxT("SMPTE ") + strMode);
         sizeText = dc.GetTextExtent(str);
         dc.DrawText(str, xpos, ypos);
         xpos += sizeText.GetWidth() + xSpace;

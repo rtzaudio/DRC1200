@@ -363,7 +363,7 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 	switch (mode)
 	{
 	case STC_MODE_HALT:
-		str = wxT("TAPE OUT HALT");
+		str = wxT("TAPE OUT!");
 		break;
 
 	case STC_MODE_THREAD:
