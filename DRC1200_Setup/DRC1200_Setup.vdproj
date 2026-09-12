@@ -712,7 +712,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BD7A6F419B4F47838C394C01C4365745"
             {
-            "Name" = "8:DRC1200 Remote"
+            "Name" = "8:DRC1200 v1.7.00"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
