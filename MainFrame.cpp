@@ -211,7 +211,7 @@ MainFrame::MainFrame() :
     config->Read(_("ConfirmZeroReset"), &m_bConfirmZeroReset);
     config->Read(_("ShowTracks"), &m_bShowTracks);
 
-    SetIcon(wxICON(DRC1200));
+    //SetIcon(wxICON(DRC1200));
 	CreateMenuBar();
 
 	// Create the main frame panel covering the entire client area
