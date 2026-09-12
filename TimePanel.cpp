@@ -161,15 +161,17 @@ void TimePanel::Draw(wxDC& dc)
 
 	wxCoord xSpace = (wxCoord)((dc.GetCharWidth() * 4));
 
-    str.Printf(wxT("%u-IPS %u\" %u-TRK"), 
+    str.Printf(wxT("%u-IPS %u\" %u-TRK"),
 		state.tapeSpeed,
 		state.tapeSize,
 		state.trackCount);
 
-    sizeText = dc.GetTextExtent(str);
+    sizeText = dc.GetTextExtent(str	if (theApp.m_bShowTimeDate)
+	{);
     xpos = dc.FromDIP(15);
     ypos = sizeText.GetHeight() + dc.FromDIP(1);
-	dc.DrawText(str, xpos, ypos);
+	dc.DrawText(str, xpos, ypos);	if (theApp.m_bShowTimeDate)
+	{
     xpos += sizeText.GetWidth() + xSpace;
 
 #if 0
@@ -252,3 +254,38 @@ void TimePanel::Draw(wxDC& dc)
 	}
 #endif
 }
+
+
+		TCHAR buf[32];
+		TCHAR ampm[8];
+
+        uint8_t hour = state.dateTime.hour;
+
+        _tcscpy_s(ampm, _T("AM"));
+
+        // Convert to 12 hour format
+        if (hour >= 12)
+        {
+            _tcscpy_s(ampm, _T("PM"));
+            hour -= 12;
+        }
+
+        // Adjust if midnight hour.
+        if (hour == 0)
+            hour = 12;
+
+        _snwprintf_s(buf, sizeof(buf)/sizeof(TCHAR), _T("%1u:%-2.2u %s"),
+            hour, state.dateTime.min, ampm);
+
+        m_pTextFormatAxis->Get()->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+			pRenderTarget->DrawText(buf, m_rectTimeProgress, pBrush, m_pTextFormatAxis);
+
+        _snwprintf_s(buf, sizeof(buf)/ sizeof(TCHAR), _T("%u/%u/%4.4u"),
+            state.dateTime.month + 1,
+            state.dateTime.date + 1,
+            state.dateTime.year + 2000);
+
+        m_pTextFormatAxis->Get()->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+			pRenderTarget->DrawText(buf, m_rectTimeProgress, pBrush, m_pTextFormatAxis);
+
+	}
