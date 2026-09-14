@@ -1,6 +1,8 @@
 #include "DRC1200.h"
 
-#define DRAW_BUFFERED	1
+#define DRAW_BUFFERED	        1
+#define SHOW_TIMEDATE           1
+#define SHOW_ENCODER_ERRORS     0
 
 // Standard DC supports drawing with alpha on OSX and GTK3.
 #if defined(__WXOSX__) || defined(__WXGTK3__)
@@ -166,20 +168,11 @@ void TimePanel::Draw(wxDC& dc)
 		state.tapeSize,
 		state.trackCount);
 
-    sizeText = dc.GetTextExtent(str	if (theApp.m_bShowTimeDate)
-	{);
+    sizeText = dc.GetTextExtent(str);
     xpos = dc.FromDIP(15);
     ypos = sizeText.GetHeight() + dc.FromDIP(1);
-	dc.DrawText(str, xpos, ypos);	if (theApp.m_bShowTimeDate)
-	{
-    xpos += sizeText.GetWidth() + xSpace;
-
-#if 0
-    str.Printf(wxT("TAPE %u\" %u-Trk"), state.tapeSize, state.trackCount);
-    sizeText = dc.GetTextExtent(str);
 	dc.DrawText(str, xpos, ypos);
-	xpos += sizeText.GetWidth() + xSpace;
-#endif
+    xpos += sizeText.GetWidth() + xSpace;
 
 	if (state.hardwareFlags & STC_HF_SMPTE)
 	{
@@ -236,7 +229,40 @@ void TimePanel::Draw(wxDC& dc)
 		dc.DrawText(str, xpos, ypos);
 	}
 
-#ifdef SHOW_ENCODER_ERRORS
+#if (SHOW_TIMEDATE > 0)
+    wxString  buf;
+    wxString  ampm;
+
+    dc.SetFont(mono4);
+
+    uint8_t hour = state.dateTime.hour;
+
+    ampm = wxT("AM");
+
+    // Convert to 12 hour format
+    if (hour >= 12)
+    {
+        ampm = wxT("PM");
+        hour -= 12;
+    }
+
+    // Adjust if midnight hour.
+    if (hour == 0)
+        hour = 12;
+
+    buf.Printf(wxT("%1u:%-2.2u %s"),
+        hour,
+        state.dateTime.min,
+        ampm);
+
+    buf.Printf(wxT("%u/%u/%4.4u"),
+        state.dateTime.month + 1,
+        state.dateTime.date + 1,
+        state.dateTime.year + 2000);
+
+#endif
+
+#if (SHOW_ENCODER_ERRORS > 0)
     if (state.errorCount > 0)
 	{
         dc.SetFont(mono4);
@@ -256,36 +282,3 @@ void TimePanel::Draw(wxDC& dc)
 }
 
 
-		TCHAR buf[32];
-		TCHAR ampm[8];
-
-        uint8_t hour = state.dateTime.hour;
-
-        _tcscpy_s(ampm, _T("AM"));
-
-        // Convert to 12 hour format
-        if (hour >= 12)
-        {
-            _tcscpy_s(ampm, _T("PM"));
-            hour -= 12;
-        }
-
-        // Adjust if midnight hour.
-        if (hour == 0)
-            hour = 12;
-
-        _snwprintf_s(buf, sizeof(buf)/sizeof(TCHAR), _T("%1u:%-2.2u %s"),
-            hour, state.dateTime.min, ampm);
-
-        m_pTextFormatAxis->Get()->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-			pRenderTarget->DrawText(buf, m_rectTimeProgress, pBrush, m_pTextFormatAxis);
-
-        _snwprintf_s(buf, sizeof(buf)/ sizeof(TCHAR), _T("%u/%u/%4.4u"),
-            state.dateTime.month + 1,
-            state.dateTime.date + 1,
-            state.dateTime.year + 2000);
-
-        m_pTextFormatAxis->Get()->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
-			pRenderTarget->DrawText(buf, m_rectTimeProgress, pBrush, m_pTextFormatAxis);
-
-	}
