@@ -191,7 +191,10 @@ void TimePanel::Draw(wxDC& dc)
         xpos += sizeText.GetWidth() + xSpace;
 	}
 
-	// Get current transport mode string
+	// Display current transport mode string
+
+    dc.SetFont(mono4);
+
     wxString strMode;
     mainframe->GetModeText(state, strMode);
 
@@ -204,12 +207,17 @@ void TimePanel::Draw(wxDC& dc)
         }
     }
 
+    sizeText = dc.GetTextExtent(strMode);
+
+    xpos = size.GetWidth() - (sizeText.GetWidth() + dc.FromDIP(10));
+
 	dc.DrawText(strMode, xpos, ypos);
-	dc.SetTextForeground(colorText);
 
 	// ------------------------------------------------------
 	// Format and draw SMPTE time string as +h:mm:ss:fn
 	// ------------------------------------------------------
+
+	dc.SetTextForeground(colorText);
 
 	if (state.hardwareFlags & STC_HF_SMPTE)
 	{
@@ -229,11 +237,15 @@ void TimePanel::Draw(wxDC& dc)
 		dc.DrawText(str, xpos, ypos);
 	}
 
-#if (SHOW_TIMEDATE > 0)
-    wxString  buf;
-    wxString  ampm;
+    // ------------------------------------------------------
+	// Draw the date and time from the machine
+	// ------------------------------------------------------
 
-    dc.SetFont(mono4);
+#if (SHOW_TIMEDATE > 0)
+    wxString buf;
+    wxString ampm;
+
+    dc.SetFont(mono3);
 
     uint8_t hour = state.dateTime.hour;
 
@@ -250,17 +262,37 @@ void TimePanel::Draw(wxDC& dc)
     if (hour == 0)
         hour = 12;
 
+    // Draw the time from the tape machine
+
     buf.Printf(wxT("%1u:%-2.2u %s"),
         hour,
         state.dateTime.min,
         ampm);
+
+    sizeText = dc.GetTextExtent(buf);
+
+    x = dc.FromDIP(10);
+    y = size.GetHeight() - (sizeText.GetHeight() + dc.FromDIP(10));
+
+    dc.DrawText(buf, x, y);
+
+    // Draw the date from the tape machine
 
     buf.Printf(wxT("%u/%u/%4.4u"),
         state.dateTime.month + 1,
         state.dateTime.date + 1,
         state.dateTime.year + 2000);
 
+    sizeText = dc.GetTextExtent(buf);
+
+    x = size.GetWidth() - (sizeText.GetWidth() + dc.FromDIP(10));
+
+    dc.DrawText(buf, x, y);
 #endif
+
+    // ------------------------------------------------------
+	// Overlay any encoder error count over the tape time
+	// ------------------------------------------------------
 
 #if (SHOW_ENCODER_ERRORS > 0)
     if (state.errorCount > 0)

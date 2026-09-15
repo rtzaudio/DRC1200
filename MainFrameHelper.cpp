@@ -363,11 +363,11 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 	switch (mode)
 	{
 	case STC_MODE_HALT:
-		str = wxT("TAPE OUT!");
+		str = wxT("TAPE OUT");
 		break;
 
 	case STC_MODE_THREAD:
-		str = wxT("THREAD TAPE");
+		str = wxT("THREAD");
 		break;
 
 	case STC_MODE_STOP:
@@ -375,17 +375,17 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 		break;
 
 	case STC_MODE_PLAY:
-		str = (msg.transportMode & STC_M_RECORD) ? wxT("RECORD") : wxT("PLAY");
+		str = (msg.transportMode & STC_M_RECORD) ? wxT("REC") : wxT("PLAY");
 		break;
 
 	case STC_MODE_FWD:
-		str = wxT("FORWARD");
+		str = wxT("FWD");
 		if (msg.transportMode & STC_M_LIBWIND)
 			str += wxT(" (LIB)");
 		break;
 
 	case STC_MODE_REW:
-		str = wxT("REWIND");
+		str = wxT("REW");
 		if (msg.transportMode & STC_M_LIBWIND)
 			str += wxT(" (LIB)");
 		break;
