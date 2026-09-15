@@ -351,7 +351,7 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 
 	if (msg.transportMode & STC_M_SEARCH)
 	{
-		str = wxT("SEARCH...");
+		str = wxT("SEARCH");
 		return;
 	}
 	else if (msg.transportMode & STC_M_LOOP)
@@ -381,13 +381,13 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 	case STC_MODE_FWD:
 		str = wxT("FWD");
 		if (msg.transportMode & STC_M_LIBWIND)
-			str += wxT(" (LIB)");
+			str += wxT("(LIB)");
 		break;
 
 	case STC_MODE_REW:
 		str = wxT("REW");
 		if (msg.transportMode & STC_M_LIBWIND)
-			str += wxT(" (LIB)");
+			str += wxT("(LIB)");
 		break;
 
 	default:
