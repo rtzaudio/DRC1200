@@ -1120,7 +1120,25 @@ void MainFrame::OnUpdateConfigurationReset(wxUpdateUIEvent& event)
 
 void MainFrame::OnTransportRecord(wxCommandEvent& WXUNUSED(event))
 {
+	TransportButtonContainer* panel = m_panelLeft->m_panelBottom;
+
 	m_bRecord = (m_bRecord) ? false : true;
+
+	if (!IsConnected())
+	{
+		panel->m_btnRec->SetForegroundColour(wxGetApp().m_colorBtnGrey);
+		panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnDark);
+		return;
+	}
+
+	if (m_bRecord)
+	{
+		panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnRecReady);
+	}
+	else
+	{
+		panel->m_btnRec->SetBackgroundColour(wxGetApp().m_colorBtnFace);
+	}
 }
 
 void MainFrame::OnUpdateUITransportRecord(wxUpdateUIEvent& event)
@@ -2090,16 +2108,22 @@ void MainFrame::OnUpdateUICheckStandbyMon(wxUpdateUIEvent& event)
 void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 	wxAboutDialogInfo info;
+	wxString strVersion;
+	wxString strBuild;
+
+	strVersion.Printf(wxT("%u.%02u"), VERSION_MAJOR, VERSION_MINOR);
+
+	strBuild.Printf(wxT("Version %s Build %u"), strVersion, VERSION_BUILD);
 
 #if defined(__WXMSW__)
-	info.SetIcon(wxIcon(wxT("AAAA_DRC1200")));
+	info.SetIcon(wxIcon("AAAA_DRC1200"));
 #elif defined(__WXMAC__)
-	info.SetIcon(wxIcon(wxT("DRC1200.png")));
+	info.SetIcon(wxIcon("DRC1200.png"));
 #elif defined(__UNIX__)
-	info.SetIcon(wxIcon(wxT("DRC1200.png")));
+	info.SetIcon(wxIcon("DRC1200.png"));
 #endif
 	info.SetName(wxT("DRC1200"));
-	info.SetVersion(wxT("1.07"), wxT("Version 1.07"));
+	info.SetVersion(strVersion, strBuild);
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));
 	info.AddDeveloper(wxT("Robert E Starr, Jr."));
