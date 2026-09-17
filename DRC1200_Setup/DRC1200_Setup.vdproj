@@ -590,7 +590,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DRC1200"
         "ProductCode" = "8:{5B01C02F-A7D7-47A6-8132-4B1DC73E10A8}"
-        "PackageCode" = "8:{14C4954D-1785-471D-97DA-EB5ED6791CAA}"
+        "PackageCode" = "8:{66CBED85-71DD-4CE2-BCB7-BE4D60725F45}"
         "UpgradeCode" = "8:{E34EC84A-D3D9-4F4F-8D2A-C649119E9558}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
