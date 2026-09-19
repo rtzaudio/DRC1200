@@ -1985,7 +1985,7 @@
 1784593657 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
 	"DRC1200.h"
 
-1788748474 /home/bob/Sandbox/DRC1200/DRC1200.h
+1789689338 /home/bob/Sandbox/DRC1200/DRC1200.h
 	"wx/wx.h"
 	"wx/event.h"
 	"wx/sizer.h"
@@ -3955,7 +3955,7 @@
 
 1788815706 /home/bob/Sandbox/DRC1200/ConnectDialog.h
 
-1789186124 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
+1789503659 source:/home/bob/Sandbox/DRC1200/MainFrameHelper.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
