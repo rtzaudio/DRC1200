@@ -3949,7 +3949,7 @@
 
 1782268718 /home/bob/Sandbox/DRC1200/TrackFrame.h
 
-1789000656 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
+1789689338 source:/home/bob/Sandbox/DRC1200/MainFrame.cpp
 	"DRC1200.h"
 	"ConnectDialog.h"
 
@@ -3965,7 +3965,7 @@
 1788483055 source:/home/bob/Sandbox/DRC1200/MainFramePanel.cpp
 	"DRC1200.h"
 
-1789435754 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
+1789788010 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
 	"DRC1200.h"
 
 1783733644 source:/home/bob/Sandbox/DRC1200/STCCommand.cpp
