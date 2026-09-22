@@ -211,7 +211,7 @@ void TimePanel::Draw(wxDC& dc)
 
     xpos = size.GetWidth() - (sizeText.GetWidth() + dc.FromDIP(10));
 
-	dc.DrawText(strMode, xpos, ypos);
+	dc.DrawText(strMode, xpos, ypos >> 1);
 
 	// ------------------------------------------------------
 	// Format and draw SMPTE time string as +h:mm:ss:fn
