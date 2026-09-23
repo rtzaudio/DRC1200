@@ -148,11 +148,11 @@ void TimePanel::Draw(wxDC& dc)
     dc.DrawText(wxT("SEC"), xpos, ypos);
 
     xpos += width;
-    xpos += (width / 2);
+    xpos += (width >> 1);
 
     xpos += (sizeText.GetWidth() >>  1);
 
-    dc.DrawText(wxT("TEN"), xpos, ypos);
+    dc.DrawText(wxT("TEN"), xpos - 3, ypos);
 
     // ------------------------------------------------------
     // Now draw the extra mode display stuff

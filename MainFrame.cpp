@@ -477,7 +477,6 @@ void MainFrame::HandleConnect(void)
 		// Get and check the STC and DTC versions to make sure we are compatible
 
 		wxSocketError err;
-
 		uint32_t rev_stc, rev_dtc;
 
 		rev_stc = rev_dtc = 0;
