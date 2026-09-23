@@ -170,7 +170,7 @@ void TimePanel::Draw(wxDC& dc)
 
     sizeText = dc.GetTextExtent(str);
     xpos = dc.FromDIP(15);
-    ypos = sizeText.GetHeight() + dc.FromDIP(1);
+    ypos = (sizeText.GetHeight() >> 1) + dc.FromDIP(1);
 	dc.DrawText(str, xpos, ypos);
     xpos += sizeText.GetWidth() + xSpace;
 

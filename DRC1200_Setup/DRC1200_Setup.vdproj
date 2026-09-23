@@ -590,7 +590,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DRC1200"
         "ProductCode" = "8:{5B01C02F-A7D7-47A6-8132-4B1DC73E10A8}"
-        "PackageCode" = "8:{AB204872-DF14-4F10-A65F-A3F516875305}"
+        "PackageCode" = "8:{102FC086-FE8E-488D-9147-94BB2E49AC1C}"
         "UpgradeCode" = "8:{E34EC84A-D3D9-4F4F-8D2A-C649119E9558}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -765,7 +765,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_6C80C05C1F634333803C217FBE7D9CFC"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
