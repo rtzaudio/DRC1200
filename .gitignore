@@ -32,3 +32,4 @@ DRC1200.layout
 DRC1200.layout
 DRC1200.depend
 *.layout
+Flatpak/.flatpak-builder/cache/.lock
