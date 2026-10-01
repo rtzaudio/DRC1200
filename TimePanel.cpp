@@ -185,7 +185,7 @@ void TimePanel::Draw(wxDC& dc)
 		else
 			strMode = _T("OFF");
 
-        str.Printf(wxT("SMPTE ") + strMode);
+        str = wxT("SMPTE ") + strMode;
         sizeText = dc.GetTextExtent(str);
         dc.DrawText(str, xpos, ypos);
         xpos += sizeText.GetWidth() + xSpace;

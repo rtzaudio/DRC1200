@@ -8,6 +8,7 @@
 *.idb
 *.depend
 *.layout
+*.flatpak-builder
 
 # Visual Studio files
 .vs/
