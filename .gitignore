@@ -8,6 +8,7 @@
 *.idb
 *.depend
 *.layout
+*.flatpak-builder
 
 # Visual Studio files
 .vs/
@@ -28,8 +29,7 @@ x64/
 Debug/
 Release/
 DRC1200.layout
-*.layout
-DRC1200.layout
 DRC1200.depend
 *.layout
-*.layout
+*.depend
+Flatpak/.flatpak-builder/cache

@@ -148,11 +148,11 @@ void TimePanel::Draw(wxDC& dc)
     dc.DrawText(wxT("SEC"), xpos, ypos);
 
     xpos += width;
-    xpos += (width / 2);
+    xpos += (width >> 1);
 
     xpos += (sizeText.GetWidth() >>  1);
 
-    dc.DrawText(wxT("TEN"), xpos, ypos);
+    dc.DrawText(wxT("TEN"), xpos - 3, ypos);
 
     // ------------------------------------------------------
     // Now draw the extra mode display stuff
@@ -170,7 +170,7 @@ void TimePanel::Draw(wxDC& dc)
 
     sizeText = dc.GetTextExtent(str);
     xpos = dc.FromDIP(15);
-    ypos = sizeText.GetHeight() + dc.FromDIP(1);
+    ypos = (sizeText.GetHeight() >> 1) + dc.FromDIP(1);
 	dc.DrawText(str, xpos, ypos);
     xpos += sizeText.GetWidth() + xSpace;
 
@@ -185,7 +185,7 @@ void TimePanel::Draw(wxDC& dc)
 		else
 			strMode = _T("OFF");
 
-        str.Printf(wxT("SMPTE ") + strMode);
+        str = wxT("SMPTE ") + strMode;
         sizeText = dc.GetTextExtent(str);
         dc.DrawText(str, xpos, ypos);
         xpos += sizeText.GetWidth() + xSpace;
@@ -211,7 +211,7 @@ void TimePanel::Draw(wxDC& dc)
 
     xpos = size.GetWidth() - (sizeText.GetWidth() + dc.FromDIP(10));
 
-	dc.DrawText(strMode, xpos, ypos);
+	dc.DrawText(strMode, xpos, ypos >> 1);
 
 	// ------------------------------------------------------
 	// Format and draw SMPTE time string as +h:mm:ss:fn

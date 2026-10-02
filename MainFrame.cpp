@@ -477,7 +477,6 @@ void MainFrame::HandleConnect(void)
 		// Get and check the STC and DTC versions to make sure we are compatible
 
 		wxSocketError err;
-
 		uint32_t rev_stc, rev_dtc;
 
 		rev_stc = rev_dtc = 0;
@@ -2112,7 +2111,6 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	wxString strBuild;
 
 	strVersion.Printf(wxT("%u.%02u"), VERSION_MAJOR, VERSION_MINOR);
-
 	strBuild.Printf(wxT("Version %s Build %u"), strVersion, VERSION_BUILD);
 
 #if defined(__WXMSW__)
@@ -2122,6 +2120,7 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 #elif defined(__UNIX__)
 	info.SetIcon(wxIcon("DRC1200.png"));
 #endif
+
 	info.SetName(wxT("DRC1200"));
 	info.SetVersion(strVersion, strBuild);
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));

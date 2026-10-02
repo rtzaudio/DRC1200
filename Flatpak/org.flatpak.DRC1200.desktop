@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=DRC1200
+Comment=DRC1200 Application
+Exec=DRC1200
+Icon=org.flatpak.DRC1200
+Terminal=false
+Categories=Utility;
+StartupNotify=true
