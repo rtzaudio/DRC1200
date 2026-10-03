@@ -1985,7 +1985,7 @@
 1784593657 source:/home/bob/Sandbox/DRC1200/DRC1200App.cpp
 	"DRC1200.h"
 
-1789689338 /home/bob/Sandbox/DRC1200/DRC1200.h
+1790828815 /home/bob/Sandbox/DRC1200/DRC1200.h
 	"wx/wx.h"
 	"wx/event.h"
 	"wx/sizer.h"
@@ -3965,7 +3965,7 @@
 1788483055 source:/home/bob/Sandbox/DRC1200/MainFramePanel.cpp
 	"DRC1200.h"
 
-1790197655 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
+1790825347 source:/home/bob/Sandbox/DRC1200/TimePanel.cpp
 	"DRC1200.h"
 
 1783733644 source:/home/bob/Sandbox/DRC1200/STCCommand.cpp
