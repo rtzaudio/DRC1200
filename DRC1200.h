@@ -26,6 +26,7 @@
 #include "wx/overlay.h"
 #include "wx/graphics.h"
 #include "wx/config.h"
+#include "wx/stdpaths.h"
 #include "MainFrame.h"
 #include "TrackFrame.h"
 
@@ -33,7 +34,7 @@
 
 #define VERSION_MAJOR	1
 #define VERSION_MINOR	9
-#define VERSION_BUILD	100
+#define VERSION_BUILD	0
 
 ///////////////////////////////////////////////////////////////////////////////
 // DRC1200App Main Application Class

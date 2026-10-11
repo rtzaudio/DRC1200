@@ -2108,10 +2108,10 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 	wxAboutDialogInfo info;
 	wxString strVersion;
-	wxString strBuild;
+	wxString strLongVersion;
 
-	strVersion.Printf(wxT("%u.%02u"), VERSION_MAJOR, VERSION_MINOR);
-	strBuild.Printf(wxT("Version %s Build %u"), strVersion, VERSION_BUILD);
+	strVersion.Printf(wxT("%u.%u.%u"), VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD);
+	strLongVersion = wxT("Version ") + strVersion;
 
 #if defined(__WXMSW__)
 	info.SetIcon(wxIcon("AAAA_DRC1200"));
@@ -2122,7 +2122,7 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 #endif
 
 	info.SetName(wxT("DRC1200"));
-	info.SetVersion(strVersion, strBuild);
+	info.SetVersion(strVersion, strLongVersion);
 	info.SetDescription(wxT("TCP/IP Remote Control for Ampex MM1200"));
 	info.SetCopyright(wxT("Copyright (C) 2026, RTZ Professional Audio"));
 	info.AddDeveloper(wxT("Robert E Starr, Jr."));

@@ -71,7 +71,17 @@ bool DRC1200App::OnInit()
     wxFileName fname(argv[0]);
     wxString ini_filename;
 
+#ifdef __WXMSW__
+    // Windows: keep the existing behavior (ini next to the exe)
+    wxFileName fname(argv[0]);
     ini_filename = fname.GetPath(wxPATH_GET_VOLUME|wxPATH_GET_SEPARATOR) + _("DRC1200.ini");
+#else
+    // Linux/Flatpak: per-user config directory
+    wxString cfgdir = wxStandardPaths::Get().GetUserConfigDir()
+                      + wxFILE_SEP_PATH + _("DRC1200");
+    wxFileName::Mkdir(cfgdir, 0755, wxPATH_MKDIR_FULL);
+    ini_filename = cfgdir + wxFILE_SEP_PATH + _("DRC1200.ini");
+#endif
 
 	m_pConfig = new wxConfig(_("DRC1200"), wxEmptyString, ini_filename);
 
