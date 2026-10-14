@@ -9,6 +9,10 @@
 
 #include "DRC1200.h"
 
+#ifndef __WXMSW__
+#include "DRC1200.xpm"
+#endif // __WXMSW__
+
 wxIMPLEMENT_APP(DRC1200App);
 
 ///////////////////////////////////////////////////////////////////////////////
