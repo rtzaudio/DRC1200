@@ -1,6 +1,9 @@
 #include "DRC1200.h"
 #include "ConnectDialog.h"
-//#include "DRC1200.xpm"
+
+#ifndef __WXMSW__
+#include "DRC1200.xpm"
+#endif // __WXMSW__
 
 ///////////////////////////////////////////////////////////////////////////////
 // Message Event Dispatch Table
@@ -199,9 +202,11 @@ MainFrame::MainFrame() :
     iconBundle.AddIcon(wxIcon("aaaa_DRC1200", wxBITMAP_TYPE_ICO_RESOURCE));
 #else
     // Loads a standard standalone image file on Linux/Mac
-    iconBundle.AddIcon(wxIcon("DRC1200.png", wxBITMAP_TYPE_PNG));
+    //iconBundle.AddIcon(wxIcon("DRC1200.png", wxBITMAP_TYPE_PNG));
+    iconBundle.AddIcon(DRC1200_xpm);
 #endif
     SetIcons(iconBundle);
+
 
     // Load config parameters
 	wxConfig* config = wxGetApp().GetConfig();
@@ -2118,7 +2123,7 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 #elif defined(__WXMAC__)
 	info.SetIcon(wxIcon("DRC1200.png"));
 #elif defined(__UNIX__)
-	info.SetIcon(wxIcon("DRC1200.png"));
+	info.SetIcon(DRC1200_xpm);
 #endif
 
 	info.SetName(wxT("DRC1200"));

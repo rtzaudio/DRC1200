@@ -9,10 +9,6 @@
 
 #include "DRC1200.h"
 
-#ifndef __WXMSW__
-#include "DRC1200.xpm"
-#endif // __WXMSW__
-
 wxIMPLEMENT_APP(DRC1200App);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -56,8 +52,6 @@ DRC1200App::DRC1200App()
 	m_colorError = *wxRED;
 	m_colorTime = *wxYELLOW;
 	m_colorTimeBkgnd = *wxBLACK;
-
-    //m_colorTime.SetRGB(0x00FF00);
 }
 
 DRC1200App::~DRC1200App()
@@ -71,7 +65,6 @@ DRC1200App::~DRC1200App()
 bool DRC1200App::OnInit()
 {
     // Create the configuration file manager object
-
     wxFileName fname(argv[0]);
     wxString ini_filename;
 
