@@ -1,5 +1,5 @@
 /* XPM */
-static char * DRC1200_64_xpm[] = {
+static const char * DRC1200_64_xpm[] = {
 "64 64 1798 2",
 "  	c None",
 ". 	c #565749",
