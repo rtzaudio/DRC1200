@@ -264,6 +264,7 @@ void MainFrame::UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, bo
     }
     else
     {
+
         if (((m_state.ledMaskButton & mask) != (m_state_prev.ledMaskButton & mask)) || repaint)
         {
             button->SetForegroundColour(wxGetApp().m_colorBtnText);
@@ -275,6 +276,7 @@ void MainFrame::UpdateLocateButtonDelta(LocatorButton* button, uint32_t mask, bo
         }
     }
 }
+
 
 void MainFrame::UpdateCueButtonDelta(LocatorButton* button, uint32_t mask, int cueIndex, bool repaint)
 {

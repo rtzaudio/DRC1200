@@ -166,32 +166,30 @@ void MainFrame::CreateMenuBar(void)
 	// Create LOCATE menu items
 
 	wxMenu* menuLocate = new wxMenu;
-	wxMenu* submenuSearch = new wxMenu;
+	wxMenu* submenuCuePoint = new wxMenu;
 
-	submenuSearch->Append(ID_CUEPOINT_LOC0, wxT("LOC &0\tAlt+0"));
-	submenuSearch->Append(ID_CUEPOINT_LOC1, wxT("LOC &1\tAlt+1"));
-	submenuSearch->Append(ID_CUEPOINT_LOC2, wxT("LOC &2\tAlt+2"));
-	submenuSearch->Append(ID_CUEPOINT_LOC3, wxT("LOC &3\tAlt+3"));
-	submenuSearch->Append(ID_CUEPOINT_LOC4, wxT("LOC &4\tAlt+4"));
-	submenuSearch->Append(ID_CUEPOINT_LOC5, wxT("LOC &5\tAlt+5"));
-	submenuSearch->Append(ID_CUEPOINT_LOC6, wxT("LOC &6\tAlt+6"));
-	submenuSearch->Append(ID_CUEPOINT_LOC7, wxT("LOC &7\tAlt+7"));
-	submenuSearch->Append(ID_CUEPOINT_LOC8, wxT("LOC &8\tAlt+8"));
-	submenuSearch->Append(ID_CUEPOINT_LOC9, wxT("LOC &9\tAlt+9"));
-	submenuSearch->AppendSeparator();
-	submenuSearch->Append(ID_SEARCH_MARKIN, wxT("Mark In"));
-	submenuSearch->Append(ID_SEARCH_MARKOUT, wxT("Mark Out"));
-	submenuSearch->AppendSeparator();
-	submenuSearch->Append(ID_SEARCH_PUNCHIN, wxT("Punch In"));
-	submenuSearch->Append(ID_SEARCH_PUNCHOUT, wxT("Punch Out"));
-	submenuSearch->AppendSeparator();
-	submenuSearch->Append(ID_SEARCH_ZERORETURN, wxT("Zero Return"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC0, wxT("LOC &0\tAlt+0"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC1, wxT("LOC &1\tAlt+1"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC2, wxT("LOC &2\tAlt+2"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC3, wxT("LOC &3\tAlt+3"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC4, wxT("LOC &4\tAlt+4"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC5, wxT("LOC &5\tAlt+5"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC6, wxT("LOC &6\tAlt+6"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC7, wxT("LOC &7\tAlt+7"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC8, wxT("LOC &8\tAlt+8"));
+	submenuCuePoint->Append(ID_CUEPOINT_LOC9, wxT("LOC &9\tAlt+9"));
+	submenuCuePoint->AppendSeparator();
+	submenuCuePoint->Append(ID_SEARCH_MARKIN, wxT("Mark In"));
+	submenuCuePoint->Append(ID_SEARCH_MARKOUT, wxT("Mark Out"));
+	submenuCuePoint->AppendSeparator();
+	submenuCuePoint->Append(ID_SEARCH_PUNCHIN, wxT("Punch In"));
+	submenuCuePoint->Append(ID_SEARCH_PUNCHOUT, wxT("Punch Out"));
 
 	menuLocate->Append(ID_LOCATOR_CUEMODE, wxT("&Cue Mode\tShift+Ctrl+C"));
 	menuLocate->Append(ID_LOCATOR_STOREMODE, wxT("&Store Mode\tShift+Ctrl+S"));
 	menuLocate->AppendSeparator();
-	menuLocate->Append(ID_LOCATOR_SEARCH, wxT("Search"), submenuSearch);
-	menuLocate->Append(ID_LOCATOR_CANCELSEARCH, wxT("Cancel Search\tCtrl+X"));
+	menuLocate->Append(ID_LOCATOR_CUEPOINT, wxT("Cue Point"), submenuCuePoint);
+	menuLocate->AppendCheckItem(ID_LOCATOR_AUTOPLAY, wxT("Auto Play"));
 	menuLocate->AppendSeparator();
 	menuLocate->Append(ID_LOCATOR_AUTOLOOP, wxT("Auto-Loop"));
 	menuLocate->Append(ID_LOCATOR_MARKIN, wxT("Mark In"));
@@ -202,8 +200,10 @@ void MainFrame::CreateMenuBar(void)
 	menuLocate->Append(ID_LOCATOR_PUNCHOUT, wxT("Punch Out"));
 	menuLocate->AppendSeparator();
 	menuLocate->Append(ID_LOCATOR_RESETCOUNTER, wxT("&Zero Reset Counter\tCtrl+Z"));
+	menuLocate->Append(ID_LOCATOR_ZERORETURN, wxT("Zero Return"));
+
 	menuLocate->AppendSeparator();
-	menuLocate->AppendCheckItem(ID_LOCATOR_AUTOPLAY, wxT("Auto Play"));
+	menuLocate->Append(ID_LOCATOR_CANCELSEARCH, wxT("Cancel Search\tCtrl+X"));
 
 	// Create MEMORY menu items
 

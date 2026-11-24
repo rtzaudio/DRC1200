@@ -131,8 +131,8 @@ EVT_UPDATE_UI(ID_CUEPOINT_PUNCHIN, MainFrame::OnUpdateCuePunchIn)
 EVT_MENU(ID_CUEPOINT_PUNCHOUT, MainFrame::OnCuePunchOut)
 EVT_UPDATE_UI(ID_CUEPOINT_PUNCHOUT, MainFrame::OnUpdateCuePunchOut)
 // Search Menu
-EVT_MENU(ID_SEARCH_ZERORETURN, MainFrame::OnLocatorZeroreturn)
-EVT_UPDATE_UI(ID_SEARCH_ZERORETURN, MainFrame::OnUpdateLocatorZeroreturn)
+EVT_MENU(ID_LOCATOR_ZERORETURN, MainFrame::OnLocatorZeroreturn)
+EVT_UPDATE_UI(ID_LOCATOR_ZERORETURN, MainFrame::OnUpdateLocatorZeroreturn)
 EVT_MENU(ID_LOCATOR_CANCELSEARCH, MainFrame::OnLocatorCancelsearch)
 EVT_UPDATE_UI(ID_LOCATOR_CANCELSEARCH, MainFrame::OnUpdateLocatorCancelsearch)
 // Memory Menu

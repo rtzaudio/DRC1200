@@ -201,7 +201,7 @@ RightContainer::RightContainer(wxWindow* parent)
 	m_btnDigit7     = new LocatorButton(panel, ID_CUEPOINT_LOC7, wxT("7"));
 	m_btnDigit8     = new LocatorButton(panel, ID_CUEPOINT_LOC8, wxT("8"));
 	m_btnDigit9     = new LocatorButton(panel, ID_CUEPOINT_LOC9, wxT("9"));
-    m_btnZeroReturn = new LocatorButton(panel, ID_SEARCH_ZERORETURN, wxT("RTZ"));
+    m_btnZeroReturn = new LocatorButton(panel, ID_LOCATOR_ZERORETURN, wxT("RTZ"));
 	m_btnCueMode    = new LocatorButton(panel, ID_LOCATOR_CUEMODE, wxT("CUE"));
 	m_btnStoreMode  = new LocatorButton(panel, ID_LOCATOR_STOREMODE, wxT("STO"));
 	m_btnAutoPunch  = new LocatorButton(panel, ID_LOCATOR_AUTOPUNCH, wxT("Auto\nPunch"));
