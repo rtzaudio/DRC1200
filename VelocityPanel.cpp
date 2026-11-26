@@ -1,13 +1,15 @@
 #include "DRC1200.h"
 
+#include <memory>
+#include <cmath>
+#include <algorithm>
+#include <wx/dcbuffer.h>
+#include <wx/graphics.h>
+
 #define DRAW_BUFFERED	1
 
-// Standard DC supports drawing with alpha on OSX and GTK3.
-#if defined(__WXOSX__) || defined(__WXGTK3__)
-#define wxDRAWING_DC_SUPPORTS_ALPHA 1
-#else
-#define wxDRAWING_DC_SUPPORTS_ALPHA 0
-#endif // __WXOSX__ || __WXGTK3__
+// Alpha (0-255) of the velocity plot line. Lower = more transparent.
+#define PLOT_ALPHA		0x60
 
 wxBEGIN_EVENT_TABLE(VelocityPanel, wxPanel)
 EVT_PAINT(VelocityPanel::OnPaint)
@@ -23,15 +25,13 @@ VelocityPanel::VelocityPanel(wxPanel* parent)
 	wxGetApp().m_panelVelocity = this;
 
 #if DRAW_BUFFERED > 0
-    // 1. Set background style to PAINT to prevent default erasing
-    SetBackgroundStyle(wxBG_STYLE_PAINT);
+	// Set background style to PAINT to prevent default erasing
+	SetBackgroundStyle(wxBG_STYLE_PAINT);
 #endif
-	m_colorPanel = wxColor(wxT("#444444"));
-	m_colorGrid	 = wxColor(wxT("#707070"));
-	m_colorPlot	 = wxColor(wxT("#3CB371"));
-    m_colorLine  = wxColor(wxT("#000000"));
-
-    m_colorPlot.SetRGBA(0x2071B33C);
+	m_colorPanel = wxColour(0x44, 0x44, 0x44);
+	m_colorGrid  = wxColour(0x70, 0x70, 0x70);
+	m_colorPlot  = wxColour(0x3C, 0xB3, 0x71, PLOT_ALPHA);	// medium sea green w/ alpha
+	m_colorLine  = wxColour(0x00, 0x00, 0x00);
 }
 
 void VelocityPanel::OnSize(wxSizeEvent& event)
@@ -43,13 +43,25 @@ void VelocityPanel::OnSize(wxSizeEvent& event)
 void VelocityPanel::OnPaint(wxPaintEvent& event)
 {
 #if DRAW_BUFFERED > 0
-    // 2. Create the DC. It automatically handles buffering.
-    wxAutoBufferedPaintDC dc(this);
+	wxAutoBufferedPaintDC dc(this);
 #else
 	wxPaintDC dc(this);
 #endif
 	PrepareDC(dc);
-	Draw(dc);
+
+	// The graphics context must be destroyed before the DC so that
+	// everything is flushed into the (buffered) DC. unique_ptr declared
+	// after dc guarantees that order.
+	std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
+
+	if (gc)
+	{
+		gc->SetAntialiasMode(wxANTIALIAS_DEFAULT);
+		gc->SetInterpolationQuality(wxINTERPOLATION_DEFAULT);
+		gc->SetCompositionMode(wxCOMPOSITION_OVER);	// normal alpha blending
+
+		Draw(gc.get());
+	}
 
 	event.Skip();
 }
@@ -58,82 +70,92 @@ void VelocityPanel::OnEraseBackground(wxEraseEvent& event)
 {
 }
 
-void VelocityPanel::Draw(wxDC& dc)
+void VelocityPanel::Draw(wxGraphicsContext* gc)
 {
 	wxSize size = GetClientSize();
 
 	MainFrame* mainframe = wxGetApp().GetMainFrame();
 
-	wxBrush brush(m_colorPanel);
+	// Opaque panel background
+	gc->SetPen(*wxTRANSPARENT_PEN);
+	gc->SetBrush(wxBrush(m_colorPanel));
+	gc->DrawRectangle(0, 0, size.GetWidth(), size.GetHeight());
 
-	dc.SetPen(*wxTRANSPARENT_PEN);
-	dc.SetBrush(brush);
-	dc.DrawRectangle(0, 0, size.GetWidth(), size.GetHeight());
-
-	DrawGrid(dc);
+	DrawGrid(gc);
 
 	if (mainframe->IsConnected())
-        PlotVelocity(dc);
+		PlotVelocity(gc);
 }
 
-void VelocityPanel::DrawGrid(wxDC& dc)
+void VelocityPanel::DrawGrid(wxGraphicsContext* gc)
 {
 	wxSize size = GetClientSize();
 
-	wxPen pen(m_colorGrid);
+	const double h = size.GetHeight();
+	const double w = size.GetWidth();
 
-    dc.SetPen(pen);
-	dc.SetBrush(*wxTRANSPARENT_BRUSH);
+	gc->SetPen(wxPen(m_colorGrid, 1));
+	gc->SetBrush(*wxTRANSPARENT_BRUSH);
 
-	dc.DrawRectangle(0, 0, size.GetWidth(), size.GetHeight());
+	// Snap lines to pixel centers (+0.5) so 1px lines stay crisp
+	// with antialiasing enabled.
 
-	float h = size.GetHeight();
-	float w = size.GetWidth();
+	wxGraphicsPath path = gc->CreatePath();
 
-	// draw vertical grid lines
+	// outer border
+	path.AddRectangle(0.5, 0.5, w - 1.0, h - 1.0);
+
+	// vertical grid lines
 	for (int i = 0; i < 10; i++)
 	{
-		int x = (w / 11) * (i + 1);
-		dc.DrawLine(x, 0, x, h);
+		double x = std::floor((w / 11.0) * (i + 1)) + 0.5;
+		path.MoveToPoint(x, 0.0);
+		path.AddLineToPoint(x, h);
 	}
 
-	// draw horizontal grid lines
+	// horizontal grid lines
 	for (int i = 0; i < 3; i++)
 	{
-		int y = (h / 4) * (i + 1);
-		dc.DrawLine(0, y, w, y);
+		double y = std::floor((h / 4.0) * (i + 1)) + 0.5;
+		path.MoveToPoint(0.0, y);
+		path.AddLineToPoint(w, y);
 	}
+
+	gc->StrokePath(path);
 }
 
-void VelocityPanel::PlotVelocity(wxDC& dc)
+void VelocityPanel::PlotVelocity(wxGraphicsContext* gc)
 {
 	MainFrame* mainframe = wxGetApp().GetMainFrame();
 
 	STC_STATE_MSG& state = mainframe->GetTransportState();
 
 	if (state.tapeVelocity == 0)
-        return;
+		return;
 
 	wxRect rect = GetClientRect();
 
-	// Now plot the velocity graph data
+	// Inset by one pixel so we don't overwrite the grid border
 
 	rect.x += 1;
 	rect.y += 1;
 	rect.width -= 2;
 	rect.height -= 2;
 
-	float step = (float)rect.width / (float)MAX_VEL_SAMPLES;
+	const double step    = (double)rect.width / (double)MAX_VEL_SAMPLES;
+	const double yBottom = (double)rect.GetBottom() + 1.0;
+	const double yTop    = (double)rect.GetTop();
+	const double yRange  = (yBottom - 1.0) - yTop;
 
-    wxPen penPlot(m_colorPlot);
-    wxPen penLine(m_colorLine, 3);
+	// Build every velocity spike into ONE path and stroke it once. A single
+	// stroke is blended as a unit, so neighboring/overlapping spikes do not
+	// double-darken where they touch. Pen width equals the sample pitch
+	// (min 1px) with butt caps so the spikes tile into a continuous plot.
 
-    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+	wxGraphicsPath path = gc->CreatePath();
 
 	for (size_t i = 0; i < MAX_VEL_SAMPLES; i++)
 	{
-		float x = (float)i * step;
-
 		float v = mainframe->GetVelocitySample(i);
 
 		if (v <= 0.0f)
@@ -142,54 +164,58 @@ void VelocityPanel::PlotVelocity(wxDC& dc)
 		if (v > 100.0f)
 			v = 100.0f;
 
-		float y2 = (float)rect.GetTop();
-		float y1 = (float)rect.GetBottom() - 1;
+		const double x = rect.GetLeft() + ((double)i + 0.5) * step;
+		const double y = (yBottom - 1.0) - (yRange * (double)v * 0.01);
 
-		float val = (float)v * 0.01f;
-
-		float y = ((y2 - y1) * val) + y1;
-
-        wxPoint pt1(rect.GetLeft() + x, rect.GetBottom());
-        wxPoint pt2(rect.GetLeft() + x, y);
-
-        dc.SetPen(penPlot);
-		dc.DrawLine(pt1, pt2);
-
-		// Now draw black line indicating progress
-
-		if (state.searching)
-		{
-			int x1 = rect.GetLeft();
-			int x2 = rect.GetRight();
-
-			float progress = (float)state.searchProgress * 0.01f;
-
-			float x = ((x2 - x1) * progress) + x1;
-
-			if (x > x2)
-				x = x2;
-
-			if (x < x1)
-				x = x1;
-
-            dc.SetPen(penLine);
-            dc.DrawLine(x, rect.GetTop(), x, rect.GetBottom());
-		}
+		path.MoveToPoint(x, yBottom);
+		path.AddLineToPoint(x, y);
 	}
 
-    // Display any quadrature encoder errors.
+	wxGraphicsPenInfo penInfo(m_colorPlot);
+	penInfo.Width(std::max(step, 1.0)).Cap(wxCAP_BUTT);
 
-    if (state.errorCount > 0)
+	gc->SetPen(gc->CreatePen(penInfo));
+	gc->SetBrush(*wxTRANSPARENT_BRUSH);
+	gc->StrokePath(path);
+
+	// Now draw black line indicating search progress. (Drawn once, after the
+	// plot, rather than once per sample inside the loop.)
+
+	if (state.searching)
 	{
-        wxString str;
-        str.Printf(wxT("ENCODER\nERRORS %u"), state.errorCount);
-        wxSize sizeText = dc.GetTextExtent(str);
+		const double x1 = rect.GetLeft();
+		const double x2 = rect.GetRight();
 
-		wxCoord xpos = (rect.GetWidth() >> 1) - (sizeText.GetWidth() >> 1);
-        wxCoord ypos = (rect.GetHeight() >> 1) - (sizeText.GetHeight() >> 1);
+		double progress = (double)state.searchProgress * 0.01;
+		double x = ((x2 - x1) * progress) + x1;
 
-        dc.SetTextForeground(wxGetApp().m_colorError);
+		if (x > x2)
+			x = x2;
 
-        dc.DrawText(str, xpos, ypos);
+		if (x < x1)
+			x = x1;
+
+		gc->SetPen(gc->CreatePen(wxGraphicsPenInfo(m_colorLine).Width(3.0)));
+		gc->StrokeLine(x, rect.GetTop(), x, rect.GetBottom());
+	}
+
+	// Display any quadrature encoder errors.
+
+	if (state.errorCount > 0)
+	{
+		const wxString line1 = wxT("ENCODER");
+		const wxString line2 = wxString::Format(wxT("ERRORS %u"), (unsigned)state.errorCount);
+
+		gc->SetFont(GetFont(), wxGetApp().m_colorError);
+
+		double w1, h1, w2, h2;
+		gc->GetTextExtent(line1, &w1, &h1);
+		gc->GetTextExtent(line2, &w2, &h2);
+
+		const double cx = rect.GetWidth() / 2.0;
+		const double y0 = (rect.GetHeight() - (h1 + h2)) / 2.0;
+
+		gc->DrawText(line1, cx - w1 / 2.0, y0);
+		gc->DrawText(line2, cx - w2 / 2.0, y0 + h1);
 	}
 }

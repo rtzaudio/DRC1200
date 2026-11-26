@@ -2,6 +2,8 @@
 
 #define MAX_VEL_SAMPLES	500
 
+class wxGraphicsContext;
+
 ///////////////////////////////////////////////////////////////////////////////
 // Sub panels of tape transport panel
 
@@ -13,9 +15,9 @@ public:
 	void OnPaint(wxPaintEvent& WXUNUSED(event));
 	void OnEraseBackground(wxEraseEvent& event);
 	void OnSize(wxSizeEvent& event);
-	void Draw(wxDC& dc);
-	void DrawGrid(wxDC& dc);
-	void PlotVelocity(wxDC& dc);
+	void Draw(wxGraphicsContext* gc);
+	void DrawGrid(wxGraphicsContext* gc);
+	void PlotVelocity(wxGraphicsContext* gc);
 
 private:
 	wxPanel* m_owner;
