@@ -5,6 +5,7 @@
 #include "res/DRC1200_16.xpm"
 #include "res/DRC1200_32.xpm"
 #include "res/DRC1200_64.xpm"
+#include "res/org.flatpak.DRC1200.xpm"
 #endif // __WXMSW__
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2124,9 +2125,9 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 #if defined(__WXMSW__)
 	info.SetIcon(wxIcon("AAAA_DRC1200"));
 #elif defined(__WXMAC__)
-	info.SetIcon(wxIcon("DRC1200.png"));
+	info.SetIcon(wxIcon("org.flatpak.DRC1200.png"));
 #elif defined(__UNIX__)
-	info.SetIcon(wxIcon(DRC1200_64_xpm));
+	info.SetIcon(wxIcon(org_flatpak_DRC1200_xpm));
 #endif
 
 	info.SetName(wxT("DRC1200"));
