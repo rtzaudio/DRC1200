@@ -179,16 +179,31 @@ void TimePanel::Draw(wxDC& dc)
 	    wxString strMode;
 
 		if (state.smpteMode == 1)
+		{
 			strMode = _T("STRIPE");
+
+			// if striping and in record, highlight text in red
+			// to indicate timecode is being recorded to tape.
+
+			if (mainframe->IsTransportModeFlags(STC_M_RECORD))
+				dc.SetTextForeground(wxGetApp().m_colorError);
+
+		}
 		else if (state.smpteMode == 2)
+		{
 			strMode = _T("SLAVE");
+		}
 		else
+		{
 			strMode = _T("OFF");
+		}
 
         str = wxT("SMPTE ") + strMode;
         sizeText = dc.GetTextExtent(str);
         dc.DrawText(str, xpos, ypos);
         xpos += sizeText.GetWidth() + xSpace;
+
+		dc.SetTextForeground(colorText);
 	}
 
 	// Display current transport mode string

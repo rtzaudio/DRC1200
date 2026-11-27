@@ -1668,7 +1668,15 @@ void MainFrame::OnUpdateCuePunchOut(wxUpdateUIEvent& event)
 
 void MainFrame::OnLocatorZeroreturn(wxCommandEvent& WXUNUSED(event))
 {
-	GetSocketCommand().LocatorZeroReturn();
+	uint32_t flags = 0;
+
+	if (IsAutoPlay())
+		flags |= STC_CF_AUTO_PLAY;
+
+	if (IsRecord())
+		flags |= STC_CF_AUTO_REC;
+
+	GetSocketCommand().LocatorZeroReturn(flags);
 }
 
 void MainFrame::OnUpdateLocatorZeroreturn(wxUpdateUIEvent& event)

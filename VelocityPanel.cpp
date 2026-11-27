@@ -9,7 +9,7 @@
 #define DRAW_BUFFERED	1
 
 // Alpha (0-255) of the velocity plot line. Lower = more transparent.
-#define PLOT_ALPHA		150
+#define PLOT_ALPHA		140
 
 wxBEGIN_EVENT_TABLE(VelocityPanel, wxPanel)
 EVT_PAINT(VelocityPanel::OnPaint)
@@ -40,6 +40,10 @@ void VelocityPanel::OnSize(wxSizeEvent& event)
 	Layout();
 }
 
+void VelocityPanel::OnEraseBackground(wxEraseEvent& event)
+{
+}
+
 void VelocityPanel::OnPaint(wxPaintEvent& event)
 {
 #if DRAW_BUFFERED > 0
@@ -65,10 +69,6 @@ void VelocityPanel::OnPaint(wxPaintEvent& event)
 	}
 
 	event.Skip();
-}
-
-void VelocityPanel::OnEraseBackground(wxEraseEvent& event)
-{
 }
 
 void VelocityPanel::Draw(wxGraphicsContext* gc)
@@ -130,9 +130,6 @@ void VelocityPanel::PlotVelocity(wxGraphicsContext* gc)
 	MainFrame* mainframe = wxGetApp().GetMainFrame();
 
 	STC_STATE_MSG& state = mainframe->GetTransportState();
-
-	if (state.tapeVelocity == 0)
-		return;
 
 	wxRect rect = GetClientRect();
 

@@ -278,7 +278,7 @@ typedef struct _STC_STATE_MSG {
 /* STC_STATE_MSG.hardwareFlags status bit flags. These flags
  * indicate the status of optional hardware systems supported.
  */
-#define STC_HF_NONE         0x00        /* no cue point stored addr   */
+#define STC_HF_NONE         0x00        /* no H/W options found       */
 #define STC_HF_RTC          0x01        /* external RTC clock found   */
 #define STC_HF_DCS          0x02        /* DCS channel switcher       */
 #define STC_HF_SMPTE        0x04        /* SMPTE daughter card        */
