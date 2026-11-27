@@ -9,7 +9,7 @@
 #define DRAW_BUFFERED	1
 
 // Alpha (0-255) of the velocity plot line. Lower = more transparent.
-#define PLOT_ALPHA		0x60
+#define PLOT_ALPHA		150
 
 wxBEGIN_EVENT_TABLE(VelocityPanel, wxPanel)
 EVT_PAINT(VelocityPanel::OnPaint)
@@ -31,7 +31,7 @@ VelocityPanel::VelocityPanel(wxPanel* parent)
 	m_colorPanel = wxColour(0x44, 0x44, 0x44);
 	m_colorGrid  = wxColour(0x70, 0x70, 0x70);
 	m_colorPlot  = wxColour(0x3C, 0xB3, 0x71, PLOT_ALPHA);	// medium sea green w/ alpha
-	m_colorLine  = wxColour(0x00, 0x00, 0x00);
+	m_colorLine  = wxColour(0x00, 0x00, 0x00, PLOT_ALPHA);	// the black progress line in search mode
 }
 
 void VelocityPanel::OnSize(wxSizeEvent& event)
@@ -51,7 +51,8 @@ void VelocityPanel::OnPaint(wxPaintEvent& event)
 
 	// The graphics context must be destroyed before the DC so that
 	// everything is flushed into the (buffered) DC. unique_ptr declared
-	// after dc guarantees that order.
+	// after dc guarantees that order!
+
 	std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
 
 	if (gc)
