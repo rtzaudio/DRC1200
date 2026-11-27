@@ -137,6 +137,8 @@ EVT_UPDATE_UI(ID_LOCATOR_ZERORETURN, MainFrame::OnUpdateLocatorZeroreturn)
 EVT_MENU(ID_LOCATOR_CANCELSEARCH, MainFrame::OnLocatorCancelsearch)
 EVT_UPDATE_UI(ID_LOCATOR_CANCELSEARCH, MainFrame::OnUpdateLocatorCancelsearch)
 // Memory Menu
+EVT_MENU_RANGE(ID_EDITTIME_LOC0, ID_EDITTIME_RTZ, MainFrame::OnRangeMemoryEditTime)
+EVT_UPDATE_UI_RANGE(ID_EDITTIME_LOC0, ID_EDITTIME_RTZ, MainFrame::OnUpdateRangeMemoryEditTime)
 EVT_MENU(ID_MEMORY_CLEARALL, MainFrame::OnMemoryClearAll)
 EVT_UPDATE_UI(ID_MEMORY_CLEARALL, MainFrame::OnUpdateMemoryClearAll)
 // SMPTE Menu
@@ -1897,6 +1899,64 @@ void MainFrame::OnUpdateLocatorPunchOut(wxUpdateUIEvent& event)
 ///////////////////////////////////////////////////////////////////////////////
 // MEMORY Menu Handlers
 
+void MainFrame::OnRangeMemoryEditTime(wxCommandEvent& event)
+{
+	int pos;
+	uint32_t cuestate;
+	TAPETIME tt;
+	CEditTapeTimeDlg dlg(this);
+
+	// Should be 30 or 15 IPS
+	float speed = GetTapeSpeed();
+
+	// Id's ID_EDITCUEPOINT_LOC0 to ID_EDITCUEPOINT_RTZ
+	// must be in sequential ascending order.
+
+	int index = event.GetId() - ID_EDITTIME_LOC0;
+
+	if ((index < 0) || (index >= STC_MAX_CUE_POINTS))
+		return;
+
+	if (!IsConnected())
+		return;
+
+	GetSocketCommand().CuePointGet(index, &pos, &cuestate);
+
+	// Convert position to tape tape h:mm:ss
+	PositionToTapeTime(pos, speed, &tt);
+
+	dlg.m_nHour = tt.hour;
+	dlg.m_nMins = tt.mins;
+	dlg.m_nSecs = tt.secs;
+	dlg.m_nTens = tt.tens;
+	dlg.m_bActive = (cuestate & STC_CF_ACTIVE) ? 1 : 0;
+	dlg.m_nMemIndex = index;
+
+	// Prompt the edit time dialog
+    if (dlg.ShowModal() == wxID_OK)
+	{
+		tt.hour = dlg.m_nHour;
+		tt.mins = dlg.m_nMins;
+		tt.secs = dlg.m_nSecs;
+		tt.tens = dlg.m_nTens;
+
+		if (dlg.m_bActive)
+			cuestate |= STC_CF_ACTIVE;
+		else
+			cuestate &= ~(STC_CF_ACTIVE);
+
+		// Convert tape time h:mm:ss to position
+		TapeTimeToPosition(&tt, speed, &pos);
+
+		GetSocketCommand().CuePointSet(index, pos, cuestate);
+	}
+}
+
+void MainFrame::OnUpdateRangeMemoryEditTime(wxUpdateUIEvent& event)
+{
+	event.Enable(IsConnected());
+}
+
 void MainFrame::OnMemoryClearAll(wxCommandEvent& WXUNUSED(event))
 {
     wxString str("Clear all cue point memories?\n\nAll cue points will be reset and cleared!");
@@ -2009,24 +2069,20 @@ void MainFrame::OnUpdateGeneratorResume(wxUpdateUIEvent& event)
 
 void MainFrame::OnGeneratorEdittime(wxCommandEvent& event)
 {
-#if 0
-	INT_PTR rc;
-	CEditSMPTETimeDlg dlg;
+    CEditSMPTETimeDlg dlg(this);
 
-	dlg.m_nHour = m_smpteHour;
+    dlg.m_nHour = m_smpteHour;
 	dlg.m_nMins = m_smpteMins;
 	dlg.m_nSecs = m_smpteSecs;
 	dlg.m_nFrame = m_smpteFrame;
 
-	// Prompt the edit time dialog
-	if ((rc = dlg.DoModal()) == IDOK)
-	{
-		m_smpteHour = dlg.m_nHour;
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        m_smpteHour = dlg.m_nHour;
 		m_smpteMins = dlg.m_nMins;
 		m_smpteSecs = dlg.m_nSecs;
 		m_smpteFrame = dlg.m_nFrame;
-	}
-#endif
+    }
 }
 
 void MainFrame::OnUpdateGeneratorEdittime(wxUpdateUIEvent& event)

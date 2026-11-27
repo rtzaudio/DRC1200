@@ -33,8 +33,8 @@
 #include "STC1200TCP.h"
 
 #define VERSION_MAJOR	1
-#define VERSION_MINOR	10
-#define VERSION_BUILD	0
+#define VERSION_MINOR	11
+#define VERSION_BUILD	100
 
 ///////////////////////////////////////////////////////////////////////////////
 // DRC1200App Main Application Class

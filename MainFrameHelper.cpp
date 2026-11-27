@@ -397,3 +397,87 @@ void MainFrame::GetModeText(STC_STATE_MSG& msg, wxString& str)
 		break;
 	}
 }
+
+// =========================================================================
+// Convert absolute encoder position to tape time units.
+
+#define INV_ROLLER_TICKS_PER_REV    (1.0f / ROLLER_TICKS_PER_REV_F)
+
+void MainFrame::PositionToTapeTime(int tapePosition, float tapeSpeed, TAPETIME* tapeTime)
+{
+	/* Get the current encoder position */
+	//float position = fabsf((float)tapePosition);
+	float position = (float)tapePosition;
+
+	/* Calculate the number of revolutions from the position */
+	//float revolutions = position / ROLLER_TICKS_PER_REV_F;
+	float revolutions = position * INV_ROLLER_TICKS_PER_REV;
+
+	/* Calculate the distance in inches based on the number of revolutions */
+	float distance = revolutions * ROLLER_CIRCUMFERENCE_F;
+
+	/* Get the current speed setting */
+	float invspeed = (1.0f / tapeSpeed);
+
+	/* Finally, calculate the time in seconds from the distance */
+	float seconds = distance * invspeed;
+
+	/* Convert the total seconds value into binary H:MM:SS:T values */
+	SecondsToTapeTime(seconds, tapeTime);
+}
+
+// =========================================================================
+// Convert tape time to absolute encoder position units.
+
+void MainFrame::TapeTimeToPosition(TAPETIME* tapeTime, float tapeSpeed, int* tapePosition)
+{
+	float time;
+
+	/* Convert tape to total seconds */
+	TapeTimeToSeconds(tapeTime, &time);
+
+	/* Calculate the distance in inches */
+	float distance = tapeSpeed * time;
+
+	float position = (distance / ROLLER_CIRCUMFERENCE_F) * ROLLER_TICKS_PER_REV_F;
+
+	*tapePosition = (int)position;
+}
+
+// =========================================================================
+// This function takes a 32-bit time value in total seconds and
+// calculates the hours, minutes and seconds members.
+
+#define SECS_DAY    (24L * 60L * 60L)
+
+void MainFrame::SecondsToTapeTime(float time, TAPETIME* p)
+{
+	float ftime = fabsf(time);
+
+	uint32_t dayclock = (uint32_t)ftime % SECS_DAY;
+
+	float intpart;
+	float fractpart = modff(ftime, &intpart);
+
+	p->hour = (uint8_t)(dayclock / 3600);
+	p->mins = (uint8_t)((dayclock % 3600) / 60);
+	p->secs = (uint8_t)(dayclock % 60);
+	p->tens = (uint8_t)(fractpart * 10.0f);
+	p->frame = (uint8_t)(fractpart * 30.0f);
+	p->flags = (time < 0.0f) ? 0 : F_TAPETIME_PLUS;
+}
+
+void MainFrame::TapeTimeToSeconds(TAPETIME* p, float* time)
+{
+	float secs;
+
+	secs = (float)(p->hour * 3600);
+	secs += (float)(p->mins % 3600) * 60.0f;
+	secs += (float)(p->secs % 60);
+	secs += (float)(p->tens % 10) * 0.10f;
+	//secs += (float)(p->frame % 30) * (1.0f/30.0f);
+
+	*time = secs + 0.1f;
+}
+
+// End-Of-File

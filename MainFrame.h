@@ -3,6 +3,9 @@
 #include "TimePanel.h"
 #include "VelocityPanel.h"
 #include "STCCommand.h"
+//Dialogs
+#include "EditSMPTETimeDlg.h"
+#include "EditTapeTimeDlg.h"
 
 #define MAX_VEL_SAMPLES	500
 
@@ -205,6 +208,11 @@ public:
 
     void GetModeText(STC_STATE_MSG& msg, wxString& str);
 
+    void PositionToTapeTime(int tapePosition, float tapeSpeed, TAPETIME* tapeTime);
+    void TapeTimeToPosition(TAPETIME* tapeTime, float tapeSpeed, int* tapePosition);
+    void SecondsToTapeTime(float time, TAPETIME* p);
+    void TapeTimeToSeconds(TAPETIME* p, float* time);
+
 private:
 	void CreateMenuBar(void);
 	bool ConnectionOpen(wxSockAddress::Family family, wxString hostname);
@@ -398,6 +406,9 @@ private:
 
     void OnMemoryClearAll(wxCommandEvent& WXUNUSED(event));
     void OnUpdateMemoryClearAll(wxUpdateUIEvent& event);
+
+    void OnRangeMemoryEditTime(wxCommandEvent& event);
+    void OnUpdateRangeMemoryEditTime(wxUpdateUIEvent& event);
 
     void OnGeneratorStop(wxCommandEvent& event);
     void OnUpdateGeneratorStop(wxUpdateUIEvent& event);

@@ -41,6 +41,10 @@
 		<Unit filename="ConnectDialog.h" />
 		<Unit filename="DRC1200.h" />
 		<Unit filename="DRC1200App.cpp" />
+		<Unit filename="EditSMPTETimeDlg.cpp" />
+		<Unit filename="EditSMPTETimeDlg.h" />
+		<Unit filename="EditTapeTimeDlg.cpp" />
+		<Unit filename="EditTapeTimeDlg.h" />
 		<Unit filename="MainFrame.cpp" />
 		<Unit filename="MainFrame.h" />
 		<Unit filename="MainFrameHelper.cpp" />
