@@ -22,6 +22,8 @@
     <ClCompile Include="ConnectDialog.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="EditSMPTETimeDlg.cpp" />
+    <ClCompile Include="EditTapeTimeDlg.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="DRC1200App.cpp" />
     <ClCompile Include="MainFrameHelper.cpp" />
@@ -35,6 +37,8 @@
   <ItemGroup>
     <ClInclude Include="ConnectDialog.h" />
     <ClInclude Include="DRC1200.h" />
+    <ClInclude Include="EditSMPTETimeDlg.h" />
+    <ClInclude Include="EditTapeTimeDlg.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="STC1200TCP.h" />
