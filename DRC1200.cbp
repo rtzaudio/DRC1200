@@ -50,6 +50,8 @@
 		<Unit filename="MainFrameHelper.cpp" />
 		<Unit filename="MainFrameMenu.cpp" />
 		<Unit filename="MainFramePanel.cpp" />
+		<Unit filename="PropPages.cpp" />
+		<Unit filename="PropPages.h" />
 		<Unit filename="STC1200TCP.h" />
 		<Unit filename="STCCommand.cpp" />
 		<Unit filename="STCCommand.h" />

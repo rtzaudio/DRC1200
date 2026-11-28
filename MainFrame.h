@@ -6,6 +6,7 @@
 //Dialogs
 #include "EditSMPTETimeDlg.h"
 #include "EditTapeTimeDlg.h"
+#include "PropPages.h"
 
 #define MAX_VEL_SAMPLES	500
 
@@ -406,7 +407,6 @@ private:
 
     void OnMemoryClearAll(wxCommandEvent& WXUNUSED(event));
     void OnUpdateMemoryClearAll(wxUpdateUIEvent& event);
-
     void OnRangeMemoryEditTime(wxCommandEvent& event);
     void OnUpdateRangeMemoryEditTime(wxUpdateUIEvent& event);
 
@@ -418,6 +418,15 @@ private:
     void OnUpdateGeneratorResume(wxUpdateUIEvent& event);
     void OnGeneratorEdittime(wxCommandEvent& event);
     void OnUpdateGeneratorEdittime(wxUpdateUIEvent& event);
+
+    void OnMachineConfiguration(wxCommandEvent& event);
+    void OnUpdateMachineConfiguration(wxUpdateUIEvent& event);
+    void OnMachineStore(wxCommandEvent& event);
+    void OnUpdateMachineStore(wxUpdateUIEvent& event);
+    void OnMachineRecall(wxCommandEvent& event);
+    void OnUpdateMachineRecall(wxUpdateUIEvent& event);
+    void OnMachineResetdefaults(wxCommandEvent& event);
+    void OnUpdateMachineResetdefaults(wxUpdateUIEvent& event);
 
 	void OnAbout(wxCommandEvent& WXUNUSED(event));
 };

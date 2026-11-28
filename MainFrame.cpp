@@ -153,6 +153,14 @@ EVT_UPDATE_UI(ID_GENERATOR_EDITTIME, MainFrame::OnUpdateGeneratorEdittime)
 // View Menu
 EVT_MENU(ID_VIEW_SHOWTRACKS, MainFrame::OnViewShowTracks)
 EVT_UPDATE_UI(ID_VIEW_SHOWTRACKS, MainFrame::OnUpdateUIViewShowTracks)
+EVT_MENU(ID_MACHINE_CONFIGURATION, MainFrame::OnMachineConfiguration)
+EVT_UPDATE_UI(ID_MACHINE_CONFIGURATION, MainFrame::OnUpdateMachineConfiguration)
+EVT_MENU(ID_MACHINE_STORE, MainFrame::OnMachineStore)
+EVT_UPDATE_UI(ID_MACHINE_STORE, MainFrame::OnUpdateMachineStore)
+EVT_MENU(ID_MACHINE_RECALL, MainFrame::OnMachineRecall)
+EVT_UPDATE_UI(ID_MACHINE_RECALL, MainFrame::OnUpdateMachineRecall)
+EVT_MENU(ID_MACHINE_RESETDEFAULTS, MainFrame::OnMachineResetdefaults)
+EVT_UPDATE_UI(ID_MACHINE_RESETDEFAULTS, MainFrame::OnUpdateMachineResetdefaults)
 // Help Menu
 EVT_MENU(ID_ABOUT, MainFrame::OnAbout)
 // Controls in the MainFrame window
@@ -2116,6 +2124,363 @@ void MainFrame::OnUpdateUIViewShowTracks(wxUpdateUIEvent& event)
 {
 	event.Enable(true);
 	event.Check(m_trackFrame->IsVisible());
+}
+
+// =========================================================================
+// VIEW - CONFIGURATION
+
+void MainFrame::OnMachineConfiguration(wxCommandEvent& event)
+{
+#if 0
+    int rc;
+	uint32_t status;
+	CMFCPropertySheet sheet(_T("Machine Configuration"));
+
+	CPropPageConfigGeneral		pgGeneral;
+	CPropPageConfigMIDI			pgMIDI;
+	CPropPageConfigSMPTE		pgSMPTE;
+	CPropPageConfigLocator		pgLocator;
+	CPropPageConfigShuttle		pgShuttle;
+	CPropPageConfigPlay			pgPlay;
+	CPropPageConfigStop			pgStop;
+	CPropPageConfigTensions		pgTensions;
+	CPropPageConfigTransport	pgTransport;
+	CString str;
+
+	CDRCWINDoc* pDocument = (CDRCWINDoc*)GetActiveDocument();
+
+	if (pDocument == NULL)
+		return;
+
+	STC_CONFIG_DATA& stc = pDocument->GetSTCConfigData();
+	DTC_CONFIG_DATA& dtc = pDocument->GetDTCConfigData();
+
+	// Read STC & STC configuration parameters from the machine */
+	status = GetSocketCommand().MachineConfigGet(stc, dtc);
+
+	if (status != 0)
+	{
+		AfxMessageBox(IDS_ERROR_READING_DTC_CONFIG, MB_OK | MB_ICONSTOP);
+
+        wxString str("Recall default track configuration parameters from EEPROM memory?\n\nAll track configuration parameters currently in memory will be replaced!");
+
+        wxMessageBox(str, wxT("Confirm Action"), wxYES_NO | wxICON_STOP);
+
+		return;
+	}
+
+	// Add the general settings page
+	sheet.AddPage(&pgGeneral);
+	sheet.AddPage(&pgMIDI);
+	sheet.AddPage(&pgSMPTE);
+	sheet.AddPage(&pgLocator);
+	sheet.AddPage(&pgTransport);
+	sheet.AddPage(&pgTensions);
+	sheet.AddPage(&pgStop);
+	sheet.AddPage(&pgPlay);
+	sheet.AddPage(&pgShuttle);
+
+	CString strSTCVersion;
+	CString strDTCVersion;
+
+	strSTCVersion.Format(_T("v%u.%02u.%03u"),
+		(stc.version >> 16),
+		(stc.version & 0xFF),
+		stc.build);
+
+	strDTCVersion.Format(_T("v%u.%02u.%03u"),
+		(dtc.version >> 16),
+		(dtc.version & 0xFF),
+		dtc.build);
+
+	// Format MAC address string
+	GetMACString(str, m_mac);
+	pgGeneral.m_stcMAC = str;
+
+	// Format serial# strings
+	GetSerialNumberString(str, m_stcSN);
+	pgGeneral.m_stcSN = str;
+
+	GetSerialNumberString(str, m_dtcSN);
+	pgGeneral.m_dtcSN = str;
+
+	// TRANSPORT settings */
+	pgGeneral.m_nShowTimecode = stc.showLongTime;
+	pgGeneral.m_nBlink7Seg    = stc.searchBlink;
+	pgGeneral.m_strSTCVersion = strSTCVersion;
+	pgGeneral.m_strDTCVersion = strDTCVersion;
+
+	// MIDI parameters
+	pgMIDI.m_nDeviceID = stc.midiDevID;
+
+	// SMPTE parameters
+	pgSMPTE.m_fRefClock = stc.ref_freq;
+	pgSMPTE.m_fps       = stc.smpteFPS;
+
+	// LOCATOR parameters
+	pgLocator.m_nJogNear = stc.jog_vel_near;
+	pgLocator.m_nJogMid  = stc.jog_vel_mid;
+	pgLocator.m_nJogFar  = stc.jog_vel_far;
+
+	// PLAY Mode parameters
+	pgPlay.m_fPlayBoostPGainLO      = dtc.play_lo_boost_pgain;
+	pgPlay.m_fPlayBoostIGainLO      = dtc.play_lo_boost_igain;
+	pgPlay.m_nPlayBoostEndVelLO     = dtc.play_lo_boost_end;
+	pgPlay.m_fPlayBoostPGainHI      = dtc.play_hi_boost_pgain;
+	pgPlay.m_fPlayBoostIGainHI      = dtc.play_hi_boost_igain;
+	pgPlay.m_nPlayBoostEndVelHI     = dtc.play_hi_boost_end;
+	pgPlay.m_nPinchRollerSettleTime = dtc.pinch_settle_time;
+	pgPlay.m_nPlaySettleTime        = dtc.play_settle_time;
+	pgPlay.m_nBrakeSettleTime       = dtc.brake_settle_time;
+	pgPlay.m_bBrakesStopPlay        = (dtc.sysflags & DTC_SF_BRAKES_STOP_PLAY) ? 1 : 0;
+	pgPlay.m_bEngagePinchRoller     = (dtc.sysflags & DTC_SF_ENGAGE_PINCH_ROLLER) ? 1 : 0;
+
+	// TRANSPORT parameters
+	pgTransport.m_nVelocityDetectThreshold = dtc.vel_detect_threshold;
+	pgTransport.m_nRecordStrobePulseTime = dtc.record_pulse_time;
+	pgTransport.m_nRecordHoldSettleTime = dtc.rechold_settle_time;
+	pgTransport.m_nButtonDebounceTime =  dtc.debounce;
+
+	// STOP parameters
+	pgStop.m_nStopBrakeTorque = dtc.stop_brake_torque;
+	pgStop.m_bLiftersAtStop = (dtc.sysflags & DTC_SF_LIFTER_AT_STOP) ? 1 : 0;
+	pgStop.m_BrakesAtStop = (dtc.sysflags & DTC_SF_BRAKES_AT_STOP) ? 1 : 0;
+	pgStop.m_bEndOfTapeDetect = (dtc.sysflags & DTC_SF_STOP_AT_TAPE_END) ? 1 : 0;
+
+	// TENSIONS parameters
+	pgTensions.m_nSupplyStopTension = dtc.stop_supply_tension;
+	pgTensions.m_nSupplyShuttleTension = dtc.shuttle_supply_tension;
+	pgTensions.m_nSupplyPlayTensionHI = dtc.play_hi_supply_tension;
+	pgTensions.m_nSupplyPlayTensionLO = dtc.play_lo_supply_tension;
+	pgTensions.m_nSupplyThreadTension = dtc.thread_supply_tension;
+	pgTensions.m_nTakeupStopTension = dtc.stop_takeup_tension;
+	pgTensions.m_nTakeupShuttleTension = dtc.shuttle_takeup_tension;
+	pgTensions.m_nTakeupPlayTensionHI = dtc.play_hi_takeup_tension;
+	pgTensions.m_nTakeupPlayTensionLO = dtc.play_lo_takeup_tension;
+	pgTensions.m_nTakeupThreadTension = dtc.thread_takeup_tension;
+	pgTensions.m_fTensionSensorGain = dtc.tension_sensor_gain;
+	pgTensions.m_fTensionSensorMidScale1 = dtc.tension_sensor_midscale1;
+	pgTensions.m_fTensionSensorMidScale2 = dtc.tension_sensor_midscale2;
+	pgTensions.m_fReelRadiusGain = dtc.reel_radius_gain;
+	pgTensions.m_fReelOffsetGain = dtc.reel_offset_gain;
+
+	// SHUTTLE parameters
+	pgShuttle.m_fFwdBackTensionGain = dtc.shuttle_fwd_holdback_gain;
+	pgShuttle.m_fRewBackTensionGain = dtc.shuttle_rew_holdback_gain;
+	pgShuttle.m_nShuttleVelocity = dtc.shuttle_velocity;
+	pgShuttle.m_nLibWindVelocity = dtc.shuttle_lib_velocity;
+	pgShuttle.m_nAutoSlowVelocity = dtc.shuttle_autoslow_velocity;
+	pgShuttle.m_nAutoSlowAtOffset = dtc.autoslow_at_offset;
+	pgShuttle.m_nAutoSlowAtVelocity = dtc.autoslow_at_velocity;
+	pgShuttle.m_nLifterSettleTime = dtc.lifter_settle_time;
+	pgShuttle.m_fShuttlePGain = dtc.shuttle_servo_pgain;
+	pgShuttle.m_fShuttleIGain = dtc.shuttle_servo_igain;
+	pgShuttle.m_fShuttleDGain = dtc.shuttle_servo_dgain;
+
+	// Show tabbed dialog with all option settings */
+	if ((rc = sheet.DoModal()) == IDOK)
+	{
+		// General page settings */
+		stc.showLongTime = pgGeneral.m_nShowTimecode;
+		stc.searchBlink  = pgGeneral.m_nBlink7Seg;
+
+		// MIDI parameters
+		stc.midiDevID = pgMIDI.m_nDeviceID;
+
+		// SMPTE parameters
+		stc.ref_freq = pgSMPTE.m_fRefClock;
+		stc.smpteFPS = pgSMPTE.m_fps;
+
+		// LOCATOR parameters
+		stc.jog_vel_near = pgLocator.m_nJogNear;
+		stc.jog_vel_mid = pgLocator.m_nJogMid;
+		stc.jog_vel_far = pgLocator.m_nJogFar;
+
+		// PLAY parameters
+		dtc.play_lo_boost_pgain = pgPlay.m_fPlayBoostPGainLO;
+		dtc.play_lo_boost_igain = pgPlay.m_fPlayBoostIGainLO;
+		dtc.play_lo_boost_end = pgPlay.m_nPlayBoostEndVelLO;
+		dtc.play_hi_boost_pgain = pgPlay.m_fPlayBoostPGainHI;
+		dtc.play_hi_boost_igain = pgPlay.m_fPlayBoostIGainHI;
+		dtc.play_hi_boost_end = pgPlay.m_nPlayBoostEndVelHI;
+		dtc.pinch_settle_time = pgPlay.m_nPinchRollerSettleTime;
+		dtc.play_settle_time = pgPlay.m_nPlaySettleTime;
+		dtc.brake_settle_time = pgPlay.m_nBrakeSettleTime;
+
+		if (pgPlay.m_bBrakesStopPlay)
+			dtc.sysflags |= DTC_SF_BRAKES_STOP_PLAY;
+		else
+			dtc.sysflags &= ~(DTC_SF_BRAKES_STOP_PLAY);
+
+		if (pgPlay.m_bEngagePinchRoller)
+			dtc.sysflags |= DTC_SF_ENGAGE_PINCH_ROLLER;
+		else
+			dtc.sysflags &= ~(DTC_SF_ENGAGE_PINCH_ROLLER);
+
+		// TRANSPORT parameters
+		dtc.vel_detect_threshold = pgTransport.m_nVelocityDetectThreshold;
+		dtc.record_pulse_time = pgTransport.m_nRecordStrobePulseTime;
+		dtc.rechold_settle_time = pgTransport.m_nRecordHoldSettleTime;
+		dtc.debounce = pgTransport.m_nButtonDebounceTime;
+
+		// STOP parameters
+		dtc.stop_brake_torque = pgStop.m_nStopBrakeTorque;
+
+		if (pgStop.m_bLiftersAtStop)
+			dtc.sysflags |= DTC_SF_LIFTER_AT_STOP;
+		else
+			dtc.sysflags &= ~(DTC_SF_LIFTER_AT_STOP);
+
+		if (pgStop.m_BrakesAtStop)
+			dtc.sysflags |= DTC_SF_BRAKES_AT_STOP;
+		else
+			dtc.sysflags &= ~(DTC_SF_BRAKES_AT_STOP);
+
+		if (pgStop.m_bEndOfTapeDetect)
+			dtc.sysflags |= DTC_SF_STOP_AT_TAPE_END;
+		else
+			dtc.sysflags &= ~(DTC_SF_STOP_AT_TAPE_END);
+
+		// TENSION parameters
+		dtc.stop_supply_tension = pgTensions.m_nSupplyStopTension;
+		dtc.shuttle_supply_tension = pgTensions.m_nSupplyShuttleTension;
+		dtc.play_hi_supply_tension = pgTensions.m_nSupplyPlayTensionHI;
+		dtc.play_lo_supply_tension = pgTensions.m_nSupplyPlayTensionLO;
+		dtc.thread_supply_tension = pgTensions.m_nSupplyThreadTension;
+		dtc.stop_takeup_tension = pgTensions.m_nTakeupStopTension;
+		dtc.shuttle_takeup_tension = pgTensions.m_nTakeupShuttleTension;
+		dtc.play_hi_takeup_tension = pgTensions.m_nTakeupPlayTensionHI;
+		dtc.play_lo_takeup_tension = pgTensions.m_nTakeupPlayTensionLO;
+		dtc.thread_takeup_tension = pgTensions.m_nTakeupThreadTension;
+		dtc.tension_sensor_gain = pgTensions.m_fTensionSensorGain;
+		dtc.tension_sensor_midscale1 = pgTensions.m_fTensionSensorMidScale1;
+		dtc.tension_sensor_midscale2 = pgTensions.m_fTensionSensorMidScale2;
+		dtc.reel_radius_gain = pgTensions.m_fReelRadiusGain;
+		dtc.reel_offset_gain = pgTensions.m_fReelOffsetGain;
+
+		dtc.shuttle_fwd_holdback_gain = pgShuttle.m_fFwdBackTensionGain;
+		dtc.shuttle_rew_holdback_gain = pgShuttle.m_fRewBackTensionGain;
+		dtc.shuttle_velocity = pgShuttle.m_nShuttleVelocity;
+		dtc.shuttle_lib_velocity = pgShuttle.m_nLibWindVelocity;
+		dtc.shuttle_autoslow_velocity = pgShuttle.m_nAutoSlowVelocity;
+		dtc.autoslow_at_offset = pgShuttle.m_nAutoSlowAtOffset;
+		dtc.autoslow_at_velocity = pgShuttle.m_nAutoSlowAtVelocity;
+		dtc.lifter_settle_time = pgShuttle.m_nLifterSettleTime;
+		dtc.shuttle_servo_pgain = pgShuttle.m_fShuttlePGain;
+		dtc.shuttle_servo_igain = pgShuttle.m_fShuttleIGain;
+		dtc.shuttle_servo_dgain = pgShuttle.m_fShuttleDGain;
+
+		//pDocument->SetModifiedFlag(TRUE);
+
+		// Save the new parameters to the machine
+		GetSocketCommand().MachineConfigSet(stc, dtc);
+	}
+#endif // 0
+}
+
+void MainFrame::OnUpdateMachineConfiguration(wxUpdateUIEvent& event)
+{
+	event.Enable(IsConnected());
+}
+
+// =========================================================================
+// VIEW - MACHINE STORE CONFIGURATION
+
+void MainFrame::OnMachineStore(wxCommandEvent& event)
+{
+#if 0
+	DWORD rc;
+
+	if (AfxMessageBox(IDS_MACHINE_CONFIG_STORE, MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
+	{
+		// Store STC/DTC config to defaults
+
+		rc = GetSocketCommand().MachineConfig(1);
+
+		if (rc != ERROR_SUCCESS)
+			AfxMessageBox(IDS_ERROR_STORE_CONFIG, MB_OK | MB_ICONSTOP);
+	}
+#endif // 0
+}
+
+void MainFrame::OnUpdateMachineStore(wxUpdateUIEvent& event)
+{
+	event.Enable(IsConnected());
+}
+
+// =========================================================================
+// VIEW - MACHINE RECALL CONFIGURATION
+
+void MainFrame::OnMachineRecall(wxCommandEvent& event)
+{
+#if 0
+	DWORD rc;
+
+	if (AfxMessageBox(IDS_MACHINE_CONFIG_RECALL, MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
+	{
+		// Recall STC/DTC config from EPROM
+
+		rc = GetSocketCommand().MachineConfig(0);
+
+		if (rc != ERROR_SUCCESS)
+			AfxMessageBox(IDS_ERROR_RECALL_CONFIG, MB_OK | MB_ICONSTOP);
+	}
+#endif // 0
+}
+
+void MainFrame::OnUpdateMachineRecall(wxUpdateUIEvent& event)
+{
+	event.Enable(IsConnected());
+}
+
+// =========================================================================
+// VIEW - MACHINE RESET TO DEFAULT CONFIGURATION
+
+void MainFrame::OnMachineResetdefaults(wxCommandEvent& event)
+{
+#if 0
+	DWORD rc;
+
+	if (AfxMessageBox(IDS_MACHINE_CONFIG_RESET, MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
+	{
+		// Reset all STC & DTC parameters to default values
+		rc = GetSocketCommand().MachineConfig(2);
+
+		if (rc != wxSOCKET_NOERROR)
+		{
+			AfxMessageBox(IDS_ERROR_RESET_CONFIG, MB_OK | MB_ICONSTOP);
+		}
+		else
+		{
+			if (rc != wxSOCKET_NOERROR)
+			{
+				AfxMessageBox(IDS_ERROR_RECALL_CONFIG, MB_OK | MB_ICONSTOP);
+			}
+			else
+			{
+				CDRCWINDoc* pDocument = (CDRCWINDoc*)GetActiveDocument();
+
+				if (pDocument)
+				{
+					STC_CONFIG_DATA& stc = pDocument->GetSTCConfigData();
+					DTC_CONFIG_DATA& dtc = pDocument->GetDTCConfigData();
+
+					// Now read the new default STC & STC configuration parameter
+					// values back from the from the machine into our document
+					// configuration memory buffers. The document can then be
+					// saved to disk with all the configuration parameters.
+
+					rc = GetSocketCommand().MachineConfigGet(stc, dtc);
+				}
+			}
+		}
+	}
+#endif // 0
+}
+
+void MainFrame::OnUpdateMachineResetdefaults(wxUpdateUIEvent& event)
+{
+	event.Enable(IsConnected());
 }
 
 ///////////////////////////////////////////////////////////////////////////////

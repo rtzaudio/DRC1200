@@ -128,7 +128,7 @@ void CEditTapeTimeDlg::StepField(int idx, int delta)
 void CEditTapeTimeDlg::UpdateGroupboxCaption()
 {
     wxString str;
-    str.Printf(wxT("Memory[%u] %1u:%02u:%02u:%1u"),
+    str.Printf(wxT("[%u] - %1u:%02u:%02u:%1u"),
                (unsigned)m_nMemIndex,
                (unsigned)GetFieldValue(0), (unsigned)GetFieldValue(1),
                (unsigned)GetFieldValue(2), (unsigned)GetFieldValue(3));

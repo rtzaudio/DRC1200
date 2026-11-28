@@ -252,10 +252,20 @@ void MainFrame::CreateMenuBar(void)
 	// Create VIEW menu items
 
 	wxMenu* menuView = new wxMenu;
+	wxMenu* menuMachine = new wxMenu;
 
 	menuView->AppendCheckItem(ID_VIEW_SHOWTRACKS,
 		wxT("&Track Window"),
 		wxT("Hide/Show Track Assign Window"));
+    menuView->AppendSeparator();
+
+	menuMachine->Append(ID_MACHINE_CONFIGURATION, wxT("Configuration..."));
+    menuMachine->AppendSeparator();
+	menuMachine->Append(ID_MACHINE_STORE, wxT("Store Configuration"));
+	menuMachine->Append(ID_MACHINE_RECALL, wxT("Recall Configuration"));
+	menuMachine->Append(ID_MACHINE_RESETDEFAULTS, wxT("Reset to Defaults"));
+
+    menuView->Append(ID_SOURCE_INPUT, wxT("Machine Settings"), menuMachine);
 
 	// Create HELP menu items
 
